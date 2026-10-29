@@ -97,6 +97,7 @@ Abans de donar-la per acabada, comprova que:
 - el build no dona cap error i diu que es pot acabar;
 - cada escenari té coses a mirar amb descripcions amb gràcia, i almenys un motiu per anar-hi;
 - cada personatge té un diàleg amb alguna cosa útil o divertida;
+- els temes de conversa i les sortides depenen del que el protagonista ja sap o ha fet (no hi és tot des del principi);
 - hi ha pistes per a cada puzle (diàlegs, descripcions, respostes en fallar);
 - hi ha introducció (`introCutsceneId`) que deixa clar l'objectiu, i un final satisfactori (`end`);
 - les imatges de Commons surten als crèdits;

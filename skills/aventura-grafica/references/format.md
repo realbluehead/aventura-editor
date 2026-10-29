@@ -186,6 +186,25 @@ Mentre dura una seqüència el jugador no pot fer res (un clic salta la frase; E
   dalt de la pantalla, amb el seu color.
 - **Opcions que depenen d'una altra conversa**: `said(diàleg, opció)` és més segur que `hasItem(objecte)` si l'objecte
   es pot perdre abans (per exemple, si es dona). Si no, el jugador es pot quedar encallat.
+- **Diàlegs que depenen del que ha passat** (vegeu «Que el món reaccioni» a design.md). El patró:
+  ```js
+  // 1. La salutació la tria una regla «Parla amb» (té prioritat sobre el diàleg); de la més concreta a la general
+  for (const [conds, text] of [[[isVar("v-ron-ok", true)], "Gràcies pel pastís!"], [[isVar("v-sap-robatori", true)], "Què passa?"], [[], "Quina gana..."]])
+    P.rules.push(rule("talk", chr("c-ron"), null, conds, [say(text, "c-ron"), talkTo("d-ron")]));
+  // 2. El diàleg comença en un node sense frases: el menú de temes, cadascun amb les seves condicions
+  P.dialogues.push(dialogue("d-ron", "Ron", "c-ron", [
+    node("ro-0", [], [
+      opt("Han robat el barret!", "ro-2", { conditions: [isVar("v-sap-robatori", true)], actions: [setVar("v-sap-peeves", true)] }),
+      opt("Té, un pastís.", null, { conditions: [hasItem("o-pastis")], actions: TR.pastis }),   // el mateix que «Dóna»
+      opt("Adéu."),                                                                         // sempre, sense condicions
+    ]),
+    node("ro-2", [["c-ron", "Segur que ha estat en Peeves."]], [opt("Gràcies.", "ro-0")]),   // torna al menú
+  ]));
+  // 3. Les accions d'un intercanvi, en una llista que fan servir alhora la regla «Dóna» i l'opció del diàleg
+  P.rules.push(rule("give", obj("o-pastis"), chr("c-ron"), [], TR.pastis));
+  ```
+  Deixa sempre una opció de sortida sense condicions. Exemple complet: `aventures/barret-perdut/build.mjs`.
+- **Sortides que s'obren amb la història**: `exit(..., { conditions: [isVar("v-recepta", true)], blocked: "Ara no hi tinc res a fer." })`.
 - **Un centre de distribució** (una plaça, una estació) amb sortides a la resta, cadascuna amb `conditions` i
   `blocked`, ordena els actes sense fer cap escenari fix.
 - **Final amb epíleg**: la seqüència final pot fer `goto(escenari, [x, y])` i continuar amb frases i `end()`.

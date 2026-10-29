@@ -32,6 +32,27 @@
 - **Dosifica el mapa**: al principi pocs llocs; se n'obren més a mesura que s'avança (sortides amb condicions).
 - **Recompensa**: un so (`SFX.success()`), una frase satisfeta, una petita seqüència quan es resol un puzle gran.
 
+## Que el món reaccioni (no fer-la lineal)
+
+Una aventura sembla lineal i falsa quan tots els temes de conversa i totes les portes hi són des del principi: el
+jugador pot preguntar a un personatge per una cosa que encara no sap que ha passat. Per evitar-ho:
+
+- **El protagonista només pregunta el que sap.** Fes una variable per a cada cosa que algú li explica
+  (`v-sap-robatori`, `v-sap-peeves`…) i posa-la com a condició dels temes que en depenen. Un tema desapareix quan
+  ja està resolt (`no("v-ron-ok")`, `hasItem(x, true)`).
+- **Les salutacions canvien.** Cada personatge diu una cosa diferent segons el moment: abans de saber res, quan
+  ja hi ha un encàrrec, quan està resolt.
+- **Les accions necessiten un motiu.** «Per què hauria de fer pessigolles a un quadre?» fins que algú en parla; el
+  mateix per agafar coses que encara no serveixen de res.
+- **El mapa s'obre amb la història.** Cada sortida que porta a una part nova té `conditions` amb el que hi dona
+  motiu per anar-hi, i un `blocked` que diu per què no («Ara no tinc res a fer a les masmorres»). Al principi només
+  hi ha oberts els llocs de l'objectiu inicial.
+- **Compte amb els encallaments**: tot el que obre un tema o una sortida s'ha de poder aconseguir abans del punt on
+  cal. Si una cosa la pot explicar més d'un personatge, que totes les vies posin la mateixa variable (fes una llista
+  d'accions compartida). `P.write` ho comprova: si diu que no es pot acabar, és que una condició no s'arriba a complir.
+
+`format.md` (secció 10) explica com s'escriu.
+
 ## Mida
 
 | durada | escenaris | personatges | objectes de l'inventari | passos imprescindibles |
