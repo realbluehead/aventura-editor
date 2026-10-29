@@ -2,3 +2,7 @@ data/
 .DS_Store
 node_modules/
 tools/barcelona/la-rosa-de-sant-jordi.zip
+# Les aventures fetes amb el skill: es guarda el build i les imatges originals; el joc i les proves es regeneren
+aventures/*/joc.zip
+aventures/*/preview/
+aventures/*/imatges/*.png

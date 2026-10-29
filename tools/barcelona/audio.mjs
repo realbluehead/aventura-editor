@@ -37,7 +37,7 @@ function note(mixBuf, at, dur, hz, { wave = "square", vol = 0.2, decay = 3 } = {
 }
 
 // Una cançó: veus amb notes «C4:1» (nota:temps) o «-:1» (silenci), a «bpm» negres per minut
-function song(bpm, voices, loops = 1) {
+export function song(bpm, voices, loops = 1) {
   const beat = 60 / bpm;
   const length = Math.max(...voices.map((v) => v.notes.trim().split(/\s+/).reduce((s, n) => s + Number(n.split(":")[1]), 0))) * beat;
   const out = new Float32Array(Math.ceil(length * loops * RATE) + 10);

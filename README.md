@@ -56,6 +56,22 @@ I obre http://localhost:8821. No té dependències, només Node.
 
 Tests: `npm test`.
 
+## Crear aventures amb Claude: el skill «aventura-grafica»
+
+A `skills/aventura-grafica/` hi ha un skill de Claude Code que fa una aventura sencera a partir d'una idea o d'un
+llibre: escriu la història, els puzles i els diàlegs; fa els fons pixelant imatges lliures de Wikimedia Commons
+(amb els crèdits) o dibuixant-los; genera els personatges, els objectes i la música; i comprova que el joc es pot
+acabar. El resultat és un zip que s'importa a l'editor.
+
+Per tenir-lo disponible a qualsevol carpeta:
+
+```bash
+mkdir -p ~/.claude/skills && ln -s "$PWD/skills/aventura-grafica" ~/.claude/skills/aventura-grafica
+```
+
+Després n'hi ha prou de demanar-ho: «fes-me una aventura gràfica sobre…». Cal Node 18+ i `ffmpeg` (o `sips`, a
+macOS) per llegir les imatges. Exemple fet amb el skill: `aventures/illa-del-tresor/` (`node aventures/illa-del-tresor/build.mjs`).
+
 ## Versió web
 
 La mateixa aplicació funciona sense servidor: un service worker fa de servidor dins del navegador, amb el mateix codi de l'API (`public/js/backend/core.js`), i guarda les dades a IndexedDB. Per construir-la a `docs/` (la carpeta que publica GitHub Pages):
