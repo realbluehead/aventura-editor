@@ -1,0 +1,8 @@
+Harry Potter i el Barret Desaparegut
+====================================
+
+Per jugar: obre index.html amb el navegador.
+Per penjar-lo a internet: puja tota aquesta carpeta (index.html, game.js, adventure.js, player.css i files/) a qualsevol web.
+Les partides es desen al navegador de qui juga.
+
+Per tornar a editar-la: a l'Editor d'aventures, «Importa» aquest mateix zip.

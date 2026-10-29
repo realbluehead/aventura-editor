@@ -41,4 +41,7 @@ for (const f of await exportFiles(PUBLIC, adventure, files)) {
   await mkdir(dirname(path), { recursive: true });
   await writeFile(path, f.data);
 }
+// Els jocs fets amb el skill que es publiquen (tools/web/jocs.json), a jocs/<nom>/
+const { PUBLICATS, publishGame } = await import("./jocs.mjs");
+for (const { nom } of PUBLICATS) await publishGame(nom, OUT);
 console.log(`Versió web a ${OUT}`);

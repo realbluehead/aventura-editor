@@ -38,6 +38,12 @@ De moment gestiona:
 npm start
 ```
 
+## Jocs fets amb el skill, publicats
+
+- **Harry Potter i el Barret Desaparegut** (aventura no oficial, inspirada en els llibres de J. K. Rowling): https://realbluehead.github.io/aventura-editor/jocs/barret-perdut/ — 20 escenaris amb els decorats dibuixats en perspectiva per codi. Codi a `aventures/barret-perdut/`.
+
+Els jocs de `tools/web/jocs.json` es publiquen a `docs/jocs/<nom>/`; `node tools/web/jocs.mjs <nom> --push` n'actualitza un i el puja.
+
 ## Joc d'exemple: «La rosa de Sant Jordi»
 
 **Juga-hi en línia:** https://realbluehead.github.io/aventura-editor/joc/ — o obre-la a l'[editor en línia](https://realbluehead.github.io/aventura-editor/), on ja hi és carregada.
