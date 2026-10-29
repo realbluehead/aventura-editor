@@ -59,9 +59,15 @@ Per provar-ho ràpid sense el build: `node $S/pixelate.mjs entrada.jpg sortida.p
 
 **Que no semblin fotos.** Una foto o una pintura pixelada a 320×200 encara sembla una foto, i els personatges
 (figures de 16×32 que al joc fan uns 50 px, és a dir, píxels d'1,5–2 px) hi queden enganxats. Per integrar-los:
-fes el fons a **160×100 i amplia'l ×2**, aplana-hi les textures abans (filtre de Kuwahara), queda't amb **12–16
-colors** per escena, neteja els píxels solts i marca les vores fortes amb un color fosc. `aventures/dracula/estil.mjs`
-(funció `fons`) ho fa tot i es pot copiar.
+treballa a la meitat de la resolució del fons i amplia ×2 (blocs de 2×2), aplana-hi les textures abans (filtre de
+Kuwahara), queda't amb **~20 colors** per escena (de la paleta comuna), conserva una part del color original
+perquè cada lloc es distingeixi, i neteja els píxels solts. No ho enfosqueixis massa: s'ha de veure tot.
+`aventures/dracula/estil.mjs` (funció `fons`) ho fa tot i es pot copiar.
+
+**Més resolució (640×480).** Per a fons amb més detall, fes-los de 640×480 (detall de 320×240). Es pot col·locar
+tot el joc en coordenades de 320×200 i convertir-les al final (x×2, y×2,4: el 16:10 estirat a 4:3, com es veien
+els jocs de 320×200 als monitors); amplia també els objectes (×2–×4) i l'alçada dels actors. Ho fa
+`aventures/dracula/build.mjs` (blocs «Mida dels objectes» i «De 320×200 a 640×480»).
 
 Per a una aventura coherent, tria una paleta comuna (per exemple `palette: "db32"` o `"endesga32"`) per a tots els
 fons i objectes. Les pintures fosques: puja la brillantor perquè el protagonista i els objectes es vegin.

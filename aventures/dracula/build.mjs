@@ -49,6 +49,21 @@ pj("c-comte", "dracula", "el comte Dràcula");
 pj("c-veu-germanes", "germana", "les germanes", "", COLORS.germana);
 pj("c-veu-lucy", "lucy", "Lucy", "", COLORS.lucy);
 
+/* ---------- Mida dels objectes ---------- */
+// Els fons fan 640×480 amb píxels de 2×2, i els personatges hi fan uns 130 px (píxels de 4×4). Els objectes es
+// dibuixen petits i aquí s'amplien: els normals ×2 (com el fons), els que porten figures humanes ×3 o ×4.
+const ESCALA = { "o-calessa": 4, "o-skinsky": 4, "o-comte-caixa": 3, "o-capita": 3, "o-lucy-wh": 3, "o-lucy-hill": 3, "o-taut": 3,
+  "o-carreta": 3, "o-tombes-germanes": 3, "o-cofre": 3, "o-caixes-castell": 3, "o-caixes-carfax": 3, "o-caixes-picc": 3, "o-caixes-me": 3, "o-foc": 3 };
+const figures = new Set();
+const object = P.object.bind(P);
+P.object = (o) => {
+  const f = figures.has(o.id) ? 4 : ESCALA[o.id] ?? 2;
+  const first = o.states.find(([, , img]) => img)?.[2];
+  // La icona de l'inventari es fa de la imatge petita, abans d'ampliar-la
+  const icon = o.icon ?? (o.pickable && first ? K.icon(first) : null);
+  return object({ ...o, icon, states: o.states.map(([id, name, img]) => [id, name, img ? K.zoomed(img, f) : null]) });
+};
+
 /* ---------- Ajudes per als escenaris ---------- */
 const H = { near: 54, far: 44 };
 function escena(key, name, description, { draw, ...rest }) {
@@ -59,18 +74,31 @@ function escena(key, name, description, { draw, ...rest }) {
 }
 // Un objecte que és una figura (el comte, la Lucy...), amb estats visible / amagat
 function aparicio(id, name, description, img, { visible = true } = {}) {
+  figures.add(id);
   return P.object({ id, name, description, states: visible ? [["present", "Present", img], ["amagat", "Amagat", null]] : [["amagat", "Amagat", null], ["present", "Present", img]] });
 }
 
 const ctx = { P, K, E, O, pj, escena, aparicio, H };
 for (const acte of ["acte1", "acte2", "acte3", "acte4"]) (await import(new URL(`./${acte}.mjs`, import.meta.url))).default(ctx);
 
+/* ---------- De 320×200 a 640×480 ---------- */
+// Tot el joc s'ha col·locat en coordenades de 320×200; aquí es passen a les dels fons (x×2, y×2,4)
+const pt = (p) => (p ? [Math.round(Math.min(E.W, p[0] * E.SX)), Math.round(Math.min(E.H, p[1] * E.SY))] : p);
+for (const s of P.scenes) {
+  s.walkable = s.walkable.map((poly) => poly.map(pt));
+  for (const h of s.hotspots) { h.polygon = h.polygon.map(pt); if (h.exit) h.exit.arrival = pt(h.exit.arrival); }
+  for (const p of [...s.objects, ...s.characters]) { p.position = pt(p.position); p.walkTo = pt(p.walkTo); }
+  s.actorHeight = s.actorHeight && { near: Math.round(s.actorHeight.near * E.SY), far: Math.round(s.actorHeight.far * E.SY) };
+}
+const actions = [...P.cutscenes.flatMap((c) => c.actions), ...P.rules.flatMap((r) => r.actions), ...P.dialogues.flatMap((d) => d.nodes.flatMap((n) => n.options.flatMap((o) => o.actions)))];
+for (const a of actions) { if (a.type === "walk") a.point = pt(a.point); if (a.type === "goto") a.arrival = pt(a.arrival); }
+
 /* ---------- Títol i escriure ---------- */
 const titol = E.fons(join(HERE, "imatges", "borgo.jpg"), OPTS.borgo ?? {});
-titol.rect(56, 14, 208, 50, [7, 6, 11, 210]);
-titol.text(160 - K.Canvas.textWidth("DRACULA", 6) / 2 + 2, 22, "DRACULA", "#3a0a10", 6);
-titol.text(160 - K.Canvas.textWidth("DRACULA", 6) / 2, 20, "DRACULA", "#cc2a2a", 6);
-titol.text(160 - K.Canvas.textWidth("BRAM STOKER", 1) / 2, 54, "BRAM STOKER", "#8f97a8", 1);
+titol.rect(112, 32, 416, 116, [7, 6, 11, 210]);
+titol.text(320 - K.Canvas.textWidth("DRACULA", 12) / 2 + 4, 48, "DRACULA", "#3a0a10", 12);
+titol.text(320 - K.Canvas.textWidth("DRACULA", 12) / 2, 44, "DRACULA", "#cc2a2a", 12);
+titol.text(320 - K.Canvas.textWidth("BRAM STOKER", 2) / 2, 120, "BRAM STOKER", "#8f97a8", 2);
 
 await P.write(join(HERE, "joc.zip"), {
   startSceneId: "s-hotel", playerId: "c-jonathan", introCutsceneId: "cs-intro",

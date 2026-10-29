@@ -7,7 +7,7 @@ const ids = process.argv.slice(2);
 const sheet = new K.Canvas(660, Math.ceil(ids.length / 2) * 215, "#000000");
 const people = ["jonathan", "mina", "vanHelsing", "dracula"];
 ids.forEach((id, k) => {
-  const c = E.fons(`imatges/${id}.jpg`, OPTS[id] ?? {});
+  const c = E.fons(`imatges/${id}.jpg`, { ...(OPTS[id] ?? {}), ...JSON.parse(process.env.EXTRA || "{}") });
   // Personatges a 54 px d'alçada, com al joc (cada píxel del sprite ≈ 1,7 píxels)
   people.forEach((p, i) => {
     const f = E.figura(E.LOOKS[p], i % 2 ? 0 : 4), s = 54 / 32;

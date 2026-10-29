@@ -64,17 +64,23 @@ export function grade(img, { keep = 0.1, dark = 1.1, vignette = 0.6, light = 0, 
 //   4. el tractament de color i la paleta, amb un tramat de 2×2 només als degradats;
 //   5. es netegen els píxels solts i es marquen en fosc les vores fortes (com el contorn d'un dibuix);
 //   6. s'amplia ×2 sense suavitzar.
-export function fons(file, { crop, anchorX, anchorY, scale = 2, smooth = 2, colors = 14, ink = 0.3, ...g } = {}) {
-  const raw = K.fromCanvas(pixelArt(file, { colors: 0, dither: "none", method: "average", crop, anchorX, anchorY }));
+// Mida dels fons: 640×480 a la pantalla, amb 320×240 píxels de detall (cada píxel és un bloc de 2×2).
+// L'enquadrament és el de 16:10 (320×200) estirat un 20% en vertical, com es veien els jocs de 320×200 als
+// monitors 4:3: així les coordenades de tot el joc es converteixen exactament (x×2, y×2,4).
+export const W = 640, H = 480, SX = 2, SY = 2.4;
+
+export function fons(file, { crop, anchorX, anchorY, smooth = 1, colors = 24, ink = 0, ...g } = {}) {
+  const raw = K.fromCanvas(pixelArt(file, { width: 640, height: 400, colors: 0, dither: "none", method: "average", crop, anchorX, anchorY }));
   const flat = kuwahara(raw, smooth);
-  const small = ops.resample(flat, Math.round(320 / scale), Math.round(200 / scale), "dominant");
-  let img = grade(small, { dither: 0, ditherKind: "none", dark: 0.9, light: 0.05, vignette: 0.45, ...g });
-  // Pocs colors per escena (triats de la paleta): taques grans i netes, com un fons dibuixat a mà
+  const small = ops.resample(flat, W / 2, H / 2, "dominant");
+  // Nit, però que es vegi tot: llum suficient i una part del color de cada lloc (fusta, verd, pedra)
+  let img = grade(small, { dither: 0, ditherKind: "none", keep: 0.35, dark: 0.85, light: 0.04, vignette: 0.32, ...g });
+  // Pocs colors per escena (triats de la paleta): taques netes, com un fons dibuixat a mà
   const chosen = [...new Map(ops.choosePalette(img, colors).map((c) => { const p = nearestRGB(c); return [p.join(), p]; })).values()];
   ops.applyPalette(img, chosen, { dither: "bayer2", amount: 0.12 });
-  img = modeFilter(modeFilter(img));
+  img = modeFilter(img);
   if (ink) img = inkEdges(img, ink);
-  return K.toCanvas(ops.resample(img, 320, 200, "nearest"));
+  return K.toCanvas(ops.resample(img, W, H, "nearest"));
 }
 
 // El color de la paleta més proper

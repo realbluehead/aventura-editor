@@ -84,7 +84,7 @@ export async function checkZip(bytes) {
       // Una sortida s'ha de poder tocar caminant: el seu polígon ha de tocar o ser a prop de la zona caminable
       const gap = Math.min(...s.walkable.flatMap((poly) => h.polygon.map((p) => (pointInPolygon(p, poly) ? 0 :
         Math.min(...poly.map((a, i) => distToSegment(p, a, poly[(i + 1) % poly.length])))))));
-      if (gap > 40) warnings.push(`${where}: la sortida «${h.name}» queda a ${Math.round(gap)} px de la zona caminable`);
+      if (gap > dim[1] * 0.2) warnings.push(`${where}: la sortida «${h.name}» queda a ${Math.round(gap)} px de la zona caminable`);
     }
     for (const p of s.characters) {
       const name = a.characters.find((c) => c.id === p.characterId)?.name ?? p.characterId;
