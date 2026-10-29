@@ -63,7 +63,11 @@ export function createPlayer(container, adventure, {
       <div class="player-end" hidden><p></p><small class="credits"></small><button type="button">Torna a començar</button></div>
     </div>
     <div class="player-ui">
-      <button type="button" class="player-menu-button">Partides</button>
+      <div class="player-corner">
+        <button type="button" class="player-hide-button" title="Amaga o mostra els verbs i l'inventari" aria-pressed="false">◐</button>
+        <button type="button" class="player-full-button" title="Pantalla completa">⛶</button>
+        <button type="button" class="player-menu-button">Partides</button>
+      </div>
       <div class="player-sentence" aria-live="polite"></div>
       <div class="player-panel">
         <div class="player-verbs" role="toolbar" aria-label="Verbs"></div>
@@ -118,18 +122,24 @@ export function createPlayer(container, adventure, {
 
   /* ---------- Mida i coordenades ---------- */
 
-  // L'escenari s'amplia tant com hi càpiga; si es pot, per un factor enter perquè el pixel art quedi net
+  // L'escenari s'amplia tant com hi càpiga; si es pot, per un factor enter perquè el pixel art quedi net.
+  // Quan els verbs i l'inventari a sota el farien molt més petit (un mòbil de costat, una finestra baixa), l'escenari
+  // ocupa tota l'alçada i els verbs i l'inventari hi queden a sobre, als costats i translúcids (mode «compact»).
   function layout() {
-    const availW = container.clientWidth - 24;
-    const availH = container.clientHeight - ui.offsetHeight - 34;
-    if (availW <= 0 || availH <= 0) return;
-    const s = Math.min(availW / W, availH / H);
-    scale = s >= 1 ? Math.floor(s) : s;
+    container.classList.remove("compact");
+    const fullW = container.clientWidth, fullH = container.clientHeight;
+    const availW = fullW - 24, availH = fullH - ui.offsetHeight - 34;
+    if (fullW <= 0 || fullH <= 0) return;
+    const below = availW > 0 && availH > 0 ? Math.min(availW / W, availH / H) : 0, full = Math.min(fullW / W, fullH / H);
+    const compact = full > below * 1.25;
+    container.classList.toggle("compact", compact);
+    const s = compact ? full : below;
+    scale = s >= 1 && !compact ? Math.floor(s) : s;
     for (const node of [screen, canvas]) {
       node.style.width = `${W * scale}px`;
       node.style.height = `${H * scale}px`;
     }
-    ui.style.width = `${Math.max(W * scale, Math.min(availW, 360))}px`;
+    ui.style.width = compact ? "" : `${Math.max(W * scale, Math.min(availW, 360))}px`;
     canvas.style.imageRendering = scale >= 1 ? "pixelated" : "auto";
   }
   const ro = new ResizeObserver(layout);
@@ -888,6 +898,21 @@ export function createPlayer(container, adventure, {
   }
 
   ui.querySelector(".player-menu-button").onclick = () => (menuOpen ? closeMenu() : openMenu());
+  // Amagar els verbs i l'inventari (en mode compact tapen una mica l'escenari)
+  const hideButton = ui.querySelector(".player-hide-button");
+  hideButton.onclick = () => hideButton.setAttribute("aria-pressed", String(container.classList.toggle("ui-hidden")));
+  // Pantalla completa: amb l'API del navegador si n'hi ha (i girant el mòbil de costat), i si no (iPhone), ocupant
+  // tota la pàgina
+  ui.querySelector(".player-full-button").onclick = async () => {
+    const on = !container.classList.contains("player-fullpage");
+    container.classList.toggle("player-fullpage", on);
+    try {
+      if (on && !document.fullscreenElement) { await container.requestFullscreen?.(); await window.screen.orientation?.lock?.("landscape"); }
+      else if (!on && document.fullscreenElement) await document.exitFullscreen();
+    } catch { /* el navegador no ho permet: es queda a tota la pàgina */ }
+  };
+  const onFullscreen = () => { if (!document.fullscreenElement) container.classList.remove("player-fullpage"); };
+  document.addEventListener("fullscreenchange", onFullscreen);
   menu.querySelector("[data-act=close]").onclick = closeMenu;
   // Qualsevol clic al joc torna a provar la música si el navegador l'havia aturat
   container.addEventListener("pointerdown", () => audio.unlock());
@@ -1089,6 +1114,7 @@ export function createPlayer(container, adventure, {
       destroyed = true;
       cancelAnimationFrame(frame);
       ro.disconnect();
+      document.removeEventListener("fullscreenchange", onFullscreen);
       clearSpeech();
       audio.stop();
       window.removeEventListener("keydown", onKey);

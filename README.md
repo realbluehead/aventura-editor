@@ -41,6 +41,9 @@ npm start
 ## Jocs fets amb el skill, publicats
 
 - **Harry Potter i el Barret Desaparegut** (aventura no oficial, inspirada en els llibres de J. K. Rowling): https://realbluehead.github.io/aventura-editor/jocs/barret-perdut/ — 20 escenaris amb els decorats dibuixats en perspectiva per codi. Codi a `aventures/barret-perdut/`.
+- **Dràcula** (a partir de la novel·la de Bram Stoker, 1897): https://realbluehead.github.io/aventura-editor/jocs/dracula/ — 50 escenaris foscos, de Transilvània a Londres i tornada, amb els decorats dibuixats en perspectiva per codi. Codi a `aventures/dracula/`.
+
+Al mòbil de costat (o a qualsevol pantalla baixa), el joc ocupa tota l'alçada i els verbs i l'inventari hi queden a sobre, translúcids; el botó ⛶ el posa a pantalla completa.
 
 Els jocs de `tools/web/jocs.json` es publiquen a `docs/jocs/<nom>/`; `node tools/web/jocs.mjs <nom> --push` n'actualitza un i el puja.
 

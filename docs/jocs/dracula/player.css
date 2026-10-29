@@ -1,0 +1,157 @@
+/* Estils del reproductor. Van a part de l'editor perquè el joc exportat només porta aquest fitxer:
+   no depèn de cap variable ni estil de l'editor, i té els seus colors propis (fosc, pixel art). */
+
+.play-stage {
+  flex: 1; min-height: 0; overflow: hidden; background: #000;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; padding: 12px;
+}
+.player-screen { position: relative; flex-shrink: 0; overflow: hidden; }
+.player-screen canvas { display: block; cursor: crosshair; touch-action: none; }
+.player-overlay { position: absolute; inset: 0; pointer-events: none; }
+.player-fade { position: absolute; inset: 0; background: #000; opacity: 0; transition: opacity .25s; pointer-events: none; }
+.player-screen [hidden], .player-ui [hidden] { display: none !important; }
+
+/* Botons del joc (títol, final, menú de partides) */
+.player-screen button {
+  font: 10px/1.6 "Press Start 2P", monospace; padding: 8px 12px; cursor: pointer;
+  color: #fff; background: #1f1c30; border: 1px solid #3fa9c9; border-radius: 4px;
+}
+.player-screen button:hover { background: #2a2640; }
+.player-screen button:disabled { opacity: .45; cursor: default; }
+.player-screen button:focus-visible, .player-ui button:focus-visible { outline: 2px solid #f5b942; outline-offset: 2px; }
+
+/* Les frases dels personatges, a l'estil clàssic: text de color amb contorn negre damunt del cap */
+.speech {
+  position: absolute; max-width: 70%; transform: translateY(-100%);
+  font: 12px/1.6 "Press Start 2P", monospace; color: #fff; text-align: center; white-space: pre-wrap;
+  text-shadow: -2px 0 #000, 2px 0 #000, 0 -2px #000, 0 2px #000, 2px 2px #000, -2px -2px #000, 2px -2px #000, -2px 2px #000;
+}
+
+/* Barra de verbs i inventari a sota de la pantalla, a l'estil de Monkey Island 2 */
+.player-ui { position: relative; display: flex; flex-direction: column; gap: 8px; flex-shrink: 0; max-width: 100%; }
+.player-sentence {
+  min-height: 20px; flex-shrink: 0;
+  font: 12px/1.6 "Press Start 2P", monospace; color: #f5b942; text-align: center;
+}
+.player-sentence.active { color: #fff; }
+.player-panel { display: grid; grid-template-columns: auto 1fr; gap: 16px; align-items: start; }
+.player-verbs { display: grid; grid-template-columns: repeat(3, auto); gap: 2px 14px; }
+.player-verbs button, .player-options button {
+  background: none; border: 0; padding: 4px 2px; text-align: left; border-radius: 4px; cursor: pointer;
+  font: 10px/1.6 "Press Start 2P", monospace; color: #3fa9c9;
+}
+.player-verbs button:hover { color: #9be7ff; }
+.player-verbs button[aria-pressed=true] { color: #fff; background: rgb(255 255 255 / .08); }
+.player-inventory {
+  min-height: 64px; max-height: 120px; overflow-y: auto; border: 1px dashed #2a2640; border-radius: 6px;
+  display: flex; flex-wrap: wrap; gap: 4px; padding: 4px; align-content: flex-start;
+}
+.inv-empty { margin: auto; font: 9px/1.6 "Press Start 2P", monospace; color: #4a4566; }
+.inv-item {
+  width: 52px; height: 52px; padding: 4px; display: grid; place-items: center; cursor: pointer;
+  background: #14121f; border: 1px solid #2a2640; border-radius: 6px;
+  font: 8px/1.3 "Press Start 2P", monospace; color: #3fa9c9; overflow: hidden;
+}
+.inv-item:hover { border-color: #3fa9c9; }
+.inv-item.selected { border-color: #fff; background: #2a2640; }
+.inv-item img { width: 100%; height: 100%; object-fit: contain; image-rendering: pixelated; }
+
+/* Opcions del diàleg: ocupen el lloc dels verbs i de l'inventari */
+.player-options { display: flex; flex-direction: column; gap: 2px; grid-column: 1 / -1; min-height: 64px; }
+.player-options button:hover, .player-options button:focus-visible { color: #fff; background: rgb(255 255 255 / .06); }
+
+/* Durant una seqüència no es veuen ni els verbs ni l'inventari (però ocupen el mateix lloc, perquè la pantalla no salti) */
+.player-ui.cutscene .player-verbs, .player-ui.cutscene .player-inventory,
+.player-ui.cutscene .player-sentence, .player-ui.cutscene .player-corner { visibility: hidden; }
+
+/* Transicions */
+.player-iris {
+  position: absolute; border-radius: 50%; pointer-events: none; box-shadow: 0 0 0 200vmax #000;
+  transition: width .45s ease-in-out, height .45s ease-in-out, left .45s ease-in-out, top .45s ease-in-out;
+}
+
+/* Pantalla de títol */
+.player-title {
+  position: absolute; inset: 0; display: flex; align-items: flex-end; justify-content: center;
+  background: #000 center / cover no-repeat; image-rendering: pixelated;
+}
+.player-title-text {
+  display: flex; flex-direction: column; align-items: center; gap: 10px; padding: 18px; text-align: center; width: 100%;
+  background: linear-gradient(transparent, rgb(0 0 0 / .85));
+}
+.player-title-text strong { font: 16px/1.5 "Press Start 2P", monospace; color: #f5b942; text-shadow: 2px 2px #000; }
+.player-title-text span { font: 10px/1.6 "Press Start 2P", monospace; color: #fff; text-shadow: 2px 2px #000; }
+.player-title-text button { font-size: 11px; padding: 10px 16px; }
+.player-title-buttons { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; }
+
+/* Pantalla final */
+.player-end {
+  position: absolute; inset: 0; background: rgb(0 0 0 / .85);
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 24px; padding: 16px; text-align: center;
+}
+.player-end p { margin: 0; font: 16px/1.6 "Press Start 2P", monospace; color: #f5b942; white-space: pre-wrap; }
+.player-end .credits { font: 10px/1.8 "Press Start 2P", monospace; color: #cfc9ef; white-space: pre-wrap; max-width: 90%; }
+.player-end .credits:empty { display: none; }
+
+/* Partides desades, pantalla completa i amagar els verbs (a la cantonada) */
+.player-corner { position: absolute; right: 0; top: -2px; display: flex; gap: 4px; z-index: 1; }
+.player-corner button {
+  padding: 3px 8px; background: none; border: 1px solid #2a2640; border-radius: 0; cursor: pointer;
+  font: 9px/1.6 "Press Start 2P", monospace; color: #3fa9c9;
+}
+.player-corner button:hover { color: #fff; border-color: #3fa9c9; }
+.player-corner .player-hide-button { display: none; }
+.player-corner .player-hide-button, .player-corner .player-full-button { font: 13px/1 system-ui, sans-serif; }
+.player-menu {
+  position: absolute; inset: 0; background: rgb(0 0 0 / .88); padding: 16px;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px;
+  font: 10px/1.6 "Press Start 2P", monospace; color: #fff;
+}
+.player-menu h3 { margin: 0; font: inherit; font-size: 14px; color: #f5b942; }
+.player-menu ol { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 6px; width: min(560px, 100%); }
+.player-menu li { display: flex; gap: 8px; align-items: center; }
+.player-menu li span { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.player-menu li::before { content: counter(list-item) "."; color: #9d97c0; width: 2ch; }
+.player-menu button { font-size: 9px; padding: 5px 8px; }
+.player-menu-msg { margin: 0; min-height: 1.6em; color: #f5b942; text-align: center; }
+
+@media (max-width: 560px) {
+  .player-panel { grid-template-columns: 1fr; }
+  .player-inventory { min-height: 40px; }
+}
+
+
+/* Mode compact (mòbil de costat, finestres baixes): l'escenari ocupa tota l'alçada i els verbs, l'inventari i la
+   frase hi queden a sobre, translúcids: els verbs a l'esquerra, l'inventari a la dreta i la frase a dalt */
+.play-stage.compact { position: relative; padding: 0; gap: 0; }
+.compact .player-ui { position: absolute; inset: 0; display: block; pointer-events: none; }
+.compact .player-ui > *, .compact .player-panel > * { pointer-events: auto; }
+.compact .player-panel { display: contents; }
+.compact .player-corner { top: 6px; right: 6px; }
+.compact .player-corner button { background: rgb(0 0 0 / .45); border-color: rgb(63 169 201 / .5); padding: 6px 8px; }
+.compact .player-corner .player-hide-button { display: block; }
+.compact .player-sentence {
+  position: absolute; top: 8px; left: 50%; transform: translateX(-50%); max-width: 60%; pointer-events: none;
+  font-size: 9px; text-shadow: -1px 0 #000, 1px 0 #000, 0 -1px #000, 0 1px #000, 2px 2px #000;
+}
+.compact .player-verbs {
+  position: absolute; left: 6px; top: 50%; transform: translateY(-50%); grid-template-columns: 1fr; gap: 0;
+  background: rgb(0 0 0 / .45); border-radius: 8px; padding: 4px 6px;
+}
+.compact .player-verbs button { font-size: 9px; padding: 6px 4px; text-shadow: 1px 1px #000; }
+.compact .player-inventory {
+  position: absolute; right: 6px; top: 44px; bottom: 6px; width: 60px; min-height: 0; max-height: none;
+  flex-direction: column; flex-wrap: nowrap; border: 0; background: rgb(0 0 0 / .45); border-radius: 8px;
+}
+.compact .player-inventory:has(.inv-empty) { bottom: auto; }
+.compact .inv-empty { font-size: 7px; text-align: center; }
+.compact .inv-item { width: 50px; height: 50px; flex-shrink: 0; background: rgb(20 18 31 / .55); }
+.compact .player-options {
+  position: absolute; left: 50%; bottom: 8px; transform: translateX(-50%); width: min(92%, 640px); min-height: 0;
+  background: rgb(0 0 0 / .75); border-radius: 8px; padding: 6px 8px;
+}
+.compact .player-options button { font-size: 9px; padding: 6px 4px; }
+.compact.ui-hidden .player-verbs, .compact.ui-hidden .player-inventory { display: none; }
+
+/* Pantalla completa: si el navegador no ho permet (iPhone), el joc ocupa tota la pàgina */
+.play-stage.player-fullpage { position: fixed; inset: 0; z-index: 1000; width: auto; height: 100dvh; background: #000; }

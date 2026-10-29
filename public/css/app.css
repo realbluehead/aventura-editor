@@ -35,7 +35,7 @@ body {
   font: var(--font);
 }
 /* Els editors a pantalla completa ocupen tota la finestra, sense desplaçament de pàgina */
-body.fullscreen { height: 100vh; overflow: hidden; }
+body.fullscreen { height: 100vh; height: 100dvh; overflow: hidden; }
 /* La barra de títol de la «finestra» */
 header.top {
   display: flex; align-items: center; justify-content: space-between; gap: 16px;

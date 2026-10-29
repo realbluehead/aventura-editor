@@ -31,7 +31,7 @@ function gameHtml(adventure) {
 <link rel="stylesheet" href="player.css">
 <style>
   * { box-sizing: border-box; }
-  body { margin: 0; height: 100vh; overflow: hidden; display: flex; flex-direction: column; background: #000; }
+  body { margin: 0; height: 100vh; height: 100dvh; overflow: hidden; display: flex; flex-direction: column; background: #000; }
 </style>
 </head>
 <body>
