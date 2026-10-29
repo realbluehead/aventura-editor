@@ -32,6 +32,9 @@ d'aquí suposen que ets a l'arrel del repositori i que `S=skills/aventura-grafic
 Dos exemples fets amb les mateixes peces; mira'ls quan dubtis de com es fa alguna cosa:
 - `aventures/illa-del-tresor/` — fet amb aquest skill a partir d'un llibre: fons de pintures de Commons pixelades,
   6 personatges, 5 diàlegs, `diseny.md` i `build.mjs`. El més semblant al que hauràs de fer.
+- `aventures/dracula/` — 50 escenaris en quatre actes, amb un **tractament d'estil propi** (`estil.mjs`: una sola
+  paleta i un mapa de gradient perquè pintures i fotos molt diferents semblin del mateix joc) i un build repartit en
+  actes. Mira'l per a aventures grans o quan l'usuari demani una estètica concreta.
 - `tools/barcelona/build.mjs` — «La rosa de Sant Jordi», 10 escenaris amb els fons dibuixats a mà amb el llenç.
 
 Necessites Node 18 o més nou i, per llegir JPG/WebP, `ffmpeg` (o `sips`, a macOS). Comprova-ho amb `ffmpeg -version`.

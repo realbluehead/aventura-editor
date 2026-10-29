@@ -333,7 +333,11 @@ export function analyze(adventure) {
   for (const id of blocking) issue("warn", `Hi ha coses que necessiten tenir «${cat.object(id).name}», però no es pot aconseguir mai.`, { objects: true });
 
   // Variables: les que es miren però no canvien mai, les que canvien però no mira ningú, i les que no surten enlloc
-  const allConditions = [...a.rules.flatMap((r) => r.conditions), ...a.dialogues.flatMap((d) => d.nodes.flatMap((n) => n.options.flatMap((o) => o.conditions)))];
+  const allConditions = [
+    ...a.rules.flatMap((r) => r.conditions),
+    ...a.dialogues.flatMap((d) => d.nodes.flatMap((n) => n.options.flatMap((o) => o.conditions))),
+    ...a.scenes.flatMap((s) => s.hotspots.flatMap((h) => h.exit?.conditions ?? [])),
+  ];
   for (const v of a.variables) {
     const read = allConditions.some((c) => c?.type === "var" && c.varId === v.id);
     // El valor inicial (el pas «start») no compta com a canvi

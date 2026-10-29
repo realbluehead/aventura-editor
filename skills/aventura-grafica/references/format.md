@@ -14,7 +14,8 @@ Tot es declara en un `build.mjs` amb el kit (`scripts/kit.mjs`). El kit omple el
 7. Diàlegs
 8. Seqüències (cutscenes)
 9. Variables, sons i `P.write`
-10. Com raona el reproductor (coses que costen d'endevinar)
+10. Patrons per a aventures llargues
+11. Com raona el reproductor (coses que costen d'endevinar)
 
 ## 1. Coordenades i mides
 
@@ -170,9 +171,28 @@ Mentre dura una seqüència el jugador no pot fer res (un clic salta la frase; E
   `SFX.coin()`, `SFX.click()`, `SFX.water()`, `SFX.horn()`, `SFX.success()` són efectes fets.
 - `await P.write("joc.zip", { startSceneId, playerId, introCutsceneId, titleScreen: { image: canvas, subtitle, music }, credits })`
   escriu el zip, el valida i diu si es pot acabar. Els crèdits de les imatges de Commons (`P.attribute`) s'hi
-  afegeixen sols. Màxim 3000 caràcters de crèdits.
+  afegeixen sols; si no hi caben (el joc en deixa 3000 caràcters), el kit els resumeix a autor i llicència.
+  Desa també la llista completa en un fitxer (`P.credits` té una línia per imatge).
 
-## 10. Com raona el reproductor
+## 10. Patrons per a aventures llargues
+
+- **Un personatge a molts escenaris** (la Mina, Van Helsing...): una entrada per escenari amb el mateix nom i aspecte
+  i ids diferents (`c-mina-budapest`, `c-mina-asil`), cadascuna amb el seu diàleg. Un personatge només pot estar
+  col·locat en un escenari, i no es pot amagar.
+- **Algú que apareix i desapareix** (el comte que se'n va, un fantasma, una víctima): fes-lo **objecte** amb dos
+  estats, un amb la figura i un sense imatge (`null`). La figura es treu del full de sprites (un fotograma).
+  «Parla amb» l'objecte → `rule("talk", obj(...), …, [talkTo("d-…")])`.
+- **Veus fora d'escena**: un personatge que no es col·loca enlloc i que fas servir com a `by` de les frases. Surten a
+  dalt de la pantalla, amb el seu color.
+- **Opcions que depenen d'una altra conversa**: `said(diàleg, opció)` és més segur que `hasItem(objecte)` si l'objecte
+  es pot perdre abans (per exemple, si es dona). Si no, el jugador es pot quedar encallat.
+- **Un centre de distribució** (una plaça, una estació) amb sortides a la resta, cadascuna amb `conditions` i
+  `blocked`, ordena els actes sense fer cap escenari fix.
+- **Final amb epíleg**: la seqüència final pot fer `goto(escenari, [x, y])` i continuar amb frases i `end()`.
+- **Molts fons**: fes fulls de contacte (4 fons per imatge, amb una graella de coordenades) per triar i col·locar-ho
+  tot sense haver de mirar 50 imatges grans una a una. `aventures/dracula/eines/` en té un exemple.
+
+## 11. Com raona el reproductor
 
 - L'anàlisi («es pot acabar?») suposa que el jugador pot anar a tots els escenaris on porten sortides que es poden
   obrir, agafar el que és `pickable`, triar opcions de diàleg i fer qualsevol regla les condicions de la qual es

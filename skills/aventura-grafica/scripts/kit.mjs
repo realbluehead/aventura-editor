@@ -299,13 +299,18 @@ export class Project {
   attribute(imagePath) {
     const meta = JSON.parse(readFileSync(`${imagePath}.json`, "utf8"));
     const line = `«${meta.title}», de ${meta.author} (${meta.license}${meta.licenseUrl ? `, ${meta.licenseUrl}` : ""}), ${meta.page}`;
-    if (!this.credits.includes(line)) this.credits.push(line);
+    if (!this.credits.includes(line)) { this.credits.push(line); this.creditMeta = [...(this.creditMeta ?? []), meta]; }
     return meta;
   }
 
   // Escriu el zip, el valida amb el mateix codi del servidor i n'analitza si es pot acabar. Torna l'informe.
   async write(out, { startSceneId, playerId, introCutsceneId = null, titleScreen = null, credits = "", verbs = DEFAULT_VERBS, cursor = "cross", strict = true } = {}) {
-    const imageCredits = this.credits.length ? `\n\nImatges (adaptades a pixel art):\n${this.credits.join("\n")}` : "";
+    let imageCredits = this.credits.length ? `\n\nImatges (adaptades a pixel art):\n${this.credits.join("\n")}` : "";
+    // Si no hi caben senceres (el joc en deixa 3000 caràcters), s'escriuen curtes: autor i llicència
+    if ((credits + imageCredits).length > 3000) {
+      const short = this.creditMeta.map((m) => `${m.author.replace(/\s+/g, " ").slice(0, 32)} (${m.license})`);
+      imageCredits = `\n\nImatges de Wikimedia Commons, adaptades a pixel art: ${short.join(" · ")}.`;
+    }
     const adventure = {
       title: this.title, description: this.description, formatVersion: 10,
       createdAt: this.now, updatedAt: this.now,

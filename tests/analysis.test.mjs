@@ -141,3 +141,12 @@ test("una sortida tancada amb condicions només s'obre quan es compleixen", () =
   a.scenes[0].hotspots[0].exit.conditions = [{ type: "state", objectId: "barril", stateId: "tancat" }];   // sempre ho és al principi
   assert.equal(analyze(a).canFinish, true);
 });
+
+test("una variable que només mira una sortida amb condicions no surt com a «cap condició no la mira»", () => {
+  const a = base();
+  a.variables = [{ id: "v", name: "porta_oberta", type: "bool", initial: false }];
+  a.rules.push({ id: "r-v", verb: "push", target: { kind: "hotspot", id: "h2" }, with: null, conditions: [], actions: [{ type: "setVar", varId: "v", op: "set", value: true }] });
+  a.scenes[1].hotspots[0].exit.conditions = [{ type: "var", varId: "v", op: "==", value: true }];
+  const r = analyze(a);
+  assert.ok(!texts(r).some((t) => t.includes("porta_oberta")), texts(r).join("\n"));
+});
