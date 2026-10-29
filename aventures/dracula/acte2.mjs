@@ -44,10 +44,11 @@ export default function acte2({ P, K, E, O, pj, escena, aparicio }) {
     onEnter: { cutsceneId: "cs-whitby", once: true },
     draw(c) {
       // Un moll de fusta a la part de baix, per on es camina
+      // En blocs de 2×2, com la resta del fons
       c.rect(0, 176, 320, 24, C.fustaFosca);
-      for (let y = 179; y < 200; y += 5) c.rect(0, y, 320, 1, C.negre);
-      for (let x = 6; x < 320; x += 37) { c.rect(x, 168, 5, 10, C.fusta); c.rect(x, 168, 5, 1, C.palla); }
-      c.rect(0, 176, 320, 1, C.fusta);
+      for (let y = 180; y < 200; y += 6) c.rect(0, y, 320, 2, C.negre);
+      for (let x = 6; x < 320; x += 38) { c.rect(x, 166, 6, 10, C.fusta); c.rect(x, 166, 6, 2, C.palla); }
+      c.rect(0, 176, 320, 2, C.fusta);
     },
     hotspots: [
       exit("ex-wp-demeter", "Pujar al Demeter", rect(45, 60, 60, 100), "s-demeter", [60, 190], {

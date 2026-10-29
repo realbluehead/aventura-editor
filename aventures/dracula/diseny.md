@@ -8,6 +8,9 @@ Protagonista: **Jonathan Harker**. Objectiu final: destruir el comte Dràcula ab
 - Totes les imatges (pintures i fotos de Commons) passen pel mateix tractament (`estil.mjs`): mapa de gradient de
   lluminositat cap a una rampa nocturna (negre blavós → morat → gris lunar → os), els vermells intensos es conserven
   com a sang, vinyeta fosca, i quantització a la paleta comuna **«Nosferatu»** amb tramat ordenat suau.
+- Perquè semblin pixel art de debò i no fotos amb pocs colors: un filtre de Kuwahara aplana les textures en taques,
+  el fons es fa a 160×100 i s'amplia ×2 (els píxels fan la mida dels dels personatges), cada escena es queda amb
+  14 colors de la paleta, es netegen els píxels solts i les vores fortes es marquen en negre.
 - Els personatges es pinten amb colors de la mateixa paleta (apagats, freds), perquè no desentonin.
 - Les aparicions que han de desaparèixer (el comte, les germanes, la Lucy) són **objectes** amb estats; els personatges
   que surten a diversos escenaris tenen una entrada per escenari (mateix aspecte i nom, id diferent).

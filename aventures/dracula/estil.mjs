@@ -25,7 +25,7 @@ const smooth = (a, b, x) => { const t = Math.max(0, Math.min(1, (x - a) / (b - a
 
 // El tractament: lluminositat → rampa nocturna (amb una mica del color original), sang, vinyeta i paleta
 //   keep: quant color original es conserva (0–1); dark: enfosquiment dels tons mitjans; vignette: força de la vinyeta
-export function grade(img, { keep = 0.1, dark = 1.1, vignette = 0.6, light = 0, dither = 0.45, blood = true } = {}) {
+export function grade(img, { keep = 0.1, dark = 1.1, vignette = 0.6, light = 0, dither = 0.45, ditherKind = "bayer4", blood = true } = {}) {
   const { width: w, height: h } = img, d = new Uint8ClampedArray(img.data);
   const lum = (i) => (0.299 * d[i] + 0.587 * d[i + 1] + 0.114 * d[i + 2]) / 255;
   // Exposició automàtica: el 3% més fosc va a negre i el 2% més clar a blanc, perquè totes les imatges tinguin el mateix rang
@@ -52,14 +52,95 @@ export function grade(img, { keep = 0.1, dark = 1.1, vignette = 0.6, light = 0, 
     d[i] = out[0]; d[i + 1] = out[1]; d[i + 2] = out[2];
   }
   const res = { width: w, height: h, data: d };
-  ops.applyPalette(res, RGB, { dither: "bayer4", amount: dither });
+  ops.applyPalette(res, RGB, { dither: ditherKind, amount: dither });
   return res;
 }
 
 // Un fons de 320×200 a partir d'una imatge: retall i encaix, i el tractament
-export function fons(file, { crop, anchorX, anchorY, ...g } = {}) {
-  const raw = pixelArt(file, { colors: 0, dither: "none", method: "average", crop, anchorX, anchorY });
-  return K.toCanvas(grade(K.fromCanvas(raw), g));
+// Un fons de 320×200 a partir d'una imatge, fet pixel art de debò (no una foto amb pocs colors):
+//   1. es retalla i s'encaixa a 320×200;
+//   2. un filtre de Kuwahara aplana les textures fotogràfiques en taques de color, com si fos pintat;
+//   3. es redueix a 160×100: cada píxel del fons fa 2×2, la mida dels píxels dels personatges a l'escena;
+//   4. el tractament de color i la paleta, amb un tramat de 2×2 només als degradats;
+//   5. es netegen els píxels solts i es marquen en fosc les vores fortes (com el contorn d'un dibuix);
+//   6. s'amplia ×2 sense suavitzar.
+export function fons(file, { crop, anchorX, anchorY, scale = 2, smooth = 2, colors = 14, ink = 0.3, ...g } = {}) {
+  const raw = K.fromCanvas(pixelArt(file, { colors: 0, dither: "none", method: "average", crop, anchorX, anchorY }));
+  const flat = kuwahara(raw, smooth);
+  const small = ops.resample(flat, Math.round(320 / scale), Math.round(200 / scale), "dominant");
+  let img = grade(small, { dither: 0, ditherKind: "none", dark: 0.9, light: 0.05, vignette: 0.45, ...g });
+  // Pocs colors per escena (triats de la paleta): taques grans i netes, com un fons dibuixat a mà
+  const chosen = [...new Map(ops.choosePalette(img, colors).map((c) => { const p = nearestRGB(c); return [p.join(), p]; })).values()];
+  ops.applyPalette(img, chosen, { dither: "bayer2", amount: 0.12 });
+  img = modeFilter(modeFilter(img));
+  if (ink) img = inkEdges(img, ink);
+  return K.toCanvas(ops.resample(img, 320, 200, "nearest"));
+}
+
+// El color de la paleta més proper
+function nearestRGB(c) {
+  let best = RGB[0], bd = Infinity;
+  for (const p of RGB) { const d = (p[0] - c[0]) ** 2 * 2 + (p[1] - c[1]) ** 2 * 4 + (p[2] - c[2]) ** 2 * 3; if (d < bd) { bd = d; best = p; } }
+  return best.slice(0, 3);
+}
+
+const lumOf = (d, i) => (0.299 * d[i] + 0.587 * d[i + 1] + 0.114 * d[i + 2]) / 255;
+
+// Filtre de Kuwahara: cada píxel pren la mitjana del quadrant (de quatre) on el color varia menys.
+// Conserva les vores però esborra la textura: la foto queda com una pintura de taques.
+function kuwahara(img, r) {
+  if (!r) return img;
+  const { width: w, height: h, data: d } = img, out = new Uint8ClampedArray(d);
+  for (let y = 0; y < h; y++) for (let x = 0; x < w; x++) {
+    let best = Infinity, bc = null;
+    for (const [qx, qy] of [[-r, -r], [0, -r], [-r, 0], [0, 0]]) {
+      let n = 0, sr = 0, sg = 0, sb = 0, sl = 0, sl2 = 0;
+      for (let yy = y + qy; yy <= y + qy + r; yy++) for (let xx = x + qx; xx <= x + qx + r; xx++) {
+        const cx = Math.min(w - 1, Math.max(0, xx)), cy = Math.min(h - 1, Math.max(0, yy)), i = (cy * w + cx) * 4;
+        const l = lumOf(d, i);
+        sr += d[i]; sg += d[i + 1]; sb += d[i + 2]; sl += l; sl2 += l * l; n++;
+      }
+      const v = sl2 / n - (sl / n) ** 2;
+      if (v < best) { best = v; bc = [sr / n, sg / n, sb / n]; }
+    }
+    const o = (y * w + x) * 4;
+    out[o] = bc[0]; out[o + 1] = bc[1]; out[o + 2] = bc[2];
+  }
+  return { width: w, height: h, data: out };
+}
+
+// Treu els píxels solts: si un píxel no s'assembla a cap veí i la majoria són d'un mateix color, pren aquest color
+function modeFilter(img) {
+  const { width: w, height: h, data: d } = img, out = new Uint8ClampedArray(d);
+  const key = (i) => (d[i] << 16) | (d[i + 1] << 8) | d[i + 2];
+  for (let y = 1; y < h - 1; y++) for (let x = 1; x < w - 1; x++) {
+    const i = (y * w + x) * 4, me = key(i), counts = new Map();
+    let same = 0;
+    for (const [dx, dy] of [[-1, 0], [1, 0], [0, -1], [0, 1], [-1, -1], [1, -1], [-1, 1], [1, 1]]) {
+      const k = key(((y + dy) * w + x + dx) * 4);
+      if (k === me) same++;
+      counts.set(k, (counts.get(k) ?? 0) + 1);
+    }
+    if (same > 0) continue;
+    const [top, n] = [...counts].sort((a, b) => b[1] - a[1])[0];
+    if (n >= 5) { out[i] = (top >> 16) & 255; out[i + 1] = (top >> 8) & 255; out[i + 2] = top & 255; }
+  }
+  return { width: w, height: h, data: out };
+}
+
+// Les vores amb molt de contrast es marquen amb el negre de la paleta, al costat fosc: queden com traços de dibuix
+function inkEdges(img, threshold) {
+  const { width: w, height: h, data: d } = img, out = new Uint8ClampedArray(d), INK = RGB[1];
+  for (let y = 0; y < h - 1; y++) for (let x = 0; x < w - 1; x++) {
+    const i = (y * w + x) * 4, l = lumOf(d, i);
+    for (const j of [i + 4, i + w * 4]) {
+      const lj = lumOf(d, j);
+      if (Math.abs(l - lj) < threshold) continue;
+      const dark = l < lj ? i : j;
+      out[dark] = INK[0]; out[dark + 1] = INK[1]; out[dark + 2] = INK[2];
+    }
+  }
+  return { width: w, height: h, data: out };
 }
 
 /* ---------- Personatges ---------- */

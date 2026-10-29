@@ -9,7 +9,7 @@ const scenes = only.length ? a.scenes.filter((s) => only.includes(s.id)) : a.sce
 for (let i = 0; i < scenes.length; i += 4) {
   const sheet = new K.Canvas(1290, 820, "#000000");
   scenes.slice(i, i + 4).forEach((s, k) => {
-    const img = K.toCanvas(K.decodePng(readFileSync(`preview/${slug(s.name)}.zones.png`)));
+    const img = K.toCanvas(K.decodePng(readFileSync(`preview/${slug(s.name)}${process.env.PLAIN ? "" : ".zones"}.png`)));
     const ox = (k % 2) * 650, oy = Math.floor(k / 2) * 412;
     sheet.draw(img, ox, oy + 10);
     sheet.text(ox, oy + 2, `${s.id}`.toUpperCase(), "#ffff66");
