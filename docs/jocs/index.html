@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="ca">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Aventures gràfiques</title>
+<meta name="description" content="Aventures gràfiques fetes amb l'editor d'aventures, per jugar-hi des del navegador.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root { --bg: #0b0a12; --card: #15131f; --line: #2a2640; --text: #e4e0f2; --dim: #9d97c0; --accent: #3fa9c9; --gold: #f5b942; }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--text); font: 15px/1.55 Inter, system-ui, sans-serif; }
+  header, main, footer { max-width: 1080px; margin: 0 auto; padding: 0 16px; }
+  header { padding-top: 40px; padding-bottom: 8px; }
+  h1 { margin: 0 0 10px; font: 22px/1.4 "Press Start 2P", monospace; color: var(--gold); text-shadow: 3px 3px #000; }
+  header p { margin: 0; color: var(--dim); max-width: 60ch; }
+  main { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 320px), 1fr)); gap: 20px; padding-top: 24px; padding-bottom: 40px; }
+  .game { display: flex; flex-direction: column; background: var(--card); border: 1px solid var(--line); border-radius: 10px; overflow: hidden; }
+  .shot { display: block; aspect-ratio: 4 / 3; background: #000; }
+  .shot img { width: 100%; height: 100%; object-fit: cover; image-rendering: pixelated; display: block; }
+  .info { display: flex; flex-direction: column; gap: 8px; padding: 16px; flex: 1; }
+  h2 { margin: 0; font: 13px/1.6 "Press Start 2P", monospace; }
+  h2 a { color: var(--text); text-decoration: none; }
+  .info p { margin: 0; }
+  .sub { color: var(--gold); font-weight: 500; }
+  .meta { color: var(--dim); font-size: 13px; }
+  .play { margin-top: auto; align-self: flex-start; padding: 10px 16px; border: 1px solid var(--accent); border-radius: 6px; color: #fff; background: #1f1c30;
+    text-decoration: none; font: 10px/1.6 "Press Start 2P", monospace; }
+  .play:hover, .play:focus-visible { background: #2a2640; outline: none; border-color: var(--gold); }
+  a:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+  footer { padding-bottom: 40px; color: var(--dim); font-size: 13px; }
+  footer a { color: var(--accent); }
+</style>
+</head>
+<body>
+<header>
+  <h1>Aventures gràfiques</h1>
+  <p>Jocs a l'estil de Monkey Island fets amb l'editor d'aventures. Es juguen al navegador, també al mòbil (millor de costat).</p>
+</header>
+<main>
+    <article class="game">
+      <a class="shot" href="barret-perdut/"><img src="barret-perdut/files/titol.png" alt="" loading="lazy"></a>
+      <div class="info">
+        <h2><a href="barret-perdut/">Harry Potter i el Barret Desaparegut</a></h2>
+        <p class="sub">Una aventura de Halloween a Hogwarts</p>
+        <p>La nit de Halloween algú ha robat el Barret Seleccionador i ha deixat Dumbledore adormit amb un encanteri. En Harry té fins a l&#39;alba per trobar el barret i despertar el director.</p>
+        <p class="meta">20 escenaris · 21 personatges</p>
+        <a class="play" href="barret-perdut/">▶ Juga</a>
+      </div>
+    </article>
+    <article class="game">
+      <a class="shot" href="dracula/"><img src="dracula/files/titol.png" alt="" loading="lazy"></a>
+      <div class="info">
+        <h2><a href="dracula/">Dràcula</a></h2>
+        <p class="sub">Una aventura gràfica a partir de la novel·la de Bram Stoker</p>
+        <p>Una aventura gràfica fosca a partir de la novel·la de Bram Stoker. En Jonathan Harker viatja a Transilvània per vendre una casa a un comte que no surt als miralls... i haurà de perseguir-lo fins a Londres i tornar.</p>
+        <p class="meta">50 escenaris · 40 personatges</p>
+        <a class="play" href="dracula/">▶ Juga</a>
+      </div>
+    </article>
+    <article class="game">
+      <a class="shot" href="../joc/"><img src="../joc/files/titol.png" alt="" loading="lazy"></a>
+      <div class="info">
+        <h2><a href="../joc/">La rosa de Sant Jordi</a></h2>
+        <p class="sub">Una aventura per Barcelona</p>
+        <p>Una aventura gràfica per Barcelona. En Jordi ha de trobar una rosa i un llibre per a la Laia abans d&#39;arribar al Park Güell. Deu escenaris, de la Plaça de Catalunya a Montjuïc.</p>
+        <p class="meta">10 escenaris · 10 personatges</p>
+        <a class="play" href="../joc/">▶ Juga</a>
+      </div>
+    </article>
+</main>
+<footer><a href="../">Obre l'editor d'aventures</a> per fer-ne una de teva.</footer>
+</body>
+</html>

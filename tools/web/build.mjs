@@ -5,7 +5,8 @@
 //   - sw.js: el service worker (public/js/backend/sw.js empaquetat), que guarda les aventures a IndexedDB;
 //   - player.js: el reproductor empaquetat, que el service worker fa servir per exportar jocs;
 //   - exemples/la-rosa-de-sant-jordi.zip: l'aventura d'exemple, que es carrega sola la primera vegada;
-//   - joc/: «La rosa de Sant Jordi» exportada, per jugar-hi directament.
+//   - joc/: «La rosa de Sant Jordi» exportada, per jugar-hi directament;
+//   - jocs/: els jocs publicats (tools/web/jocs.json) i jocs/index.html, l'índex de tots.
 import { cp, mkdir, readFile, rm, writeFile } from "node:fs/promises";
 import { execFileSync } from "node:child_process";
 import { dirname, join } from "node:path";
@@ -42,6 +43,7 @@ for (const f of await exportFiles(PUBLIC, adventure, files)) {
   await writeFile(path, f.data);
 }
 // Els jocs fets amb el skill que es publiquen (tools/web/jocs.json), a jocs/<nom>/
-const { PUBLICATS, publishGame } = await import("./jocs.mjs");
+const { PUBLICATS, publishGame, writeIndex } = await import("./jocs.mjs");
 for (const { nom } of PUBLICATS) await publishGame(nom, OUT);
+await writeIndex(OUT);
 console.log(`Versió web a ${OUT}`);
