@@ -108,6 +108,7 @@ export function createPlayer(container, adventure, {
   let pending = null;         // acció en curs mentre el personatge hi camina: { verb, target, with }
   let busy = true;            // durant les transicions no s'accepten clics
   let scripting = false;      // mentre s'executen les accions d'una regla, un clic només salta la frase
+  let quietUntil = 0;         // just després d'una regla o conversa, els clics no fan res (vegeu script())
   let scriptDepth = 0;        // les regles i seqüències es poden encadenar (una seqüència que va a un escenari amb una altra…)
   let cutsceneDepth = 0;      // dins d'una seqüència no es veuen els verbs
   let skipping = false;       // Esc salta la seqüència: les frases, esperes i passeigs es fan a l'instant
@@ -427,7 +428,7 @@ export function createPlayer(container, adventure, {
         b.setAttribute("aria-keyshortcuts", keys.map((k) => k.toUpperCase()).join(" "));
       }
       b.onclick = () => {
-        if (busy || scripting) return;
+        if (busy || scripting || performance.now() < quietUntil) return;
         pickVerb(v);
       };
       verbBox.append(b);
@@ -584,7 +585,9 @@ export function createPlayer(container, adventure, {
         const options = availableOptions(d, node, game);
         if (!options.length) break;
         const option = await chooseOption(options);
-        showOptions(false);
+        // les opcions marxen, però els verbs no tornen fins que s'acaba la conversa: un toc per passar la frase
+        // no ha de poder triar un verb
+        optionsBox.hidden = true;
         markSaid(game, d, option);
         onStateChange?.();
         await say(option.text, actor);
@@ -606,7 +609,13 @@ export function createPlayer(container, adventure, {
     } finally {
       scriptDepth--;
       scripting = scriptDepth > 0;
-      if (!scripting) setCursor("normal");
+      if (!scripting) {
+        setCursor("normal");
+        // Després d'una conversa o d'una acció, es torna a «Camina», i durant un moment els tocs no fan res: el toc
+        // que treu l'última frase no ha de tornar a engegar la conversa
+        quietUntil = performance.now() + 450;
+        resetVerb();
+      }
       updateSentence();
     }
   }
@@ -693,7 +702,7 @@ export function createPlayer(container, adventure, {
   // El jugador ha clicat una cosa (o el buit, amb target null) amb el verb triat
   function choose(target, point) {
     if (busy) return;
-    if (scripting) { clearSpeech(); return; }
+    if (scripting || performance.now() < quietUntil) { clearSpeech(); return; }
     clearSpeech();
     // «Fes servir» o «Dóna» amb un objecte de l'inventari: falta el segon
     if (verb?.preposition && !first && target?.kind === "object" && !target.inScene) {
