@@ -62,7 +62,7 @@
 
 /* Durant una seqüència no es veuen ni els verbs ni l'inventari (però ocupen el mateix lloc, perquè la pantalla no salti) */
 .player-ui.cutscene .player-verbs, .player-ui.cutscene .player-inventory,
-.player-ui.cutscene .player-sentence, .player-ui.cutscene .player-corner { visibility: hidden; }
+.player-ui.cutscene .player-sentence, .player-ui.cutscene .player-menu-button { visibility: hidden; }
 
 /* Transicions */
 .player-iris {
@@ -101,7 +101,7 @@
 }
 .player-corner button:hover { color: #fff; border-color: #3fa9c9; }
 .player-corner .player-hide-button { display: none; }
-.player-corner .player-hide-button, .player-corner .player-full-button { font: 13px/1 system-ui, sans-serif; }
+.player-corner .player-hide-button, .player-corner .player-full-button, .player-corner .player-sound-button { font: 13px/1 system-ui, sans-serif; }
 .player-menu {
   position: absolute; inset: 0; background: rgb(0 0 0 / .88); padding: 16px;
   display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px;

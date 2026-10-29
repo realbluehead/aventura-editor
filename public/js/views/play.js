@@ -69,6 +69,11 @@ export function renderPlay(view, adventure, { sceneId }) {
     setup: setupNow(),
     // La pantalla de títol, només quan es juga des del principi (ni des d'un escenari concret ni amb una situació de prova)
     title: !sceneId && !setupNow(),
+    // El botó «So» de la barra segueix el del joc
+    onMuteChange(muted) {
+      $("#mute").setAttribute("aria-pressed", String(muted));
+      $("#mute").textContent = muted ? "Sense so" : "So";
+    },
     onSceneChange(s) {
       $("#scene-name").textContent = s.name;
       $("#edit-scene").href = `${base}/escenari/${s.id}`;
@@ -214,13 +219,7 @@ export function renderPlay(view, adventure, { sceneId }) {
   };
   $("#debug").onclick = toggleDebug;
   $("#restart").onclick = () => player.restart(setupNow());
-  let muted = false;
-  const toggleMute = () => {
-    muted = !muted;
-    player.setMuted(muted);
-    $("#mute").setAttribute("aria-pressed", String(muted));
-    $("#mute").textContent = muted ? "Sense so" : "So";
-  };
+  const toggleMute = () => player.setMuted(!player.isMuted());
   $("#mute").onclick = toggleMute;
 
   // Les eines de prova van amb Maj, perquè les lletres soles són les dreceres dels verbs del joc

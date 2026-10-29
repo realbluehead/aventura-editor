@@ -43,9 +43,10 @@ function loadImage(url) {
 
 // opcions: imageUrl(fitxer) → url, startSceneId, onSceneChange(escenari), onStateChange() quan canvia la partida
 // (inventari, estats, variables…), setup: una situació de prova per començar (vegeu «applySetup»),
-// title: si es mostra la pantalla de títol (només quan es juga des del principi), i saves: on es desen les partides
+// title: si es mostra la pantalla de títol (només quan es juga des del principi), saves: on es desen les partides, i
+// onMuteChange(silenciat) quan s'encén o s'apaga el so (amb el botó del joc o amb setMuted)
 export function createPlayer(container, adventure, {
-  imageUrl, startSceneId, onSceneChange, onStateChange, setup = null, title = false, saves = createSaves(adventure.id),
+  imageUrl, startSceneId, onSceneChange, onStateChange, setup = null, title = false, saves = createSaves(adventure.id), onMuteChange,
 }) {
   container.innerHTML = `
     <div class="player-screen">
@@ -65,6 +66,7 @@ export function createPlayer(container, adventure, {
     <div class="player-ui">
       <div class="player-corner">
         <button type="button" class="player-hide-button" title="Amaga o mostra els verbs i l'inventari" aria-pressed="false">◐</button>
+        <button type="button" class="player-sound-button" title="Encén o apaga el so (Maj+M)" aria-pressed="false">🔊</button>
         <button type="button" class="player-full-button" title="Pantalla completa">⛶</button>
         <button type="button" class="player-menu-button">Partides</button>
       </div>
@@ -911,6 +913,17 @@ export function createPlayer(container, adventure, {
       else if (!on && document.fullscreenElement) await document.exitFullscreen();
     } catch { /* el navegador no ho permet: es queda a tota la pàgina */ }
   };
+  // Encendre i apagar el so (també des de fora, amb setMuted: el botó «So» de l'editor, Maj+M)
+  const soundButton = ui.querySelector(".player-sound-button");
+  let muted = false;
+  function setMuted(on) {
+    muted = !!on;
+    audio.setMuted(muted);
+    soundButton.textContent = muted ? "🔇" : "🔊";
+    soundButton.setAttribute("aria-pressed", String(muted));
+    onMuteChange?.(muted);
+  }
+  soundButton.onclick = () => setMuted(!muted);
   const onFullscreen = () => { if (!document.fullscreenElement) container.classList.remove("player-fullpage"); };
   document.addEventListener("fullscreenchange", onFullscreen);
   menu.querySelector("[data-act=close]").onclick = closeMenu;
@@ -1092,7 +1105,8 @@ export function createPlayer(container, adventure, {
   return {
     restart: (st) => (title && !st ? showTitle() : restart(st)),
     setDebug(on) { debug = on; },
-    setMuted: (on) => audio.setMuted(on),
+    setMuted,
+    isMuted: () => muted,
     // Per al panell de proves: llegir la partida i canviar-la en directe
     debug: {
       get game() { return game; },

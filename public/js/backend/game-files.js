@@ -12,9 +12,8 @@ const player = createPlayer(document.querySelector(".play-stage"), adventure, {
   title: true,
 });
 // Maj+M silencia el so (les lletres soles són les dreceres dels verbs)
-let muted = false;
 window.addEventListener("keydown", (e) => {
-  if (e.key.toLowerCase() === "m" && e.shiftKey && !e.metaKey && !e.ctrlKey) player.setMuted((muted = !muted));
+  if (e.key.toLowerCase() === "m" && e.shiftKey && !e.metaKey && !e.ctrlKey) player.setMuted(!player.isMuted());
 });
 `;
 
