@@ -107,6 +107,27 @@ V("v-grassa", "contrasenya_dama"); V("v-pera", "pera_pessigolles"); V("v-filch",
 V("v-snape", "snape_permet"); V("v-ingr", "ingredients", "number"); V("v-mart", "mart_vist"); V("v-sprout", "sprout_permet");
 V("v-myrtle", "myrtle_contenta"); V("v-peeves", "peeves_confessa"); V("v-dobby", "dobby_explica"); V("v-sala", "sala_oberta");
 V("v-dalt", "dalt_dels_trastos"); V("v-barret", "barret_content"); V("v-despert", "dumbledore_despert");
+// Què sap en Harry (perquè els temes dels diàlegs i les sortides s'obrin quan toca) i què ja s'ha resolt
+for (const [id, name] of [["v-sap-robatori", "sap_robatori"], ["v-sap-filch", "sap_filch_vigila"], ["v-sap-gana", "sap_ron_te_gana"], ["v-sap-cuines", "sap_entrada_cuines"],
+  ["v-sap-trevor", "sap_trevor_perdut"], ["v-sap-peeves", "sap_peeves_lladre"], ["v-sap-torre", "sap_cal_pujar_torre"], ["v-sap-baro", "sap_por_del_baro"], ["v-peeves-nega", "peeves_no_ho_diu"],
+  ["v-sap-prohibida", "sap_seccio_prohibida"], ["v-sap-paraigua", "sap_paraigua_robat"], ["v-sap-snitch", "sap_draco_vol_snitch"], ["v-sap-fems", "sap_sprout_vol_fems"],
+  ["v-neville-ok", "neville_content"], ["v-ron-ok", "ron_ha_menjat"], ["v-dobby-ok", "dobby_te_mitjo"], ["v-draco-ok", "draco_ha_canviat"], ["v-hagrid-ok", "hagrid_te_paraigua"],
+  ["v-hooch-ok", "hooch_te_xiulet"], ["v-luna-ok", "luna_te_quisquiller"], ["v-firenze-ok", "firenze_ha_donat_pel"]]) V(id, name);
+
+// Intercanvis: el mateix passa amb «Dóna» que triant l'opció del diàleg
+const SAP_PEEVES = [setVar("v-sap-peeves", true), setVar("v-sap-torre", true)];
+const TR = {
+  trevor: [lose("o-trevor"), say("TREVOR! On t'havies ficat?", "c-neville"), say("Al lavabo de la Myrtle. Fa vida social."), say("Gràcies, Harry! Té, les meves orelleres d'Herbologia. La professora Sprout diu que no es pot treballar amb mandràgores sense.", "c-neville"), take("o-orelleres"), setVar("v-neville-ok", true), sound("so-exit")],
+  pastis: [lose("o-pastis"), say("UN PASTÍS DE CARBASSA SENCER! Harry, ets el millor amic del món.", "c-ron"), say("Mmmf... Té. La bomba fètida d'en Fred i en George. Fes-la servir amb en Filch quan no miri.", "c-ron"), take("o-bomba"), setVar("v-ron-ok", true), sound("so-exit")],
+  permis: [lose("o-permis"), setVar("v-snape", true), say("(Llegeix el permís amb cara d'haver mossegat una llimona)", "c-snape"), say("Molt bé. Faci servir aquest calder. Però si fa explotar la masmorra, ho pagarà vostè, no la professora McGonagall.", "c-snape"), sound("so-exit")],
+  invitacio: [lose("o-invitacio"), setVar("v-myrtle", true), say("Una festa? Per a MI? Ningú no m'havia convidat mai a res!", "c-myrtle"), say("Endu-te el gripau, si vols. Ara tinc vida social!", "c-myrtle"), sound("so-exit")],
+  mitjo: [lose("o-mitjo"), say("Un MITJÓ! Harry Potter dona un mitjó a Dobby! Ara Dobby en té dos... i són diferents!", "c-dobby"), say("Dobby li dona el pastís de carbassa més gran de la cuina, senyor!", "c-dobby"), take("o-pastis"), setVar("v-dobby-ok", true), sound("so-exit")],
+  snitch: [lose("o-snitch"), say("(La mira embadalit) Una snitch... de veritat...", "c-draco"), say("Té, el paraigua del gegant. I no diguis a ningú que l'he tocat: encara agafaré puces.", "c-draco"), take("o-paraigua"), setVar("v-draco-ok", true), sound("so-exit")],
+  paraigua: [lose("o-paraigua"), say("El meu paraigua! (L'abraça tan fort que se sent un cric.) Està sencer! Sobretot... el que hi ha a dins.", "c-hagrid"), say("Té, la meva llanterna. Si entres al bosc, no et separis del camí. I si veus en Firenze, saluda'l de part meva.", "c-hagrid"), take("o-llanterna"), setVar("v-hagrid-ok", true), sound("so-exit")],
+  fems: [lose("o-fems"), setVar("v-sprout", true), say("Fems de drac! Fantàstic, Harry, gràcies!", "c-sprout"), say("Agafa una fulla de mandràgora, si la necessites. Però posa't orelleres, eh!", "c-sprout"), sound("so-exit")],
+  xiulet: [lose("o-xiulet"), say("El meu xiulet! FIIIIIUUUU! Ah, ara sí que em sento jo mateixa.", "c-hooch"), say("Té, Potter, agafa una escombra de l'escola. I ja que hi ets, atrapa'm aquella snitch, que se m'ha escapat i no em deixa dormir.", "c-hooch"), take("o-escombra"), setVar("v-hooch-ok", true), setVar("v-sap-snitch", true), sound("so-exit")],
+  quisquiller: [lose("o-quisquiller"), say("Oh, el número de febrer! El de les arracades de rave que espanten els nargles!", "c-luna"), say("Té, el meu flascó. Avui els plimpies no piquen; diuen que la lluna els fa tímids.", "c-luna"), take("o-flasco-buit"), setVar("v-luna-ok", true), sound("so-exit")],
+};
 
 /* ---------- Objectes de l'inventari (sense lloc a cap escenari) ---------- */
 inv("o-varita", "vareta", "La meva vareta: grèvol i ploma de fènix, onze polzades. Fa coses, si les demano bé.", "varita");
@@ -177,11 +198,11 @@ P.scene({ id: "s-comuna", name: "Sala comuna de Gryffindor", background: S.comun
 P.scene({ id: "s-escala", name: "Escala Gran", background: S.escala.bg, walkable: S.escala.walk, actorHeight: S.escala.ah, music: "so-castell",
   description: "Un replà de l'Escala Gran. Les escales es mouen quan els ve de gust.",
   hotspots: [
-    ex("ex-escala-biblio", "biblioteca", SP("escala", "biblioteca"), "s-biblioteca", PT("biblioteca", "arribada")),
+    ex("ex-escala-biblio", "biblioteca", SP("escala", "biblioteca"), "s-biblioteca", PT("biblioteca", "arribada"), { conditions: [isVar("v-sap-robatori", true)], blocked: "Ara no és hora de llegir. Primer, la McGonagall: m'espera al passadís de la gàrgola." }),
     ex("ex-escala-gargola", "passadís de la gàrgola", SP("escala", "gargola"), "s-gargola", PT("gargola", "arribada")),
-    ex("ex-escala-lavabo", "lavabos", SP("escala", "lavabo"), "s-lavabo", PT("lavabo", "arribada")),
-    ex("ex-escala-amunt", "escala amunt", SP("escala", "amunt"), "s-setena", PT("setena", "arribada")),
-    ex("ex-escala-avall", "escala avall", SP("escala", "avall"), "s-vestibul", PT("vestibul", "deEscala")),
+    ex("ex-escala-lavabo", "lavabos", SP("escala", "lavabo"), "s-lavabo", PT("lavabo", "arribada"), { conditions: [isVar("v-sap-trevor", true)], blocked: "El lavabo de les noies? Sense un bon motiu, no hi entro." }),
+    ex("ex-escala-amunt", "escala amunt", SP("escala", "amunt"), "s-setena", PT("setena", "arribada"), { conditions: [isVar("v-sap-torre", true)], blocked: "Al setè pis i a la torre? No hi tinc res a fer, de moment." }),
+    ex("ex-escala-avall", "escala avall", SP("escala", "avall"), "s-vestibul", PT("vestibul", "deEscala"), { conditions: [isVar("v-sap-robatori", true)], blocked: "Primer he d'anar a veure la McGonagall. El passadís de la gàrgola és el del mig." }),
     spot("ho-escala-escales", "escales mòbils", "Les escales es mouen. Divendres n'hi ha una que porta a un lloc diferent. Diuen.", SP("escala", "escales")),
     spot("ho-escala-q1", "retrat del cavaller", "Un mag amb barba groga que em saluda amb el barret. Darrere seu, un ase llegeix el diari.", SP("escala", "quadre1")),
     spot("ho-escala-q2", "retrat de la bruixa", "Una bruixa que fa punt amb les agulles... i les agulles fan punt amb ella.", SP("escala", "quadre2")),
@@ -195,7 +216,7 @@ P.scene({ id: "s-vestibul", name: "Vestíbul", background: S.vestibul.bg, walkab
     ex("ex-vest-porta", "porta principal", SP("vestibul", "porta"), "s-jardins", PT("jardins", "deCastell"), { conditions: [isVar("v-filch", true)], blocked: "En Filch no deixa sortir ningú. M'hauria de treure'l del davant." }),
     ex("ex-vest-saló", "Gran Saló", SP("vestibul", "gransalo"), "s-gransalo", PT("gransalo", "deVestibul")),
     ex("ex-vest-escala", "Escala Gran", SP("vestibul", "escala"), "s-escala", PT("escala", "deVestibul")),
-    ex("ex-vest-masmorres", "escala de les masmorres", SP("vestibul", "masmorres"), "s-masmorra", PT("masmorra", "arribada")),
+    ex("ex-vest-masmorres", "escala de les masmorres", SP("vestibul", "masmorres"), "s-masmorra", PT("masmorra", "arribada"), { conditions: [isVar("v-recepta", true)], blocked: "A les masmorres, de nit, amb l'Snape rondant? Només si hi tinc alguna cosa a fer." }),
     ex("ex-vest-cuines", "forat del quadre", SP("vestibul", "cuines"), "s-cuines", PT("cuines", "arribada"), { conditions: [isVar("v-pera", true)], blocked: "Només és un quadre." }),
     spot("ho-vest-rellotges", "rellotges de punts", "Els rellotges de sorra amb els punts de les cases. Gryffindor va primer! Bé, de moment. L'Snape encara no s'ha llevat.", SP("vestibul", "rellotges")),
   ],
@@ -299,7 +320,7 @@ P.scene({ id: "s-despatx", name: "Despatx de Dumbledore", background: S.despatx.
     sobj(S.despatx, "escriptori", { id: "o-escriptori", name: "escriptori", description: "L'escriptori del director. Hi ha un pot de caramels de llimona... buit. I una tassa de te amb un pòsit verdós. Algú li ha posat un Filtre de Son al te!", walkTo: PT("despatx", "deskWalk") }),
     sobj(S.despatx, "fawkes", { id: "o-fawkes", name: "Fawkes", description: "En Fawkes, el fènix de Dumbledore. Està trist: el seu amo no es desperta. Diuen que als fènixs els agrada molt la música.", states: [["quiet", "Quiet"], ["canta", "Canta"]], walkTo: PT("despatx", "fawkesWalk") }),
     sobj(S.despatx, "prestatge", { id: "o-prestatge", name: "prestatge", description: "El prestatge on sempre hi ha el Barret Seleccionador. Ara només hi ha un rodolí de pols on era.", states: [["buit", "Buit"], ["barret", "Amb el barret"]], layer: "back", walkTo: PT("despatx", "shelfWalk") }),
-    sobj(S.despatx, "pensadora", { id: "o-pensadora", name: "pensadora", description: "La pensadora de Dumbledore: una pica de pedra plena de records platejats. Hi veig un record recent: en Peeves, rient, sortint per la finestra amb un bony sota el braç.", walkTo: PT("despatx", "pensWalk") }),
+    sobj(S.despatx, "pensadora", { id: "o-pensadora", name: "pensadora", description: "La pensadora de Dumbledore: una pica de pedra plena de records platejats.", walkTo: PT("despatx", "pensWalk") }),
   ],
   characters: [npc("c-dumbledore", PT("despatx", "dumbledore"), "down")],
 });
@@ -346,9 +367,9 @@ P.scene({ id: "s-jardins", name: "Jardins de Hogwarts", background: S.jardins.bg
     ex("ex-jard-castell", "castell", SP("jardins", "castell"), "s-vestibul", PT("vestibul", "dePorta")),
     ex("ex-jard-cabana", "cabana d'en Hagrid", SP("jardins", "cabana"), "s-cabana", PT("cabana", "arribada")),
     ex("ex-jard-bosc", "Bosc Prohibit", SP("jardins", "bosc"), "s-bosc", PT("bosc", "arribada"), { conditions: [hasItem("o-llanterna")], blocked: "Entrar al Bosc Prohibit de nit, sense llum? Ni boig. Necessito una llanterna." }),
-    ex("ex-jard-quidditch", "camp de Quidditch", SP("jardins", "quidditch"), "s-quidditch", PT("quidditch", "arribada")),
-    ex("ex-jard-hiver", "hivernacles", SP("jardins", "hivernacle"), "s-hivernacle", PT("hivernacle", "arribada")),
-    ex("ex-jard-llac", "camí del llac", SP("jardins", "llac"), "s-llac", PT("llac", "arribada")),
+    ex("ex-jard-quidditch", "camp de Quidditch", SP("jardins", "quidditch"), "s-quidditch", PT("quidditch", "arribada"), { conditions: [isVar("v-sap-snitch", true)], blocked: "Ara no és hora de Quidditch, per molt que m'agradi." }),
+    ex("ex-jard-hiver", "hivernacles", SP("jardins", "hivernacle"), "s-hivernacle", PT("hivernacle", "arribada"), { conditions: [isVar("v-recepta", true)], blocked: "Ara no necessito res dels hivernacles." }),
+    ex("ex-jard-llac", "camí del llac", SP("jardins", "llac"), "s-llac", PT("llac", "arribada"), { conditions: [isVar("v-recepta", true)], blocked: "Què hi faria, al llac, de nit? Encara em menjaria el calamar gegant." }),
     spot("ho-jard-carbasses", "carbasses gegants", "Les carbasses d'en Hagrid. Són tan grosses que hi podries viure. Sospito que hi ha fet servir algun encanteri que no hauria de saber.", SP("jardins", "carbasses")),
   ],
   characters: [npc("c-draco", PT("jardins", "draco"), "left")],
@@ -440,12 +461,12 @@ R("open", obj("o-bagul"), null, [], [say("Ja està obert. Només hi queden mitjo
 R("close", obj("o-bagul"), null, [inState("o-bagul", "o-bagul-obert")], [setState("o-bagul", "o-bagul-tancat"), sound("so-clic")]);
 R("pickup", obj("o-bagul"), null, [], [say("Pesa com un hipogrif. Ja l'obriré, si cal.")]);
 R("pickup", chr("c-neville"), null, [], [say("En Neville no és un objecte. Encara que de vegades l'hagis de buscar com un.")]);
-R("give", obj("o-trevor"), chr("c-neville"), [], [lose("o-trevor"), say("TREVOR! On t'havies ficat?", "c-neville"), say("Al lavabo de la Myrtle. Fa vida social."), say("Gràcies, Harry! Té, les meves orelleres d'Herbologia. La professora Sprout diu que no es pot treballar amb mandràgores sense.", "c-neville"), take("o-orelleres"), OK()]);
+R("give", obj("o-trevor"), chr("c-neville"), [], TR.trevor);
 R("give", obj("o-bufanda"), chr("c-neville"), [], [say("Ja en tinc una, Harry. La porto lligada al turmell per no perdre'l.", "c-neville")]);
 // Sala comuna
 R("push", obj("o-escacs"), null, [], [say("Peó a e4!"), say("El peó m'ha mirat malament i no s'ha mogut. Només obeeix en Ron.")]);
 R("pickup", obj("o-escacs"), null, [], [say("Si toco els escacs d'en Ron, em mata. I les peces també.")]);
-R("give", obj("o-pastis"), chr("c-ron"), [], [lose("o-pastis"), say("UN PASTÍS DE CARBASSA SENCER! Harry, ets el millor amic del món.", "c-ron"), say("Mmmf... Té. Una bomba fètida d'en Fred i en George. En Filch hi té pànic: les odia més que en Peeves.", "c-ron"), take("o-bomba"), OK()]);
+R("give", obj("o-pastis"), chr("c-ron"), [], TR.pastis);
 R("give", obj("o-galetes"), chr("c-ron"), [], [say("(Crec!) Ai! Aquesta galeta m'ha mossegat ella a mi. Són d'en Hagrid, oi?", "c-ron"), say("Quedeu-vos-les. Les faré servir de pedres per al tirador.", "c-ron")]);
 R("give", obj("o-cromo"), chr("c-ron"), [], [lose("o-cromo"), say("Dumbledore! En tinc sis, però mai no en sobren. Gràcies!", "c-ron"), say("Sabies que li agrada molt la música? Al seu despatx, en Fawkes canta cada cop que algú hi toca una melodia. Ho diu al cromo.", "c-ron")]);
 R("give", obj("o-granota"), chr("c-ron"), [], [say("Obre-la tu, Harry. Si no surt el cromo d'Agripa em posaré a plorar.", "c-ron")]);
@@ -455,19 +476,21 @@ R("open", obj("o-grassa"), null, [isVar("v-grassa", true)], [go("s-comuna", PT("
 R("open", obj("o-grassa"), null, [], [say("No s'obre si no li dic la contrasenya. Hauria de parlar-hi.")]);
 R("push", obj("o-grassa"), null, [], [say("Ei! Una dama no s'empeny, jovenet!", "c-harry")]);
 // Vestíbul: Filch, la porta i la pera
-R("talk", obj("o-filch"), null, [inState("o-filch", "o-filch-hi")], [talkTo("d-filch")]);
 R("use", obj("o-bomba"), obj("o-filch"), [], [lose("o-bomba"), sound("so-clic"), say("Ups! Se m'ha escapat la bomba fètida..."), say("UNA BOMBA FÈTIDA! A L'ENTRADA! PEEVES! AQUEST COP T'ENXAMPO!", "c-filch"), setState("o-filch", "o-filch-fora"), setVar("v-filch", true), wait(0.5), say("En Filch ha marxat corrents cap al Gran Saló, tapant-se el nas. La porta ha quedat lliure."), setState("o-porta", "o-porta-oberta"), OK()]);
 R("give", obj("o-bomba"), obj("o-filch"), [], [say("Donar-li en mà una bomba fètida a en Filch... Millor la faig servir amb ell, sense que se n'adoni.")]);
-R("open", obj("o-porta"), null, [isVar("v-filch", false)], [say("Ni se t'acudeixi, Potter! Ningú no surt del castell aquesta nit. Ordres de la professora McGonagall.", "c-filch")]);
+R("open", obj("o-porta"), null, [isVar("v-filch", false)], [setVar("v-sap-filch", true), say("Ni se t'acudeixi, Potter! Ningú no surt del castell aquesta nit. Ordres de la professora McGonagall.", "c-filch")]);
 R("open", obj("o-porta"), null, [], [say("Ja és oberta. Els jardins m'esperen.")]);
+R("push", obj("o-pera"), null, [isVar("v-pera", false), isVar("v-sap-cuines", false)], [say("Per què hauria de grapejar un quadre de fruita? Ni que tingués gana.")]);
 R("push", obj("o-pera"), null, [isVar("v-pera", false)], [say("Li faig pessigolles a la pera amb el dit..."), say("Ji ji ji!"), setState("o-pera", "o-pera-obert"), setVar("v-pera", true), sound("so-clic"), say("La pera ha rigut i el quadre s'ha obert com una porta. Hi ha un passadís cap a les cuines!"), OK()]);
-R("pull", obj("o-pera"), null, [isVar("v-pera", false)], [say("No vull arrencar-la. Potser si li faig pessigolles... Empenyent-la amb el dit, suaument.")]);
-R("use", obj("o-pera"), null, [], [say("La pera té cara de tenir pessigolles. Potser si l'empenyo amb el dit...")]);
+R("pull", obj("o-pera"), null, [isVar("v-pera", false), isVar("v-sap-cuines", true)], [say("No vull arrencar-la. Pessigolles, deia en Ron... Empenyent-la amb el dit, suaument.")]);
+R("use", obj("o-pera"), null, [], [say("Un bodegó. Fa gana i tot.")]);
 // Gran Saló
 R("pickup", chr("c-nick"), null, [], [say("La mà em travessa en Nick. Fa un fred que glaça.")]);
 // Biblioteca: el llibre prohibit
 R("pickup", obj("o-llibre"), null, [], [say("Ni se t'acudeixi, Potter! La Secció Prohibida és prohibida. Per això es diu així.", "c-pince"), say("Si Madame Pince no em veiés...")]);
+R("use", obj("o-capa"), obj("o-llibre"), [isVar("v-sap-prohibida", false)], [say("Per què m'hauria d'arriscar per un llibre de pocions? No en necessito cap... de moment.")]);
 R("use", obj("o-capa"), obj("o-llibre"), [], [say("Em poso la capa invisible... Passo pel costat de Madame Pince, salto el cordó, i..."), sound("so-clic"), take("o-llibre"), say("...el llibre deixa la cadena i em ve a la mà! Torno, em trec la capa. Ningú no ha vist res."), OK()]);
+R("use", obj("o-capa"), obj("o-corda"), [isVar("v-sap-prohibida", false)], [say("Colar-me a la Secció Prohibida per res? Si m'enxampen, adéu Quidditch.")]);
 R("use", obj("o-capa"), obj("o-corda"), [], [say("Em poso la capa invisible... Passo pel costat de Madame Pince, salto el cordó, i..."), sound("so-clic"), take("o-llibre"), say("...ja tinc «Pocions Molt Potents»! Torno, em trec la capa. Ningú no ha vist res."), OK()]);
 R("use", obj("o-capa"), chr("c-pince"), [], [say("Fer-la invisible a ella? Seria més fàcil fer-me invisible jo... i anar a buscar el llibre.")]);
 R("pickup", obj("o-corda"), null, [], [say("Si el toco, Madame Pince ho sabrà. Ho sap tot. Té un sisè sentit per als cordons.")]);
@@ -488,14 +511,14 @@ R("use", obj("o-flasco-buit"), obj("o-calder"), [inState("o-calder", "o-calder-l
 R("use", obj("o-flasco-buit"), obj("o-calder"), [], [say("Encara no hi ha cap poció per embotellar.")]);
 R("pickup", obj("o-calder"), null, [], [say("És de l'escola i pesa una tona. Millor el faig servir aquí.")]);
 R("use", obj("o-recepta"), obj("o-calder"), [], [say("Segons la recepta: aigua del llac, fulla de mandràgora, pèl d'unicorn i ploma de fènix. Després, foc amb la vareta i embotellar amb un flascó.")]);
-R("give", obj("o-permis"), chr("c-snape"), [], [lose("o-permis"), setVar("v-snape", true), say("(Llegeix el permís amb cara d'haver menjat una llimona)", "c-snape"), say("Molt bé. Faci servir aquest calder. Però si fa explotar la masmorra, ho pagarà vostè, no la professora McGonagall.", "c-snape"), OK()]);
+R("give", obj("o-permis"), chr("c-snape"), [], TR.permis);
 // Lavabo: en Trevor
 R("pickup", obj("o-trevor"), null, [isVar("v-myrtle", false)], [say("NO TOQUIS EL MEU GRIPAU! És l'únic que em fa companyia!", "c-myrtle"), say("Ui. Potser primer hauria de fer-la una mica més feliç.")]);
 R("pickup", obj("o-trevor"), null, [], [take("o-trevor"), say("Vine aquí, Trevor. En Neville et busca. (Rauc.)"), OK()]);
-R("give", obj("o-invitacio"), chr("c-myrtle"), [], [lose("o-invitacio"), setVar("v-myrtle", true), say("Una festa? Per a MI? Ningú no m'havia convidat mai a res!", "c-myrtle"), say("Endu-te el gripau, si vols. Ara tinc vida social!", "c-myrtle"), OK()]);
+R("give", obj("o-invitacio"), chr("c-myrtle"), [], TR.invitacio);
 // Cuines
 R("open", obj("o-granota"), null, [], [lose("o-granota"), say("Obro la capsa... La granota de xocolata salta, fa dos bots i s'escapa per sota d'una porta. Em queda el cromo."), take("o-cromo")]);
-R("give", obj("o-mitjo"), chr("c-dobby"), [], [lose("o-mitjo"), say("Un MITJÓ! Harry Potter dona un mitjó a Dobby! Ara Dobby en té dos... i són diferents!", "c-dobby"), say("Dobby li dona el pastís de carbassa més gran de la cuina, senyor!", "c-dobby"), take("o-pastis"), OK()]);
+R("give", obj("o-mitjo"), chr("c-dobby"), [], TR.mitjo);
 R("give", obj("o-bufanda"), chr("c-dobby"), [], [say("Dobby la trobaria preciosa, senyor... però la necessitarà vostè. Dobby prefereix mitjons. Mitjons vells, si pot ser.", "c-dobby")]);
 // Gàrgola i despatx
 R("talk", obj("o-gargola"), null, [inState("o-gargola", "o-gargola-tancada")], [talkTo("d-gargola")]);
@@ -512,6 +535,7 @@ R("use", obj("o-barret"), obj("o-prestatge"), [], [say("Vull que Dumbledore vegi
 R("talk", chr("c-dumbledore"), null, [isVar("v-despert", false)], [say("Professor? Professor Dumbledore?"), say("Zzzz... mmm... un altre caramel de llimona, si us plau... zzzz...", "c-dumbledore")]);
 R("push", chr("c-dumbledore"), null, [isVar("v-despert", false)], [say("El sacsejo una mica. Res. Ni un terratrèmol el despertaria. Cal alguna cosa més forta.")]);
 R("pickup", obj("o-escriptori"), null, [], [say("No em puc endur l'escriptori del director. Però el pot de caramels, en una altra ocasió...")]);
+R("look", obj("o-pensadora"), null, [], [say("La pensadora de Dumbledore: una pica de pedra plena de records platejats."), say("Hi veig un record recent: en Peeves, rient, sortint per la finestra amb un bony sota el braç... i cap amunt, cap a la torre!"), ...SAP_PEEVES]);
 R("use", obj("o-pensadora"), null, [], [say("Hi fico el cap? Millor no: encara em perdré en els records d'algú altre.")]);
 // Torre d'Astronomia
 R("use", obj("o-telescopi"), null, [], [say("...")]);
@@ -545,15 +569,16 @@ R("talk", obj("o-barret"), null, [], [say("Som-hi, a casa!", "c-barret")]);
 R("use", obj("o-flauta"), obj("o-barret"), [isVar("v-dalt", false)], [say("Des d'aquí baix no em sentiria. Hauria de pujar fins on és.")]);
 R("use", obj("o-flauta"), obj("o-barret"), [isVar("v-barret", false)], [cutscene("cs-barret")]);
 // Jardins i fora
-R("give", obj("o-snitch"), chr("c-draco"), [], [lose("o-snitch"), say("(La mira embadalit) Una snitch... de veritat...", "c-draco"), say("Té, el paraigua del gegant. I no diguis a ningú que l'he tocat: encara agafaré puces.", "c-draco"), take("o-paraigua"), OK()]);
-R("give", obj("o-paraigua"), chr("c-hagrid"), [], [lose("o-paraigua"), say("El meu paraigua! (L'abraça tan fort que se sent un cric.) Està sencer! Sobretot... el que hi ha a dins.", "c-hagrid"), say("Té, la meva llanterna. Si entres al bosc, no et separis del camí. I si veus en Firenze, saluda'l de part meva.", "c-hagrid"), take("o-llanterna"), OK()]);
+R("give", obj("o-snitch"), chr("c-draco"), [], TR.snitch);
+R("give", obj("o-paraigua"), chr("c-hagrid"), [], TR.paraigua);
 R("give", obj("o-galetes"), chr("c-hagrid"), [], [say("Oh, no, són per a tu, Harry! Jo ja n'he menjat dotze.", "c-hagrid")]);
 R("give", obj("o-galetes"), obj("o-fang"), [], [lose("o-galetes"), say("En Fang s'empassa les galetes de roca d'un mos. Crec que les he sentit picar dins la panxa.")]);
 R("give", obj("o-bufanda"), chr("c-hagrid"), [], [say("Gràcies, Harry, però a mi no em fa fred. Tinc pell de gegant. Bé, de mig gegant.", "c-hagrid")]);
+R("pickup", obj("o-fems"), null, [isVar("v-sap-fems", false)], [say("Un sac de fems de drac? Fa una pudor que tomba. No el vull per a res... de moment.")]);
 R("pickup", obj("o-fems"), null, [], [take("o-fems"), say("Uf, quina pudor! Ho sento, Hagrid, me l'emporto.", null), say("Per a la professora Sprout? Endu-te'l, endu-te'l. En tinc una muntanya darrere la cabana.", "c-hagrid")]);
 R("pickup", obj("o-fang"), null, [], [say("En Fang pesa més que jo. I em llepa.")]);
 R("push", obj("o-fang"), null, [], [say("En Fang es posa panxa enlaire perquè li faci moixaines. Molt temible.")]);
-R("give", obj("o-fems"), chr("c-sprout"), [], [lose("o-fems"), setVar("v-sprout", true), say("Fems de drac! Fantàstic, Harry, gràcies!", "c-sprout"), say("Agafa una fulla de mandràgora, si la necessites. Però posa't orelleres, eh!", "c-sprout"), OK()]);
+R("give", obj("o-fems"), chr("c-sprout"), [], TR.fems);
 for (const verb of ["pull", "pickup"]) {
   P.rules.push(rule(verb, obj("o-mandragora"), null, [inState("o-mandragora", "o-mandragora-arrencada")], [say("Ja en tinc una fulla. Les altres que dormin.")]));
   P.rules.push(rule(verb, obj("o-mandragora"), null, [isVar("v-sprout", false)], [say("Eh, eh, eh! Aquestes no es toquen sense permís, Potter!", "c-sprout")]));
@@ -561,235 +586,377 @@ for (const verb of ["pull", "pickup"]) {
   P.rules.push(rule(verb, obj("o-mandragora"), null, [], [say("Em poso les orelleres i estiro..."), setState("o-mandragora", "o-mandragora-arrencada"), say("AAAAAAAAH! (Se sent esmorteït, com des de molt lluny.)"), say("Li agafo una fulla i la torno a plantar. Ja està: fulla de mandràgora!"), take("o-fulla"), OK()]));
 }
 R("use", obj("o-orelleres"), obj("o-mandragora"), [isVar("v-sprout", true)], [say("Me les poso i estiro la mandràgora..."), setState("o-mandragora", "o-mandragora-arrencada"), say("AAAAAAAAH! (Se sent molt lluny.) Li agafo una fulla i la torno a plantar."), take("o-fulla"), OK()]);
-R("give", obj("o-xiulet"), chr("c-hooch"), [], [lose("o-xiulet"), say("El meu xiulet! FIIIIIUUUU! Ah, ara sí que em sento jo mateixa.", "c-hooch"), say("Té, Potter, agafa una escombra de l'escola. I ja que hi ets, atrapa'm aquella snitch, que se m'ha escapat i no em deixa dormir.", "c-hooch"), take("o-escombra"), OK()]);
+R("give", obj("o-xiulet"), chr("c-hooch"), [], TR.xiulet);
 R("pickup", obj("o-snitch"), null, [], [say("És massa amunt, i va massa de pressa. Necessitaria una escombra.")]);
 R("use", obj("o-escombra"), obj("o-snitch"), [], [say("Pujo a l'escombra i m'enlairo!"), wait(0.5), say("Un gir, un picat, un tirabuixó... i... LA TINC!"), take("o-snitch"), OK(), say("Encara ets el Buscador més jove del segle, Potter!", "c-hooch")]);
 R("talk", obj("o-tentacle"), null, [], [say("Hola, calamar!"), say("(El tentacle fa adéu i es torna a enfonsar mig segon. Després torna a sortir.)")]);
 R("push", obj("o-tentacle"), null, [], [say("No empenyo el calamar gegant. Té més braços que jo.")]);
-R("give", obj("o-quisquiller"), chr("c-luna"), [], [lose("o-quisquiller"), say("Oh, el número de febrer! El de les arracades de rave que espanten els nargles!", "c-luna"), say("Té, el meu flascó. Avui els plimpies no piquen; diuen que la lluna els fa tímids.", "c-luna"), take("o-flasco-buit"), OK()]);
+R("give", obj("o-quisquiller"), chr("c-luna"), [], TR.quisquiller);
 R("use", obj("o-flasco-buit"), hot("ho-llac-aigua"), [], [take("o-flasco-aigua"), lose("o-flasco-buit"), sound("so-aigua"), say("M'ajupo al cap del moll i omplo el flascó d'aigua del Llac Negre. Brrr, està gelada!"), OK()]);
 R("use", obj("o-flasco-buit"), hot("ho-llac-moll"), [], [take("o-flasco-aigua"), lose("o-flasco-buit"), sound("so-aigua"), say("Al cap del moll omplo el flascó d'aigua del Llac Negre. Brrr, està gelada!"), OK()]);
 R("pickup", hot("ho-llac-aigua"), null, [], [say("Amb les mans no la puc portar fins al castell. Necessito un recipient.")]);
 
 /* ---------- Diàlegs ---------- */
+// Cada diàleg comença en un node sense frases (el menú de temes): la salutació la fa una regla «Parla amb», que
+// tria la frase segons el que ja ha passat. Cada tema només surt quan en Harry té motiu per preguntar-ho (el que
+// sap: variables v-sap-*, el que porta a sobre, el que ja ha dit) i desapareix quan ja està resolt.
 const D = (...a) => P.dialogues.push(dialogue(...a));
+const no = (v) => isVar(v, false), si = (v) => isVar(v, true), te = (o) => hasItem(o), noTe = (o) => hasItem(o, true);
+// Salutacions: [[condicions, frase], ...], de la més concreta a la general; després s'obre el diàleg
+function greet(ch, dlg, variants, extra = []) {
+  for (const [conds, text] of variants) R("talk", chr(ch), null, conds, [...extra, say(text, ch), talkTo(dlg)]);
+}
+const back = (id) => (text) => opt(text, id);
+
+// Neville
+greet("c-neville", "d-neville", [
+  [[si("v-neville-ok")], "En Trevor i jo et devem una, Harry. Bé, en Trevor no ho sap. Però jo sí."],
+  [[si("v-sap-robatori")], "Has vist la McGonagall? Feia la mateixa cara que quan vaig fer explotar el calder."],
+  [[], "Harry! La McGonagall t'espera al passadís de la gàrgola, al segon pis. Diu que és urgent!"],
+]);
 D("d-neville", "Neville", "c-neville", [
-  node("ne-1", [["c-neville", "Harry! La professora McGonagall t'espera al passadís de la gàrgola, al segon pis. Deia que és urgent!"]], [
-    opt("Quina és la contrasenya de la Dama Grassa?", "ne-2", { id: "op-ne-contra" }),
-    opt("Què et passa? Fas cara de...", "ne-3"),
-    opt("He trobat en Trevor!", null, { conditions: [hasItem("o-trevor")], actions: [lose("o-trevor"), say("TREVOR! Gràcies, Harry! Té, les meves orelleres d'Herbologia. La professora Sprout diu que no es pot tocar una mandràgora sense.", "c-neville"), take("o-orelleres"), OK()] }),
+  node("ne-0", [], [
+    opt("Quina és la contrasenya de la Dama Grassa?", "ne-2", { conditions: [noTe("o-nota")] }),
+    opt("Què et passa? Fas cara d'haver perdut alguna cosa.", "ne-3", { conditions: [no("v-sap-trevor"), no("v-neville-ok")], actions: [setVar("v-sap-trevor", true)] }),
+    opt("Encara no he trobat en Trevor.", "ne-4", { conditions: [si("v-sap-trevor"), noTe("o-trevor"), no("v-neville-ok")] }),
+    opt("He trobat en Trevor!", null, { conditions: [te("o-trevor")], actions: TR.trevor }),
+    opt("Saps res del Barret Seleccionador?", "ne-5", { conditions: [si("v-sap-robatori")] }),
     opt("Fins després, Neville."),
   ]),
-  node("ne-2", [["c-neville", "Espera, que la tinc apuntada... Té, queda't el paper. Jo ja me la sé de memòria. Crec."]], [
-    opt("Gràcies!", "ne-1", { once: true, conditions: [hasItem("o-nota", true)], actions: [take("o-nota")] }),
-    opt("Ja me l'havies donat.", "ne-1", { conditions: [hasItem("o-nota")] }),
-    opt("Torna-m'ho a dir.", "ne-1", { conditions: [hasItem("o-nota", true)], actions: [say("«Cap de drac». Ho has entès? Cap. De. Drac.", "c-neville")] }),
-  ]),
-  node("ne-3", [["c-neville", "He tornat a perdre en Trevor, el meu gripau. El vaig sentir raucar a prop dels lavabos del primer pis... però allà hi viu la Myrtle i em fa por."]], [
-    opt("Si el trobo, te'l porto.", "ne-1"),
-  ]),
+  node("ne-2", [["c-neville", "Espera, que la tinc apuntada... Té, queda't el paper. Jo ja me la sé de memòria. Crec."]], [opt("Gràcies!", "ne-0", { actions: [take("o-nota")] })]),
+  node("ne-3", [["c-neville", "He tornat a perdre en Trevor, el meu gripau. El vaig sentir raucar a prop dels lavabos del primer pis... però allà hi viu la Myrtle i em fa por."]], [back("ne-0")("Si el trobo, te'l porto.")]),
+  node("ne-4", [["c-neville", "Prova al lavabo de les noies, el de la Myrtle. Jo no hi gosaria entrar ni amb la capa de la meva àvia."]], [back("ne-0")("D'acord.")]),
+  node("ne-5", [["c-neville", "El barret? A mi em volia posar a Hufflepuff. Li vaig haver de suplicar. No ho diguis a ningú."]], [back("ne-0")("Secret guardat.")]),
+]);
+
+// Ron
+greet("c-ron", "d-ron", [
+  [[si("v-ron-ok")], "Mmm, quin pastís. Si en trobes un altre, ja saps on sóc. Sempre sóc aquí."],
+  [[si("v-sap-gana")], "Harry... tens res de menjar? Em sento les costelles."],
+  [[si("v-sap-robatori")], "Harry! Què passa? Diuen que hi ha professors corrent pels passadissos."],
+  [[], "Harry! Ostres, quina gana. M'he saltat el banquet per acabar una partida d'escacs. Contra mi mateix. He perdut."],
 ]);
 D("d-ron", "Ron", "c-ron", [
-  node("ro-1", [["c-ron", "Harry! Ostres, quina gana. M'he saltat el banquet de Halloween per acabar la partida d'escacs. Contra mi mateix. He perdut."]], [
-    opt("Han robat el Barret Seleccionador!", "ro-2"),
-    opt("Com s'entra a les cuines?", "ro-3"),
-    opt("Tens res que em pugui servir?", "ro-4"),
-    opt("Té, un pastís de carbassa.", null, { conditions: [hasItem("o-pastis")], actions: [lose("o-pastis"), say("UN PASTÍS SENCER! Ets el millor amic del món.", "c-ron"), say("Mmmf... Té, una bomba fètida d'en Fred i en George. En Filch hi té pànic.", "c-ron"), take("o-bomba"), OK()] }),
+  node("ro-0", [], [
+    opt("Han robat el Barret Seleccionador!", "ro-2", { conditions: [si("v-sap-robatori")], once: true, actions: SAP_PEEVES }),
+    opt("Com puc passar per davant d'en Filch?", "ro-4", { conditions: [si("v-sap-filch"), no("v-ron-ok")], actions: [setVar("v-sap-gana", true)] }),
+    opt("Com s'entra a les cuines?", "ro-3", { conditions: [si("v-sap-gana"), no("v-pera")], actions: [setVar("v-sap-cuines", true)] }),
+    opt("Té, un pastís de carbassa.", null, { conditions: [te("o-pastis")], actions: TR.pastis }),
+    opt("Juguem als escacs?", "ro-5", { conditions: [no("v-sap-robatori")] }),
     opt("Adéu, Ron."),
   ]),
-  node("ro-2", [["c-ron", "Qui vol un barret vell que canta malament? Algú amb molt mal gust..."], ["c-ron", "...o en Peeves. Tota la setmana que fa broma amb la Dama Grassa dient que li canta millor que el barret."]], [opt("Gràcies, Ron.", "ro-1")]),
-  node("ro-3", [["c-ron", "En Fred i en George diuen que s'ha de fer pessigolles a la pera del quadre de fruita del vestíbul. La pera riu i s'obre la porta."], ["c-ron", "Jo hi aniria, però tinc tanta gana que no em puc moure de la butaca."]], [opt("Ja hi aniré jo.", "ro-1")]),
-  node("ro-4", [["c-ron", "Tinc una bomba fètida d'en Fred i en George. Te la canvio per menjar. Molt menjar. Un pastís sencer, per exemple."]], [opt("Ja veurem què trobo.", "ro-1")]),
+  node("ro-2", [["c-ron", "Qui vol un barret vell que canta malament? Algú amb molt mal gust..."], ["c-ron", "...o en Peeves. Tota la setmana que fa broma amb la Dama Grassa dient que li canta millor que el barret."]], [back("ro-0")("Peeves, eh...")]),
+  node("ro-3", [["c-ron", "En Fred i en George diuen que s'ha de fer pessigolles a la pera del quadre de fruita del vestíbul. La pera riu i s'obre la porta."]], [back("ro-0")("Ja hi vaig.")]),
+  node("ro-4", [["c-ron", "En Filch? Fàcil: una bomba fètida d'en Fred i en George. Les odia més que en Peeves."], ["c-ron", "En tinc una. Te la canvio per menjar. Molt menjar. Un pastís sencer, per exemple. De les cuines."]], [back("ro-0")("Entesos.")]),
+  node("ro-5", [["c-ron", "Ara no, que tinc gana. I perdries. Els meus cavalls et tenen mania."]], [back("ro-0")("Una altra nit.")]),
+]);
+
+// Hermione
+greet("c-hermione", "d-hermione", [
+  [[te("o-pocio")], "La poció! Corre, Harry, al despatx de Dumbledore!"],
+  [[si("v-recepta")], "Com va la poció? Recorda: aigua del llac, mandràgora, unicorn i fènix. I el permís per a l'Snape."],
+  [[si("v-sap-robatori")], "Harry! La McGonagall m'ho ha explicat. Un son màgic així només es desfà amb una Poció Despertadora molt forta."],
+  [[], "Harry? Què fas despert? Jo repasso per a l'examen de dimarts. Sí, el de dimarts de la setmana que ve."],
 ]);
 D("d-hermione", "Hermione", "c-hermione", [
-  node("he-1", [["c-hermione", "Harry! La McGonagall m'ho ha explicat. Un encanteri de son així només es desfà amb una Poció Despertadora molt forta."]], [
-    opt("Com es fa, aquesta poció?", "he-2"),
-    opt("Tinc el llibre de la Secció Prohibida!", null, { conditions: [hasItem("o-llibre")], actions: [cutscene("cs-recepta")] }),
-    opt("Recorda'm els ingredients.", "he-3", { conditions: [isVar("v-recepta", true)] }),
-    opt("Saps alguna cosa de la Sala dels Menesters?", "he-4", { conditions: [isVar("v-peeves", true)] }),
+  node("he-0", [], [
+    opt("Com es fa, la Poció Despertadora?", "he-2", { conditions: [si("v-sap-robatori"), no("v-recepta")], actions: [setVar("v-sap-prohibida", true)] }),
+    opt("Tinc el llibre de la Secció Prohibida!", null, { conditions: [te("o-llibre")], actions: [cutscene("cs-recepta")] }),
+    opt("Recorda'm els ingredients.", "he-3", { conditions: [si("v-recepta"), noTe("o-pocio")] }),
+    opt("Saps res d'una sala on s'amaguen coses?", "he-4", { conditions: [si("v-peeves"), no("v-sala")] }),
+    opt("Què estudies?", "he-5", { conditions: [no("v-sap-robatori")] }),
     opt("Ens veiem, Hermione."),
   ]),
-  node("he-2", [["c-hermione", "La recepta és a «Pocions Molt Potents», a la Secció Prohibida. Madame Pince no hi deixa passar ningú sense permís... ni tan sols a mi!"], ["c-hermione", "Si algú hi pogués entrar sense ser vist... Ai, no em miris així, Harry. No ho he dit jo."]], [opt("Entesos.", "he-1")]),
-  node("he-3", [["c-hermione", "Aigua del Llac Negre, una fulla de mandràgora, un pèl d'unicorn i una ploma de fènix. Tot al calder de la masmorra, foc amb la vareta i embotellar."], ["c-hermione", "I necessitaràs un permís de la McGonagall perquè l'Snape et deixi el calder."]], [opt("Gràcies.", "he-1")]),
-  node("he-4", [["c-hermione", "És una sala del setè pis que només apareix quan la necessites. Diuen que cal passar tres vegades per davant d'una paret pensant molt fort què necessites."]], [opt("Interessant...", "he-1")]),
+  node("he-2", [["c-hermione", "La recepta és a «Pocions Molt Potents», a la Secció Prohibida. Madame Pince no hi deixa passar ningú sense permís... ni tan sols a mi!"], ["c-hermione", "Si algú hi pogués entrar sense ser vist... Ai, no em miris així. No ho he dit jo."]], [back("he-0")("Sense ser vist. Entesos.")]),
+  node("he-3", [["c-hermione", "Aigua del Llac Negre, una fulla de mandràgora, un pèl d'unicorn i una ploma de fènix. Tot al calder de la masmorra, foc amb la vareta i embotellar."], ["c-hermione", "I demana un permís a la McGonagall, o l'Snape no et deixarà ni mirar el calder."]], [back("he-0")("Gràcies.")]),
+  node("he-4", [["c-hermione", "La Sala dels Menesters! Diuen que és al setè pis i que només apareix si passes tres vegades per davant de la paret pensant molt fort què necessites."]], [back("he-0")("Interessant...")]),
+  node("he-5", [["c-hermione", "Història de la Màgia. La rebel·lió dels follets de 1612. Vols que te l'expliqui?"]], [back("he-0")("Una altra nit, potser.")]),
 ]);
+
+// Madame Pince
+greet("c-pince", "d-pince", [[[], "Xxxxt! Això és una biblioteca, no un camp de Quidditch."]]);
 D("d-pince", "Madame Pince", "c-pince", [
-  node("pi-1", [["c-pince", "Xxxxt! Això és una biblioteca, no un camp de Quidditch."]], [
-    opt("Puc entrar a la Secció Prohibida?", "pi-2"),
+  node("pi-0", [], [
+    opt("Puc entrar a la Secció Prohibida?", "pi-2", { conditions: [si("v-sap-prohibida"), noTe("o-llibre"), no("v-recepta")] }),
+    opt("Busco un llibre sobre barrets.", "pi-3", { conditions: [si("v-sap-robatori")] }),
     opt("(Xiuxiuejant) Perdó."),
   ]),
   node("pi-2", [["c-pince", "Només amb un permís signat per un professor. I tu no en tens. I si en tinguessis, també me'l miraria amb lupa."]], [opt("D'acord, d'acord.")]),
+  node("pi-3", [["c-pince", "«Barrets encantats i com evitar-los», passadís quatre. I el tornes sense taques de te."]], [opt("Gràcies.")]),
+]);
+
+// Nick Quasi Decapitat
+greet("c-nick", "d-nick", [
+  [[si("v-sap-robatori")], "Jove Potter! He sentit que hi ha enrenou al despatx del director. Quin escàndol!"],
+  [[], "Bona nit, jove Potter! Feliç Halloween! Avui faig cinc-cents cinc anys de mort, saps?"],
 ]);
 D("d-nick", "Nick Quasi Decapitat", "c-nick", [
-  node("ni-1", [["c-nick", "Bona nit, jove Potter! Feliç Halloween! Avui faig cinc-cents cinc anys de mort, saps?"]], [
-    opt("Has vist algú amb el Barret Seleccionador?", "ni-2"),
-    opt("Com s'ha de tractar el Baró Sagnant?", "ni-3", { id: "op-reverencia" }),
-    opt("Celebres el teu aniversari de mort?", "ni-4"),
+  node("ni-0", [], [
+    opt("Has vist algú amb el Barret Seleccionador?", "ni-2", { conditions: [si("v-sap-robatori")], actions: [...SAP_PEEVES, setVar("v-sap-baro", true)] }),
+    opt("Com s'ha de tractar el Baró Sagnant?", "ni-3", { id: "op-reverencia", conditions: [si("v-sap-baro")] }),
+    opt("Celebres el teu aniversari de mort?", "ni-4", { conditions: [noTe("o-invitacio"), no("v-myrtle")] }),
     opt("Adéu, Nick."),
   ]),
-  node("ni-2", [["c-nick", "Vaig veure en Peeves rient com un boig, amb un bony sota el braç, pujant cap a la Torre d'Astronomia."], ["c-nick", "Però a en Peeves no li trauràs res. Només té por d'una persona: el Baró Sagnant."]], [opt("El Baró Sagnant, eh?", "ni-1")]),
-  node("ni-3", [["c-nick", "Amb molta reverència. Literalment: si no li fas una reverència abans de dirigir-li la paraula, ni et mira."], ["c-nick", "Ronda pel setè pis. Si fa cara de pomes agres, és ell. Sempre fa cara de pomes agres."]], [opt("Una reverència. Entesos.", "ni-1")]),
-  node("ni-4", [["c-nick", "Faig una festa! Però ningú no hi vol venir. Diuen que les festes de fantasmes són... fredes."], ["c-nick", "Té, una invitació. Dona-la a qui vulguis. A algú que estigui sol, potser."]], [
-    opt("Gràcies, Nick.", "ni-1", { once: true, actions: [take("o-invitacio")] }),
-    opt("Ja en tinc una.", "ni-1"),
-  ]),
+  node("ni-2", [["c-nick", "Vaig veure en Peeves rient com un boig, amb un bony sota el braç, pujant cap a la Torre d'Astronomia."], ["c-nick", "Però a en Peeves no li trauràs res. Només té por d'una persona: el Baró Sagnant."]], [back("ni-0")("El Baró Sagnant, eh?")]),
+  node("ni-3", [["c-nick", "Amb molta reverència. Literalment: si no li fas una reverència abans de dirigir-li la paraula, ni et mira."], ["c-nick", "Ronda pel setè pis. Si fa cara de pomes agres, és ell. Sempre fa cara de pomes agres."]], [back("ni-0")("Una reverència. Entesos.")]),
+  node("ni-4", [["c-nick", "Faig una festa! Però ningú no hi vol venir. Diuen que les festes de fantasmes són... fredes."], ["c-nick", "Té, una invitació. Dona-la a qui vulguis. A algú que estigui sol, potser."]], [opt("Gràcies, Nick.", "ni-0", { actions: [take("o-invitacio")] })]),
+]);
+
+// Snape
+greet("c-snape", "d-snape", [
+  [[te("o-pocio")], "Ja la té, Potter? Doncs fora de la meva masmorra, abans que me'n penedeixi."],
+  [[si("v-snape")], "Encara aquí, Potter? El calder no es remenarà sol."],
+  [[], "Potter. A la meva masmorra, a aquestes hores. Deu punts menys per a Gryffindor."],
 ]);
 D("d-snape", "Snape", "c-snape", [
-  node("sn-1", [["c-snape", "Potter. A la meva masmorra, a aquestes hores. Deu punts menys per a Gryffindor."]], [
-    opt("Necessito fer servir un calder.", "sn-2", { conditions: [isVar("v-snape", false)] }),
-    opt("Tinc un permís de la professora McGonagall.", null, { conditions: [hasItem("o-permis")], actions: [lose("o-permis"), setVar("v-snape", true), say("(Llegeix el permís amb cara d'haver mossegat una llimona)", "c-snape"), say("Molt bé. Faci servir el calder. Però si fa explotar res, ho pagarà vostè.", "c-snape"), OK()] }),
-    opt("Sap qui ha robat el barret?", "sn-3"),
+  node("sn-0", [], [
+    opt("Necessito fer servir un calder.", "sn-2", { conditions: [si("v-recepta"), no("v-snape"), noTe("o-permis")] }),
+    opt("Tinc un permís de la professora McGonagall.", null, { conditions: [te("o-permis")], actions: TR.permis }),
+    opt("Sap qui ha robat el barret?", "sn-3", { conditions: [si("v-sap-robatori")] }),
+    opt("Què fa despert, professor?", "sn-4", { conditions: [no("v-sap-robatori")] }),
     opt("Me'n vaig, professor."),
   ]),
-  node("sn-2", [["c-snape", "Els meus calders no són joguines per a famosos. Sense un permís d'un professor, ni el mira."]], [opt("...", "sn-1")]),
-  node("sn-3", [["c-snape", "Si ho sabés, Potter, no l'hi diria a vostè. Algú ha posat Filtre de Son al te del director, i aquest algú sabia fer pocions... cosa que el descarta a vostè."]], [opt("Gràcies pel compliment.", "sn-1")]),
+  node("sn-2", [["c-snape", "Els meus calders no són joguines per a famosos. Sense un permís d'un professor, ni el mira."]], [back("sn-0")("...")]),
+  node("sn-3", [["c-snape", "Si ho sabés, Potter, no l'hi diria a vostè. Algú ha posat Filtre de Son al te del director, i aquest algú sabia fer pocions... cosa que el descarta a vostè."]], [back("sn-0")("Gràcies pel compliment.")]),
+  node("sn-4", [["c-snape", "Vigilo que cap alumne no faci res estúpid. Com ara, ser aquí. Vagi-se'n a dormir."]], [back("sn-0")("Sí, professor.")]),
+]);
+
+// Myrtle
+greet("c-myrtle", "d-myrtle", [
+  [[si("v-myrtle")], "Harry! Saps què em posaré per a la festa? El mateix de sempre. Sóc un fantasma."],
+  [[], "Què vols? Has vingut a riure't de la pobra Myrtle?"],
 ]);
 D("d-myrtle", "Myrtle", "c-myrtle", [
-  node("my-1", [["c-myrtle", "Què vols? Has vingut a riure't de la pobra Myrtle?"]], [
-    opt("Aquest gripau és teu?", "my-2", { conditions: [isVar("v-myrtle", false)] }),
-    opt("Tinc una invitació a una festa per a tu.", null, { conditions: [hasItem("o-invitacio")], actions: [lose("o-invitacio"), setVar("v-myrtle", true), say("Una festa? Per a MI? Ningú no m'havia convidat mai a res!", "c-myrtle"), say("Endu-te el gripau, si vols. Ara tinc vida social!", "c-myrtle"), OK()] }),
+  node("my-0", [], [
+    opt("Aquest gripau és d'en Neville!", "my-2", { conditions: [no("v-myrtle"), si("v-sap-trevor")] }),
+    opt("D'on ha sortit aquest gripau?", "my-2", { conditions: [no("v-myrtle"), no("v-sap-trevor")] }),
+    opt("Tinc una invitació a una festa per a tu.", null, { conditions: [te("o-invitacio"), no("v-myrtle")], actions: TR.invitacio }),
     opt("No, res. Adéu."),
   ]),
   node("my-2", [["c-myrtle", "Ara és meu. És l'únic que em fa companyia. Ningú no em convida mai a res... ni a festes, ni a res!"], ["c-myrtle", "BUAAAAAAH!"]], [opt("Ja me'n vaig...")]),
 ]);
+
+// Dobby
+greet("c-dobby", "d-dobby", [
+  [[si("v-dobby-ok")], "Harry Potter! Dobby porta els dos mitjons cada dia! Un a cada orella, quan dorm."],
+  [[], "Harry Potter! Senyor! Dobby està tan content de veure'l!"],
+]);
 D("d-dobby", "Dobby", "c-dobby", [
-  node("do-1", [["c-dobby", "Harry Potter! Senyor! Dobby està tan content de veure'l!"]], [
-    opt("Tens alguna cosa per menjar?", "do-2"),
-    opt("Té, un mitjó.", null, { conditions: [hasItem("o-mitjo")], actions: [lose("o-mitjo"), say("Un MITJÓ! Ara Dobby en té dos, i són diferents! Té, el pastís de carbassa més gran de la cuina!", "c-dobby"), take("o-pastis"), OK()] }),
-    opt("On amagaries una cosa perquè ningú no la trobés?", "do-3", { actions: [setVar("v-dobby", true)] }),
+  node("do-0", [], [
+    opt("Tens alguna cosa per menjar? És per al Ron.", "do-2", { conditions: [si("v-sap-gana"), no("v-dobby-ok"), noTe("o-mitjo")] }),
+    opt("Té, un mitjó.", null, { conditions: [te("o-mitjo")], actions: TR.mitjo }),
+    opt("Saps on és una sala on s'amaguen les coses?", "do-3", { conditions: [si("v-peeves")], actions: [setVar("v-dobby", true)] }),
+    opt("Què fas despert, Dobby?", "do-4", { conditions: [no("v-sap-robatori")] }),
     opt("Adéu, Dobby."),
   ]),
-  node("do-2", [["c-dobby", "Dobby donaria qualsevol cosa a Harry Potter! Però Dobby està trist... Dobby només té un mitjó, i els elfs lliures haurien de tenir-ne dos."]], [opt("Ho tindré en compte.", "do-1")]),
-  node("do-3", [["c-dobby", "A la Sala dels Menesters, senyor! Al setè pis, davant del tapís dels trols ballarins."], ["c-dobby", "Cal passar tres vegades per davant de la paret, pensant molt fort en el que es necessita. I llavors apareix una porta!"]], [opt("Gràcies, Dobby!", "do-1")]),
+  node("do-2", [["c-dobby", "Dobby donaria qualsevol cosa a Harry Potter! Però Dobby està trist... Dobby només té un mitjó, i els elfs lliures n'haurien de tenir dos."]], [back("do-0")("Ho tindré en compte.")]),
+  node("do-3", [["c-dobby", "La Sala dels Menesters, senyor! Al setè pis, davant del tapís dels trols ballarins."], ["c-dobby", "Cal passar tres vegades per davant de la paret pensant molt fort en el que es necessita. I llavors apareix una porta!"]], [back("do-0")("Gràcies, Dobby!")]),
+  node("do-4", [["c-dobby", "Els elfs no dormen la nit de Halloween, senyor: hi ha mil plats per rentar!"]], [back("do-0")("Bona feina, Dobby.")]),
+]);
+
+// McGonagall (la primera trobada és la seqüència cs-mcgonagall)
+greet("c-mcgonagall", "d-mcgonagall", [
+  [[te("o-barret")], "El barret! Corre, Potter, al despatx! I desperta el director, si pots."],
+  [[si("v-despert")], "El director ja és despert! Ara només falta el barret, Potter."],
+  [[], "Alguna novetat, Potter?"],
 ]);
 D("d-mcgonagall", "McGonagall", "c-mcgonagall", [
-  node("mc-1", [["c-mcgonagall", "Potter. Algú ha entrat al despatx del director, ha robat el Barret Seleccionador i ha deixat el professor Dumbledore sumit en un son màgic."], ["c-mcgonagall", "Demà al matí arriben alumnes nous d'intercanvi i cal seleccionar-los. Sense barret... i sense director..."]], [
-    opt("Què puc fer?", "mc-2"),
+  node("mc-0", [], [
+    opt("Què puc fer?", "mc-2", { conditions: [no("v-recepta")] }),
     opt("Quina és la contrasenya de la gàrgola?", "mc-3", { id: "op-contra" }),
-    opt("Necessito un permís per fer servir un calder.", "mc-4", { conditions: [isVar("v-recepta", true), hasItem("o-permis", true), isVar("v-snape", false)] }),
-    opt("Puc sortir als jardins?", "mc-5"),
+    opt("Necessito un permís per fer servir un calder.", "mc-4", { conditions: [si("v-recepta"), noTe("o-permis"), no("v-snape")] }),
+    opt("Puc sortir als jardins?", "mc-5", { conditions: [si("v-sap-filch"), no("v-filch")] }),
     opt("Hi vaig de seguida."),
   ]),
-  node("mc-2", [["c-mcgonagall", "Troba el barret, Potter. I si trobes la manera de despertar el director, encara millor."], ["c-mcgonagall", "La senyoreta Granger és a la biblioteca. Si algú sap com desfer un son màgic, és ella."]], [opt("Entesos.", "mc-1")]),
-  node("mc-3", [["c-mcgonagall", "«Gotes de regalèssia». No la diguis a ningú. Ni al Ron Weasley."]], [opt("Gotes de regalèssia. Gràcies.", "mc-1")]),
-  node("mc-4", [["c-mcgonagall", "Una Poció Despertadora? Brillant idea, la de la senyoreta Granger. Té, un permís signat. L'Snape rondinarà, però l'acceptarà."]], [opt("Gràcies, professora!", "mc-1", { once: true, actions: [take("o-permis"), OK()] })]),
-  node("mc-5", [["c-mcgonagall", "De nit? Està prohibit, Potter. En Filch vigila la porta principal."], ["c-mcgonagall", "...Ara bé, si en Filch no et veu sortir, jo tampoc no t'hauré vist."]], [opt("No he sentit res.", "mc-1")]),
+  node("mc-2", [["c-mcgonagall", "Troba el barret, Potter. I si trobes la manera de despertar el director, encara millor."], ["c-mcgonagall", "La senyoreta Granger és a la biblioteca. Si algú sap com desfer un son màgic, és ella."]], [back("mc-0")("Entesos.")]),
+  node("mc-3", [["c-mcgonagall", "«Gotes de regalèssia». No la diguis a ningú. Ni al Ron Weasley."]], [back("mc-0")("Gotes de regalèssia. Gràcies.")]),
+  node("mc-4", [["c-mcgonagall", "Una Poció Despertadora? Brillant idea, la de la senyoreta Granger. Té, un permís signat. L'Snape rondinarà, però l'acceptarà."]], [opt("Gràcies, professora!", "mc-0", { actions: [take("o-permis"), OK()] })]),
+  node("mc-5", [["c-mcgonagall", "De nit? Està prohibit, Potter. En Filch vigila la porta principal."], ["c-mcgonagall", "...Ara bé, si en Filch no et veu sortir, jo tampoc no t'hauré vist."]], [back("mc-0")("No he sentit res.")]),
 ]);
+
+// Gàrgola i Dama Grassa (no són personatges: les obren regles)
 D("d-gargola", "Gàrgola", null, [
   node("ga-1", [[null, "(La gàrgola em mira amb els ulls de pedra. Espera una contrasenya.)"]], [
     opt("Gotes de regalèssia.", null, { conditions: [said("d-mcgonagall", "op-contra")], actions: [sound("so-clic"), setState("o-gargola", "o-gargola-oberta"), say("La gàrgola fa un salt de costat i darrere seu apareix una escala de cargol que puja sola."), OK()] }),
     opt("Caramels de llimona.", null, { actions: [say("(La gàrgola no es mou. Era la contrasenya de l'any passat, segur.)")] }),
     opt("Obre't, sèsam.", null, { actions: [say("(La gàrgola em fa una ganyota.)")] }),
-    opt("Si us plau?", null, { actions: [say("(Res. Les gàrgoles no tenen educació.)")] }),
     opt("(Marxar)"),
   ]),
 ]);
 D("d-grassa", "Dama Grassa", null, [
   node("gr-1", [[null, "Contrasenya?"]], [
-    opt("Cap de drac.", null, { conditions: [hasItem("o-nota")], actions: [setVar("v-grassa", true), say("Correcte, estimat. Passa, passa."), go("s-comuna", PT("comuna", "deRetrat"))] }),
-    opt("Cap de... gripau?", null, { conditions: [hasItem("o-nota", true)], actions: [say("Frec, frec... però no. Sense contrasenya no passes, guapo.")] }),
+    opt("Cap de drac.", null, { conditions: [te("o-nota")], actions: [setVar("v-grassa", true), say("Correcte, estimat. Passa, passa."), go("s-comuna", PT("comuna", "deRetrat"))] }),
+    opt("Cap de... gripau?", null, { conditions: [noTe("o-nota")], actions: [say("Frec, frec... però no. Sense contrasenya no passes, guapo.")] }),
     opt("Sóc en Harry Potter!", null, { actions: [say("I jo, la reina d'Anglaterra. Contrasenya!")] }),
-    opt("Què li sembla la meva veu? Do-re-mi...", null, { actions: [say("Ai, no! Una altra vegada no! En Peeves ja m'ha vingut a cantar tota la setmana!")] }),
+    opt("Do-re-mi-fa-sol...", null, { conditions: [si("v-sap-peeves")], actions: [say("Ai, no! Una altra vegada no! En Peeves ja m'ha vingut a cantar tota la setmana!")] }),
     opt("(Marxar)"),
   ]),
 ]);
+
+// Filch (és un objecte, perquè se'n va)
+R("talk", obj("o-filch"), null, [inState("o-filch", "o-filch-hi")], [setVar("v-sap-filch", true), say("Potter! Què hi fas, aquí, a aquestes hores? Ningú no surt del castell aquesta nit. Ordres de la professora McGonagall.", "c-filch"), talkTo("d-filch")]);
 D("d-filch", "Filch", "c-filch", [
-  node("fi-1", [["c-filch", "Potter! Què hi fas, aquí, a aquestes hores? Ningú no surt del castell aquesta nit. Ordres de la professora McGonagall."]], [
-    opt("Ha vist en Peeves?", "fi-2"),
+  node("fi-0", [], [
+    opt("Ha vist en Peeves?", "fi-2", { conditions: [si("v-sap-peeves")] }),
+    opt("Per què no es pot sortir?", "fi-3", { conditions: [no("v-sap-robatori")] }),
     opt("Bona nit, senyor Filch."),
   ]),
   node("fi-2", [["c-filch", "Aquell poltergeist! Avui ha llençat tres bombes fètides al Gran Saló. Si en sento l'olor una altra vegada, el penjo pels turmells!"]], [opt("(Interessant...)")]),
+  node("fi-3", [["c-filch", "Perquè algú ha entrat al despatx del director, i jo vigilo. Ara, fora d'aquí."]], [opt("...")]),
+]);
+
+// Baró Sagnant
+greet("c-baro", "d-baro", [
+  [[te("o-cadena")], "(El Baró et mira i fa sonar les seves cadenes. Sembla que vulgui dir «fes-la servir bé».)"],
+  [[], "..."],
 ]);
 D("d-baro", "Baró Sagnant", "c-baro", [
-  node("ba-1", [["c-baro", "..."]], [
+  node("ba-0", [], [
     opt("Hola! Sóc en Harry...", null, { conditions: [said("d-nick", "op-reverencia", true)], actions: [say("(El Baró em mira com si fos una taca a la catifa. No diu res.)")] }),
     opt("(Fer una reverència molt profunda)", "ba-2", { conditions: [said("d-nick", "op-reverencia")] }),
     opt("(Marxar a poc a poc)"),
   ]),
   node("ba-2", [["c-baro", "Hm. Un jove amb modals. Avui dia en queden pocs. Què vols?"]], [
-    opt("En Peeves ha robat una cosa i no vol dir on l'ha amagada.", "ba-3"),
+    opt("En Peeves ha amagat el barret i no vol dir on.", "ba-3", { conditions: [si("v-peeves-nega"), noTe("o-cadena"), no("v-peeves")] }),
+    opt("Ha vist en Peeves?", "ba-4", { conditions: [si("v-sap-peeves"), no("v-peeves-nega")] }),
     opt("Res, només volia saludar-lo, senyor Baró."),
   ]),
-  node("ba-3", [["c-baro", "Peeves... Té, una de les meves cadenes. Fes-la sonar davant seu: recordarà qui mana en aquest castell."]], [
-    opt("Gràcies, senyor Baró.", null, { once: true, actions: [take("o-cadena"), OK()] }),
-    opt("Ja en tinc una, gràcies."),
-  ]),
+  node("ba-3", [["c-baro", "Peeves... Té, una de les meves cadenes. Fes-la sonar davant seu: recordarà qui mana en aquest castell."]], [opt("Gràcies, senyor Baró.", null, { actions: [take("o-cadena"), OK()] })]),
+  node("ba-4", [["c-baro", "És a la torre, rient. Sempre riu. Si no et vol dir alguna cosa, torna'm a veure."]], [opt("Gràcies.")]),
+]);
+
+// Peeves
+greet("c-peeves", "d-peeves", [
+  [[si("v-peeves")], "Potty mentider! M'has enganyat! Ja no et dic res més, ni ji ni ja!"],
+  [[], "Potty Potter! Pipí de gripau! Què hi fas aquí dalt, eh, eh?"],
 ]);
 D("d-peeves", "Peeves", "c-peeves", [
-  node("pe-1", [["c-peeves", "Potty Potter! Pipí de gripau! El barret s'ha perdut, ningú sap on ha anat, ningú, ningú, NINGÚ!"]], [
-    opt("On has amagat el barret, Peeves?", "pe-2"),
-    opt("Per què l'has robat?", "pe-3"),
+  node("pe-0", [], [
+    opt("On has amagat el barret, Peeves?", "pe-2", { conditions: [si("v-sap-peeves"), no("v-peeves")], actions: [setVar("v-peeves-nega", true)] }),
+    opt("Per què l'has robat?", "pe-3", { conditions: [si("v-sap-peeves")] }),
+    opt("Què fas aquí dalt?", "pe-4", { conditions: [no("v-sap-peeves")] }),
     opt("Adéu, Peeves."),
   ]),
-  node("pe-2", [["c-peeves", "No t'ho diré, Potty! Ni que em suplicis! Ni que em llepis les sabates! Ni que...!"]], [opt("Ja n'hi ha prou.", "pe-1")]),
-  node("pe-3", [["c-peeves", "Aquell barret vell em va dir que les meves cançons eren DOLENTES! Doncs ara que canti per als ratolins! Ji ji ji!"]], [opt("Ah.", "pe-1")]),
+  node("pe-2", [["c-peeves", "No t'ho diré, Potty! Ni que em suplicis! Ni que em llepis les sabates! Només el Baró em faria parlar, i el Baró no és aquí! Ji ji ji!"]], [back("pe-0")("Ja n'hi ha prou.")]),
+  node("pe-3", [["c-peeves", "Aquell barret vell em va dir que les meves cançons eren DOLENTES! Doncs ara que canti per als ratolins!"]], [back("pe-0")("Ah.")]),
+  node("pe-4", [["c-peeves", "Comptar estrelles! Una, dues, mil! Ja està! Ara compto ulleres: unes!"]], [back("pe-0")("Molt graciós.")]),
+]);
+
+// Draco
+greet("c-draco", "d-draco", [
+  [[si("v-draco-ok")], "Què vols ara, Potter? Ja t'he donat el paraigua del gegant."],
+  [[], "Potter. Què hi fas, fora, de nit? L'Snape ho sabrà de seguida."],
 ]);
 D("d-draco", "Draco", "c-draco", [
-  node("dr-1", [["c-draco", "Potter. Què hi fas, fora, de nit? L'Snape ho sabrà de seguida."]], [
-    opt("Què hi fas tu, amb un paraigua rosa?", "dr-2"),
+  node("dr-0", [], [
+    opt("Torna-li el paraigua a en Hagrid!", "dr-2", { conditions: [si("v-sap-paraigua"), no("v-draco-ok")], actions: [setVar("v-sap-snitch", true)] }),
+    opt("Té, la snitch.", null, { conditions: [te("o-snitch")], actions: TR.snitch }),
     opt("I tu, què hi fas, fora?", "dr-3"),
     opt("Adéu, Malfoy."),
   ]),
-  node("dr-2", [["c-draco", "Això? És del gegant ximple. L'hi he pres per riure. Pesa com si estigués ple de pedres."], ["c-draco", "Te'l canvio... per la snitch que s'ha escapat del camp de Quidditch. Si la portes tu, que ets el Buscador «estrella»..."]], [opt("Ja veurem.", "dr-1")]),
-  node("dr-3", [["c-draco", "Jo vaig on vull. El meu pare és al consell escolar."], ["c-draco", "...I m'he perdut tornant de l'hivernacle. Però això no ho diràs a ningú."]], [opt("Ni a una ànima.", "dr-1")]),
+  node("dr-2", [["c-draco", "Aquesta cosa rosa? Pesa com si estigués plena de pedres."], ["c-draco", "Te la canvio... per la snitch que s'ha escapat del camp de Quidditch. Si la portes tu, que ets el Buscador «estrella»..."]], [back("dr-0")("Ja veurem.")]),
+  node("dr-3", [["c-draco", "Jo vaig on vull. El meu pare és al consell escolar."], ["c-draco", "...I m'he perdut tornant de l'hivernacle. Però això no ho diràs a ningú."]], [back("dr-0")("Ni a una ànima.")]),
+]);
+
+// Hagrid
+greet("c-hagrid", "d-hagrid", [
+  [[si("v-hagrid-ok")], "Harry! Com va? Si vas al bosc, no surtis del camí, eh!"],
+  [[], "Harry! Entra, entra, que fa fresca. Vols una galeta de roca? Acabades de fer!"],
 ]);
 D("d-hagrid", "Hagrid", "c-hagrid", [
-  node("ha-1", [["c-hagrid", "Harry! Entra, entra, que fa fresca. Vols una galeta de roca? Acabades de fer!"]], [
-    opt("Què et passa, Hagrid? Fas mala cara.", "ha-2"),
-    opt("Puc entrar al Bosc Prohibit?", "ha-3"),
-    opt("Han robat el Barret Seleccionador.", "ha-4"),
+  node("ha-0", [], [
+    opt("Què et passa, Hagrid? Fas mala cara.", "ha-2", { conditions: [no("v-hagrid-ok"), no("v-sap-paraigua")], actions: [setVar("v-sap-paraigua", true)] }),
+    opt("Té, el teu paraigua.", null, { conditions: [te("o-paraigua")], actions: TR.paraigua }),
+    opt("Necessito entrar al Bosc Prohibit.", "ha-3", { conditions: [si("v-recepta"), noTe("o-llanterna"), noTe("o-pel")] }),
+    opt("Han robat el Barret Seleccionador.", "ha-4", { conditions: [si("v-sap-robatori")] }),
     opt("Me'n vaig, Hagrid."),
   ]),
-  node("ha-2", [["c-hagrid", "En Malfoy m'ha pres el paraigua rosa aquesta tarda! I aquell paraigua és molt... especial. No et puc dir per què. No ho hauria d'haver dit."]], [opt("Te'l recuperaré.", "ha-1")]),
-  node("ha-3", [["c-hagrid", "Ni pensar-hi! Bé... amb una llanterna i sense sortir del camí, potser. En Firenze ronda pel camí aquesta nit."], ["c-hagrid", "Però la llanterna la tinc jo, i no et deixo res fins que no em tornin el paraigua. Estic de mal humor."]], [opt("Entesos.", "ha-1")]),
-  node("ha-4", [["c-hagrid", "El barret? Qui faria una cosa així? Pobre Dumbledore... el millor mag del món, això és el que és."], ["c-hagrid", "Si necessites res del bosc, en Firenze sap llegir els estels. Sempre sap coses."]], [opt("Gràcies, Hagrid.", "ha-1")]),
+  node("ha-2", [["c-hagrid", "En Malfoy m'ha pres el paraigua rosa aquesta tarda! I aquell paraigua és molt... especial. No et puc dir per què. No ho hauria d'haver dit."]], [back("ha-0")("Te'l recuperaré.")]),
+  node("ha-3", [["c-hagrid", "Un pèl d'unicorn? Ni pensar-hi, de nit! Bé... amb una llanterna i sense sortir del camí, potser. En Firenze ronda pel camí."], ["c-hagrid", "Però la llanterna la tinc jo, i fins que no em tornin el paraigua estic de mal humor."]], [back("ha-0")("Entesos.")]),
+  node("ha-4", [["c-hagrid", "El barret? Qui faria una cosa així? Pobre Dumbledore... el millor mag del món, això és el que és."]], [back("ha-0")("Ho arreglarem.")]),
+]);
+
+// Sprout
+greet("c-sprout", "d-sprout", [
+  [[inState("o-mandragora", "o-mandragora-arrencada")], "Ja tens la fulla? Molt bé, Harry. I encara hi sents! Bona senyal."],
+  [[si("v-sprout")], "Agafa la fulla quan vulguis, Harry. Amb orelleres!"],
+  [[], "Bona nit, Harry! Estic trasplantant mandràgores a la llum de la lluna."],
 ]);
 D("d-sprout", "Sprout", "c-sprout", [
-  node("sp-1", [["c-sprout", "Bona nit, Harry! Estic trasplantant mandràgores a la llum de la lluna. Els va molt bé per a les arrels."]], [
-    opt("Necessito una fulla de mandràgora.", "sp-2", { conditions: [isVar("v-sprout", false)] }),
+  node("sp-0", [], [
+    opt("Necessito una fulla de mandràgora.", "sp-2", { conditions: [si("v-recepta"), no("v-sprout")], actions: [setVar("v-sap-fems", true)] }),
+    opt("Té, fems de drac.", null, { conditions: [te("o-fems")], actions: TR.fems }),
     opt("Les mandràgores fan mal?", "sp-3"),
     opt("Adéu, professora."),
   ]),
-  node("sp-2", [["c-sprout", "Una fulla? Per a una poció, suposo. D'acord, però fem un tracte: necessito fems de drac per als testos, i en Hagrid en té un sac."]], [opt("Li portaré.", "sp-1")]),
-  node("sp-3", [["c-sprout", "El crit d'una mandràgora jove et deixa estabornit unes hores. Mai, mai les toquis sense orelleres!"]], [opt("Ho recordaré.", "sp-1")]),
+  node("sp-2", [["c-sprout", "Una fulla? Per a una poció, suposo. D'acord, però fem un tracte: necessito fems de drac per als testos, i en Hagrid en té un sac."]], [back("sp-0")("Li portaré.")]),
+  node("sp-3", [["c-sprout", "El crit d'una mandràgora jove et deixa estabornit unes hores. Mai, mai les toquis sense orelleres!"]], [back("sp-0")("Ho recordaré.")]),
+]);
+
+// Madame Hooch
+greet("c-hooch", "d-hooch", [
+  [[te("o-snitch")], "Bona feina, Potter! La snitch no se t'escapa mai, eh?"],
+  [[si("v-hooch-ok")], "Vinga, Potter, que la snitch no s'atraparà sola!"],
+  [[], "Potter! Has vist el meu xiulet? L'he perdut durant el banquet i sense xiulet no sóc ningú."],
 ]);
 D("d-hooch", "Hooch", "c-hooch", [
-  node("ho-1", [["c-hooch", "Potter! Has vist el meu xiulet? L'he perdut durant el banquet i sense xiulet no sóc ningú."]], [
-    opt("On el podries haver perdut?", "ho-2"),
-    opt("Què hi fa, la snitch, allà dalt?", "ho-3"),
+  node("ho-0", [], [
+    opt("On el podries haver perdut?", "ho-2", { conditions: [no("v-hooch-ok"), noTe("o-xiulet")] }),
+    opt("Té, el teu xiulet.", null, { conditions: [te("o-xiulet")], actions: TR.xiulet }),
+    opt("Puc atrapar la snitch?", "ho-3", { conditions: [no("v-hooch-ok"), si("v-sap-snitch")] }),
     opt("Adéu, Madame Hooch."),
   ]),
-  node("ho-2", [["c-hooch", "Al Gran Saló, segur. Vaig fer un xiulet de sorpresa a la taula dels professors i el director va riure tant que se'm va caure."]], [opt("Ho miraré.", "ho-1")]),
-  node("ho-3", [["c-hooch", "La snitch d'entrenament s'ha escapat de la capsa. Si tingués el xiulet, et deixaria una escombra per atrapar-la."]], [opt("Entesos.", "ho-1")]),
+  node("ho-2", [["c-hooch", "Al Gran Saló, segur. Vaig fer un xiulet de sorpresa a la taula dels professors i el director va riure tant que se'm va caure."]], [back("ho-0")("Ho miraré.")]),
+  node("ho-3", [["c-hooch", "Amb quina escombra? Les tinc tancades i la clau va amb el xiulet. Troba'm el xiulet i et deixo una escombra."]], [back("ho-0")("Entesos.")]),
+]);
+
+// Firenze
+greet("c-firenze", "d-firenze", [
+  [[si("v-firenze-ok")], "Que els estels et guiïn, Harry Potter."],
+  [[], "Harry Potter. Els estels deien que vindries aquesta nit."],
 ]);
 D("d-firenze", "Firenze", "c-firenze", [
-  node("fz-1", [["c-firenze", "Harry Potter. Els estels deien que vindries aquesta nit."]], [
-    opt("Necessito un pèl d'unicorn.", "fz-2"),
-    opt("Saps qui ha robat el Barret Seleccionador?", "fz-3"),
+  node("fz-0", [], [
+    opt("Necessito un pèl d'unicorn.", "fz-2", { conditions: [si("v-recepta"), no("v-firenze-ok")] }),
+    opt("Saps qui ha robat el Barret Seleccionador?", "fz-3", { conditions: [si("v-sap-robatori")] }),
+    opt("Què hi fas, al bosc?", "fz-6"),
     opt("Adéu, Firenze."),
   ]),
   node("fz-2", [["c-firenze", "Els unicorns només donen el seu pèl a qui sap mirar el cel. Digues-me, Harry Potter: quin planeta brilla més aquesta nit?"]], [
     opt("Venus.", "fz-4"),
     opt("Júpiter.", "fz-4"),
-    opt("Mart.", null, { conditions: [isVar("v-mart", true)], once: true, actions: [say("Mart. Fa segles que no brillava així. Sí: saps mirar.", "c-firenze"), say("Té. L'unicorn el va deixar anar ahir, quan el vaig ajudar. És per a qui el necessita de debò.", "c-firenze"), take("o-pel"), OK()] }),
-    opt("Mart.", "fz-5", { conditions: [isVar("v-mart", false)] }),
+    opt("Mart.", null, { conditions: [si("v-mart")], actions: [setVar("v-firenze-ok", true), say("Mart. Fa segles que no brillava així. Sí: saps mirar.", "c-firenze"), say("Té. L'unicorn el va deixar anar ahir, quan el vaig ajudar. És per a qui el necessita de debò.", "c-firenze"), take("o-pel"), OK()] }),
+    opt("Mart.", "fz-5", { conditions: [no("v-mart")] }),
     opt("No ho sé.", "fz-5"),
   ]),
-  node("fz-3", [["c-firenze", "Els estels no parlen de lladres. Però Mart, el guerrer, brilla vermell: hi haurà baralla abans de l'alba. I música."]], [opt("Música?", "fz-1")]),
-  node("fz-4", [["c-firenze", "No. Mires sense veure, com tots els humans. Puja a la torre més alta i mira-ho bé."]], [opt("...", "fz-1")]),
-  node("fz-5", [["c-firenze", "Endevinar no és saber. Puja a la torre més alta del castell i mira-ho amb els teus ulls."]], [opt("D'acord.", "fz-1")]),
+  node("fz-3", [["c-firenze", "Els estels no parlen de lladres. Però Mart, el guerrer, brilla vermell: hi haurà baralla abans de l'alba. I música."]], [back("fz-0")("Música?")]),
+  node("fz-4", [["c-firenze", "No. Mires sense veure, com tots els humans. Puja a la torre més alta del castell i mira-ho bé."]], [opt("...", "fz-0", { actions: [setVar("v-sap-torre", true)] })]),
+  node("fz-5", [["c-firenze", "Endevinar no és saber. Puja a la torre més alta del castell i mira-ho amb els teus ulls."]], [opt("D'acord.", "fz-0", { actions: [setVar("v-sap-torre", true)] })]),
+  node("fz-6", [["c-firenze", "Vigilo els unicorns. Aquesta nit alguna cosa els ha espantat: una veu que reia, molt amunt, al castell."]], [back("fz-0")("Una veu que reia...")]),
+]);
+
+// Luna
+greet("c-luna", "d-luna", [
+  [[si("v-luna-ok")], "Hola, Harry. Els plimpies continuen sense picar. El Quisquiller diu que és normal els dijous."],
+  [[], "Hola, Harry. Estic pescant plimpies. Però no recordo quin cebo els agrada; ho deia el Quisquiller del mes passat."],
 ]);
 D("d-luna", "Luna", "c-luna", [
-  node("lu-1", [["c-luna", "Hola, Harry. Estic pescant plimpies. Però no recordo quin cebo els agrada; ho deia el Quisquiller del mes passat."]], [
+  node("lu-0", [], [
     opt("Què són els plimpies?", "lu-2"),
-    opt("Has vist algú estrany aquesta nit?", "lu-3"),
-    opt("Per què necessites el flascó?", "lu-4"),
+    opt("Has vist algú estrany aquesta nit?", "lu-3", { conditions: [si("v-sap-robatori")], actions: SAP_PEEVES }),
+    opt("Em deixaries el teu flascó?", "lu-4", { conditions: [si("v-recepta"), no("v-luna-ok")] }),
+    opt("Té, un Quisquiller.", null, { conditions: [te("o-quisquiller"), no("v-luna-ok")], actions: TR.quisquiller }),
     opt("Adéu, Luna."),
   ]),
-  node("lu-2", [["c-luna", "Uns peixets rodons amb potes. Fan olor de llimona. El meu pare diu que si te'n menges un, pots respirar sota l'aigua... però només de dijous."]], [opt("Ah.", "lu-1")]),
-  node("lu-3", [["c-luna", "En Peeves ha passat volant cap a la torre amb un barret. El barret cantava una cançó molt trista. Em va agradar."]], [opt("Ho sabia!", "lu-1")]),
-  node("lu-4", [["c-luna", "Per guardar-hi els plimpies. Però si em portessis un Quisquiller, potser recordaria el cebo... i llavors ja no el necessitaria."]], [opt("Ho miraré.", "lu-1")]),
+  node("lu-2", [["c-luna", "Uns peixets rodons amb potes. Fan olor de llimona. El meu pare diu que si te'n menges un, pots respirar sota l'aigua... però només els dijous."]], [back("lu-0")("Ah.")]),
+  node("lu-3", [["c-luna", "En Peeves ha passat volant cap a la torre amb un barret. El barret cantava una cançó molt trista. Em va agradar."]], [back("lu-0")("Ho sabia!")]),
+  node("lu-4", [["c-luna", "Per guardar-hi els plimpies el necessito... Però si em portessis el Quisquiller del mes passat, recordaria el cebo bo i ja no em caldria."]], [back("lu-0")("Ho miraré.")]),
 ]);
+
+// Dumbledore despert
+R("talk", chr("c-dumbledore"), null, [si("v-despert"), te("o-barret")], [say("Aquest bony sota el braç, Harry... és el que crec?", "c-dumbledore")]);
+R("talk", chr("c-dumbledore"), null, [si("v-despert")], [say("El barret, Harry. Sense ell, demà no podrem seleccionar ningú. I a mi m'agrada molt la cerimònia.", "c-dumbledore")]);
+
 D("d-barret", "Barret Seleccionador", null, [
   node("ba-b1", [["c-barret", "Què vols, noi? Vine a dir-me que les meves cançons són avorrides, com aquell poltergeist?"]], [
     opt("Has de tornar. Demà s'han de seleccionar alumnes nous!", "ba-b2"),
@@ -799,6 +966,7 @@ D("d-barret", "Barret Seleccionador", null, [
   node("ba-b2", [["c-barret", "Que els seleccioni un altre! Mil anys cantant i ningú no em fa cas. Aquí, almenys, els trastos no es queixen."]], [opt("...", "ba-b1")]),
   node("ba-b3", [["c-barret", "De debò? Doncs demostra-ho! Una mica de música, almenys. Fa segles que ningú no em toca una melodia."]], [opt("Hm. Una melodia...", "ba-b1")]),
 ]);
+
 // Veu del barret (no es col·loca enlloc: parla des de l'objecte)
 P.character({ id: "c-barret", name: "Barret Seleccionador", description: "", color: "#e8c890", look: { skin: "#7a5a38", hair: "#6a5030", hat: "#7a5a38", shirt: "#6a5030", pants: "#5a4028", shoes: "#3a2a1a" } });
 
@@ -813,7 +981,7 @@ P.cutscenes.push(
     take("o-varita"),
     say("Agafo la vareta. Una nit de Halloween tranquil·la... segur que no."),
   ] },
-  { id: "cs-mcgonagall", name: "McGonagall", actions: [say("Potter! Per fi. Vine, ràpid.", "c-mcgonagall"), talkTo("d-mcgonagall")] },
+  { id: "cs-mcgonagall", name: "McGonagall", actions: [say("Potter! Per fi. Vine, ràpid.", "c-mcgonagall"), say("Algú ha entrat al despatx del director, ha robat el Barret Seleccionador i ha deixat el professor Dumbledore sumit en un son màgic.", "c-mcgonagall"), say("Demà al matí arriben alumnes nous d'intercanvi i cal seleccionar-los. Sense barret... i sense director...", "c-mcgonagall"), setVar("v-sap-robatori", true), talkTo("d-mcgonagall")] },
   { id: "cs-despatx", name: "El despatx", actions: [say("Dumbledore dorm dret darrere l'escriptori, amb un somriure."), say("I el prestatge del Barret Seleccionador... és buit."), say("Necessito dues coses: el barret i alguna manera de despertar-lo.")] },
   { id: "cs-recepta", name: "La recepta", actions: [
     lose("o-llibre"), setVar("v-recepta", true),

@@ -1,7 +1,7 @@
 // Els jocs fets amb el skill que es publiquen a GitHub Pages, cadascun a docs/jocs/<nom>/ (joc estàtic, per
 // jugar-hi des del navegador). La llista és a jocs.json. tools/web/build.mjs els torna a posar cada vegada.
 //   node tools/web/jocs.mjs <nom>            exporta aventures/<nom>/joc.zip a docs/jocs/<nom>/
-//   node tools/web/jocs.mjs <nom> --push     i a més en fa un commit (el joc i el seu codi) i el puja a GitHub
+//   node tools/web/jocs.mjs <nom> --push ["missatge"]   i a més en fa un commit (el joc i el seu codi) i el puja a GitHub
 import { mkdir, readFile, rm, writeFile } from "node:fs/promises";
 import { execFileSync } from "node:child_process";
 import { dirname, join } from "node:path";
@@ -36,7 +36,8 @@ if (process.argv[1] === fileURLToPath(import.meta.url)) {
     git("add", "--", join("docs", "jocs", name), join("aventures", name), join("tools", "web"));
     const staged = execFileSync("git", ["diff", "--cached", "--name-only"], { cwd: ROOT, encoding: "utf8" }).trim();
     if (!staged) { console.log("No hi ha canvis per publicar."); process.exit(0); }
-    git("commit", "-m", `Publica «${PUBLICATS.find((p) => p.nom === name).titol}» a GitHub Pages\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>`);
+    const titol = PUBLICATS.find((p) => p.nom === name).titol, msg = process.argv[4];
+    git("commit", "-m", `${msg ? `«${titol}»: ${msg}` : `Publica «${titol}» a GitHub Pages`}\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>`);
     git("push", "origin", "HEAD");
     console.log(`Publicat: https://realbluehead.github.io/aventura-editor/jocs/${name}/`);
   }
