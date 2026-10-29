@@ -64,11 +64,6 @@ Kuwahara), queda't amb **~20 colors** per escena (de la paleta comuna), conserva
 perquè cada lloc es distingeixi, i neteja els píxels solts. No ho enfosqueixis massa: s'ha de veure tot.
 `aventures/dracula/estil.mjs` (funció `fons`) ho fa tot i es pot copiar.
 
-**Més resolució (640×480).** Per a fons amb més detall, fes-los de 640×480 (detall de 320×240). Es pot col·locar
-tot el joc en coordenades de 320×200 i convertir-les al final (x×2, y×2,4: el 16:10 estirat a 4:3, com es veien
-els jocs de 320×200 als monitors); amplia també els objectes (×2–×4) i l'alçada dels actors. Ho fa
-`aventures/dracula/build.mjs` (blocs «Mida dels objectes» i «De 320×200 a 640×480»).
-
 Per a una aventura coherent, tria una paleta comuna (per exemple `palette: "db32"` o `"endesga32"`) per a tots els
 fons i objectes. Les pintures fosques: puja la brillantor perquè el protagonista i els objectes es vegin.
 
@@ -95,6 +90,18 @@ pedres, fulles sempre igual). Mira `tools/barcelona/scenes.mjs` per veure deu fo
 
 Pensa el fons com un escenari de teatre: **cel o paret a dalt, coses interessants al mig (on aniran els punts
 calents), i terra pla a baix (y ≈ 150–199)** on camina el protagonista. Deixa lloc lliure per als personatges.
+
+**Decorats en perspectiva (el resultat més bo).** En lloc de pixelar fotos, dibuixa cada escenari en 3D amb una
+càmera: parets, terra i mobles es projecten amb punt de fuga, amb textures procedurals (pedra, fusta, maó, neu,
+aigua), llums (torxes, espelmes, finestres) i una paleta comuna amb tramat. Com que la zona caminable, els punts
+calents i l'alçada dels personatges surten de la mateixa càmera, tot quadra sol. Hi ha dos exemples:
+- `aventures/barret-perdut/` (320×200): el motor (`persp.mjs` càmera i formes, `textura.mjs` materials i llum,
+  `comu.mjs` mobles i retalls d'objectes, `llums.mjs` flames animades) i 20 decorats a `castell.mjs` i `fora.mjs`.
+- `aventures/dracula/decorats/` (640×480 amb píxels de 2×2): el mateix motor a 320×240, una paleta pròpia, peces
+  noves (`dcomu.mjs`: cel amb núvols, muntanyes, castell, cases, làpides, vaixells, aranyes de llums...) i 50
+  decorats. Cada funció torna `{ bg, walk, ah, spots: { idPuntCalent: polígon }, pts: { idPersonatge: [x, y] } }`
+  i `build.mjs` ho encaixa a les escenes; `eines/decorats.mjs` en fa proves amb les zones dibuixades.
+Les portes de les parets laterals han de ser prou endins perquè es vegin (`sideExit` ho calcula).
 
 ## 4. Personatges
 

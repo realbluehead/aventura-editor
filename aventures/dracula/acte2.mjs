@@ -2,7 +2,6 @@
 export default function acte2({ P, K, E, O, pj, escena, aparicio }) {
   const { rect, leftEdge, rightEdge, spot, exit, npc, place, obj, chr, hot, hasItem, inState, isVar, said, say, take, lose, setState, setVar, sound, music, cutscene, wait, rule, dialogue, node, opt } = K;
   const V = (id) => isVar(id, true);
-  const C = O.C;
 
   /* ---------- Objectes ---------- */
   P.object({ id: "o-bitllet", name: "bitllets", description: "Dos bitllets de tren i vaixell: Budapest, Calais, Dover, Whitby. Per a mi i per a la Mina. La senyora Harker.", pickable: true, states: [["normal", "Normal", O.bitllet()]] });
@@ -28,7 +27,7 @@ export default function acte2({ P, K, E, O, pj, escena, aparicio }) {
 
   /* ---------- Escenaris ---------- */
   escena("budapest", "Hospital de Budapest", "L'hospital de Sant Josep i Santa Maria, a Budapest. Fa olor de sabó i d'encens.", {
-    walkable: [[[0, 176], [200, 162], [320, 166], [320, 199], [0, 199]]], music: "so-whitby",
+    music: "so-whitby",
     onEnter: { cutsceneId: "cs-budapest", once: true },
     hotspots: [
       exit("ex-bp-estacio", "Cap a l'estació", rightEdge(166), "s-whitby-port", [60, 190], {
@@ -40,16 +39,8 @@ export default function acte2({ P, K, E, O, pj, escena, aparicio }) {
     characters: [npc("c-agata", [232, 184], "left"), npc("c-mina-bp", [92, 190], "right")],
   });
   escena("whitby-port", "Port de Whitby", "El port de Whitby, l'endemà de la tempesta. Al moll hi ha un vaixell encallat.", {
-    walkable: [[[0, 178], [320, 178], [320, 199], [0, 199]]], music: "so-whitby",
+    music: "so-whitby",
     onEnter: { cutsceneId: "cs-whitby", once: true },
-    draw(c) {
-      // Un moll de fusta a la part de baix, per on es camina
-      // En coordenades de 640×480 i en blocs de 2×2, com la resta del fons
-      c.rect(0, 422, 640, 58, C.fustaFosca);
-      for (let y = 432; y < 480; y += 14) c.rect(0, y, 640, 4, C.negre);
-      for (let x = 12; x < 640; x += 76) { c.rect(x, 398, 12, 24, C.fusta); c.rect(x, 398, 12, 4, C.palla); }
-      c.rect(0, 422, 640, 4, C.fusta);
-    },
     hotspots: [
       exit("ex-wp-demeter", "Pujar al Demeter", rect(45, 60, 60, 100), "s-demeter", [60, 190], {
         conditions: [said("d-guardacostes", "op-permis")], blocked: "El guardacostes crida: «Enrere! Ningú no puja a bord sense permís!»",
@@ -64,7 +55,7 @@ export default function acte2({ P, K, E, O, pj, escena, aparicio }) {
     characters: [npc("c-guardacostes", [252, 192], "left")],
   });
   escena("demeter", "Coberta del Demeter", "La coberta del Demeter. Ni una ànima viva a bord. Només el capità, i cinquanta caixes de terra a la bodega.", {
-    walkable: [[[0, 166], [220, 150], [300, 176], [320, 199], [0, 199]]], transition: "iris",
+    transition: "iris",
     hotspots: [
       exit("ex-dm-port", "Baixar al moll", leftEdge(166), "s-whitby-port", [80, 190]),
       spot("ho-dm-cordam", "cordam", "Les cordes estan tallades. Algú, o alguna cosa, les va mossegar.", rect(232, 20, 88, 140)),
@@ -73,7 +64,7 @@ export default function acte2({ P, K, E, O, pj, escena, aparicio }) {
     objects: [place("o-capita", [112, 172], [136, 182]), place("o-quadern", [202, 186], [190, 190])],
   });
   escena("escales", "Les 199 escales", "Les 199 escales que pugen del port a l'església de Santa Maria.", {
-    walkable: [[[62, 170], [320, 160], [320, 199], [62, 199]]], music: "so-whitby",
+    music: "so-whitby",
     hotspots: [
       exit("ex-es-port", "Baixar al port", rect(62, 165, 20, 34), "s-whitby-port", [290, 190]),
       exit("ex-es-cementiri", "Pujar al cementiri", rect(205, 60, 65, 100), "s-cementiri-whitby", [40, 190]),
@@ -82,7 +73,7 @@ export default function acte2({ P, K, E, O, pj, escena, aparicio }) {
     characters: [npc("c-swales", [200, 188], "left")],
   });
   escena("cementiri-whitby", "Cementiri de l'East Cliff", "El cementiri de dalt del penya-segat, on la Lucy ve a seure cada nit.", {
-    walkable: [[[0, 163], [320, 161], [320, 199], [0, 199]]], music: "so-whitby",
+    music: "so-whitby",
     hotspots: [
       exit("ex-cw-escales", "Baixar les escales", leftEdge(163), "s-escales", [230, 188]),
       exit("ex-cw-abadia", "A les ruïnes de l'abadia", rect(170, 65, 50, 95), "s-abadia", [40, 188]),
@@ -92,7 +83,6 @@ export default function acte2({ P, K, E, O, pj, escena, aparicio }) {
     objects: [place("o-lucy-banc", [120, 184], [96, 188])],
   });
   escena("abadia", "Ruïnes de l'abadia", "Les ruïnes de l'abadia de Whitby. El vent hi xiula com algú que crida.", {
-    walkable: [[[0, 172], [320, 168], [320, 199], [0, 199]]],
     hotspots: [
       exit("ex-ab-cementiri", "Tornar al cementiri", leftEdge(172), "s-cementiri-whitby", [280, 188]),
       spot("ho-ab-ruines", "ruïnes", "Arcs gòtics sense sostre. Les estrelles fan de vitralls.", rect(85, 30, 115, 140)),
@@ -100,7 +90,7 @@ export default function acte2({ P, K, E, O, pj, escena, aparicio }) {
     objects: [place("o-xal", [226, 190], [210, 192]), place("o-gos", [286, 188], [262, 190])],
   });
   escena("crescent", "Casa dels Westenra (Whitby)", "Les habitacions que llogen la Lucy i la seva mare al Royal Crescent.", {
-    walkable: [[[0, 168], [122, 168], [102, 199], [0, 199]]], music: "so-whitby",
+    music: "so-whitby",
     hotspots: [
       exit("ex-cr-port", "Sortir al port", leftEdge(168), "s-whitby-port", [40, 190]),
       exit("ex-cr-lucy", "Escala de les habitacions", rect(125, 60, 40, 105), "s-lucy-whitby", [60, 186], {
@@ -113,7 +103,6 @@ export default function acte2({ P, K, E, O, pj, escena, aparicio }) {
     characters: [npc("c-westenra-wh", [60, 190], "right")],
   });
   escena("lucy-whitby", "Dormitori de la Lucy (Whitby)", "L'habitació de la Lucy. Fa fred, encara que la finestra és tancada.", {
-    walkable: [[[0, 164], [150, 146], [320, 152], [320, 199], [0, 199]]],
     hotspots: [
       exit("ex-lw-crescent", "Baixar", leftEdge(164), "s-crescent", [40, 186]),
       spot("ho-lw-armari", "armari", "Un armari de roure. La roba de la Lucy fa olor de violetes... i de terra humida.", rect(0, 30, 110, 130)),
@@ -123,7 +112,7 @@ export default function acte2({ P, K, E, O, pj, escena, aparicio }) {
     objects: [place("o-lucy-wh", [216, 142], [200, 162], { layer: "back" })],
   });
   escena("hillingham", "Hillingham", "La casa de la Lucy a Londres. Hi fa olor de medicines i de flors pansides.", {
-    walkable: [[[0, 182], [320, 180], [320, 199], [0, 199]]], music: "so-londres",
+    music: "so-londres",
     onEnter: { cutsceneId: "cs-hillingham", once: true },
     hotspots: [
       exit("ex-hl-dormitori", "Pujar al dormitori", rect(228, 70, 40, 90), "s-hillingham-dormitori", [40, 190]),
@@ -136,7 +125,6 @@ export default function acte2({ P, K, E, O, pj, escena, aparicio }) {
     characters: [npc("c-vh-hill", [232, 192], "left"), npc("c-arthur-hill", [112, 192], "right")],
   });
   escena("hillingham-dormitori", "Dormitori de la Lucy (Londres)", "El dormitori de la Lucy, a Hillingham. Hi ha flors a tot arreu, i cap no fa olor de res.", {
-    walkable: [[[0, 186], [320, 184], [320, 199], [0, 199]]],
     hotspots: [
       exit("ex-hd-baixar", "Baixar", leftEdge(186), "s-hillingham", [290, 192]),
       spot("ho-hd-finestra", "finestra", "Una finestra alta, amb cortines de vellut. Fora, la nit de Londres.", rect(0, 110, 50, 75)),

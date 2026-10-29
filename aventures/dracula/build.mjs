@@ -1,14 +1,17 @@
 // «Dràcula»: una aventura gràfica fosca en 50 escenaris, a partir de la novel·la de Bram Stoker (1897).
 // Feta amb el skill aventura-grafica. Executa: node build.mjs   (escriu joc.zip i el comprova)
-// L'estètica és a estil.mjs; els objectes, a objectes.mjs; cada acte, a acte1.mjs … acte4.mjs.
+// Els decorats es dibuixen per codi en perspectiva (decorats/, el motor del Barret Desaparegut); els personatges i
+// la música són a estil.mjs; els objectes, a objectes.mjs; cada acte, a acte1.mjs … acte4.mjs.
 import { fileURLToPath } from "node:url";
 import { dirname, join } from "node:path";
-import { readFileSync, writeFileSync } from "node:fs";
 const K = await import(new URL("../../skills/aventura-grafica/scripts/kit.mjs", import.meta.url));
 const E = await import(new URL("./estil.mjs", import.meta.url));
 const O = await import(new URL("./objectes.mjs", import.meta.url));
+const T = await import(new URL("./decorats/textura.mjs", import.meta.url));
+const { DECORATS } = await import(new URL("./decorats/index.mjs", import.meta.url));
+const { lightFrames } = await import(new URL("./decorats/llums.mjs", import.meta.url));
+const { crop } = await import(new URL("./decorats/comu.mjs", import.meta.url));
 const HERE = dirname(fileURLToPath(import.meta.url));
-const OPTS = JSON.parse(readFileSync(join(HERE, "opcions.json"), "utf8"));
 
 const P = new K.Project({
   title: "Dràcula",
@@ -52,6 +55,7 @@ pj("c-veu-lucy", "lucy", "Lucy", "", COLORS.lucy);
 /* ---------- Mida dels objectes ---------- */
 // Els fons fan 640×480 amb píxels de 2×2, i els personatges hi fan uns 130 px (píxels de 4×4). Els objectes es
 // dibuixen petits i aquí s'amplien: els normals ×2 (com el fons), els que porten figures humanes ×3 o ×4.
+// Un estat pot ser una llista d'imatges (animació) amb els fotogrames per segon al final.
 const ESCALA = { "o-calessa": 4, "o-skinsky": 4, "o-comte-caixa": 3, "o-capita": 3, "o-lucy-wh": 3, "o-lucy-hill": 3, "o-taut": 3,
   "o-carreta": 3, "o-tombes-germanes": 3, "o-cofre": 3, "o-caixes-castell": 3, "o-caixes-carfax": 3, "o-caixes-picc": 3, "o-caixes-me": 3, "o-foc": 3 };
 const figures = new Set();
@@ -61,16 +65,24 @@ P.object = (o) => {
   const first = o.states.find(([, , img]) => img)?.[2];
   // La icona de l'inventari es fa de la imatge petita, abans d'ampliar-la
   const icon = o.icon ?? (o.pickable && first ? K.icon(first) : null);
-  return object({ ...o, icon, states: o.states.map(([id, name, img]) => [id, name, img ? K.zoomed(img, f) : null]) });
+  const zoom = (img) => (Array.isArray(img) ? img.map((i) => K.zoomed(i, f)) : img ? K.zoomed(img, f) : null);
+  return object({ ...o, icon, states: o.states.map(([id, name, img, ...rest]) => [id, name, zoom(img), ...rest]) });
 };
 
 /* ---------- Ajudes per als escenaris ---------- */
+// Cada decorat (decorats/) es dibuixa a 320×240 i porta la zona caminable, l'alçada dels actors, el polígon de cada
+// punt calent (per id) i on va cada personatge o objecte. El joc es col·loca en coordenades de 320×200 (vegeu més
+// avall), així que aquí les y es divideixen per 1,2; el fons s'amplia ×2 fins a 640×480.
 const H = { near: 54, far: 44 };
+const DEC = {};
+const g = ([x, y]) => [x, y / 1.2];
 function escena(key, name, description, { draw, ...rest }) {
-  const bg = E.fons(join(HERE, "imatges", `${key}.jpg`), OPTS[key] ?? {});
-  if (draw) draw(bg);
-  P.attribute(join(HERE, "imatges", `${key}.jpg`));
-  return P.scene({ id: `s-${key}`, name, description, background: bg, actorHeight: H, ...rest });
+  const sc = (DEC[key] = T.render(DECORATS[key], T.DRACULA));
+  const hotspots = (rest.hotspots ?? []).map((h) => (sc.spots[h.id] ? { ...h, polygon: sc.spots[h.id].map(g) } : h));
+  const characters = (rest.characters ?? []).map((n) => (sc.pts[n.characterId] ? { ...n, position: g(sc.pts[n.characterId]) } : n));
+  const objects = (rest.objects ?? []).map((o) => (sc.pts[o.objectId] ? { ...o, position: g(sc.pts[o.objectId]) } : o));
+  return P.scene({ id: `s-${key}`, name, description, background: K.zoomed(sc.bg, 2), ...rest, hotspots, characters, objects,
+    walkable: sc.walk.map((poly) => poly.map(g)), actorHeight: { near: sc.ah.near / 1.2, far: sc.ah.far / 1.2 } });
 }
 // Un objecte que és una figura (el comte, la Lucy...), amb estats visible / amagat
 function aparicio(id, name, description, img, { visible = true } = {}) {
@@ -80,6 +92,40 @@ function aparicio(id, name, description, img, { visible = true } = {}) {
 
 const ctx = { P, K, E, O, pj, escena, aparicio, H };
 for (const acte of ["acte1", "acte2", "acte3", "acte4"]) (await import(new URL(`./${acte}.mjs`, import.meta.url))).default(ctx);
+
+/* ---------- Llums animades i encaix ---------- */
+// Les flames de les torxes, espelmes i llars de foc, i les finestres llunyanes que fan pampallugues: un objecte
+// decoratiu animat per escenari (llums.mjs), darrere dels personatges
+for (const [key, sc] of Object.entries(DEC)) {
+  const fr = lightFrames(sc);
+  if (!fr) continue;
+  const { imgs, pos } = crop(fr), id = `o-llums-${key}`;
+  P.object({ id, name: "llums", description: "", decor: true, states: [["anim", "Animació", imgs, 7]] });
+  P.scenes.find((s) => s.id === `s-${key}`).objects.push(K.place(id, g(pos), null, { layer: "back" }));
+}
+// Els decorats nous tenen el terra on toca: els personatges, els punts per acostar-s'hi i les arribades de les
+// sortides que hi queden fora es porten al punt de terra més proper
+const inside = (poly, [x, y]) => { let c = false; for (let i = 0, j = poly.length - 1; i < poly.length; j = i++) { const [xi, yi] = poly[i], [xj, yj] = poly[j]; if ((yi > y) !== (yj > y) && x < ((xj - xi) * (y - yi)) / (yj - yi) + xi) c = !c; } return c; };
+function onFloor(scene, p) {
+  if (!p || scene.walkable.some((w) => inside(w, p))) return p;
+  let best = null, bd = Infinity;
+  for (const w of scene.walkable) for (let i = 0; i < w.length; i++) {
+    const [a, b] = [w[i], w[(i + 1) % w.length]], dx = b[0] - a[0], dy = b[1] - a[1];
+    const t = Math.max(0, Math.min(1, ((p[0] - a[0]) * dx + (p[1] - a[1]) * dy) / (dx * dx + dy * dy || 1)));
+    const q = [a[0] + dx * t, a[1] + dy * t], d = Math.hypot(q[0] - p[0], q[1] - p[1]);
+    if (d < bd) { bd = d; best = q; }
+  }
+  // una mica cap endins, perquè no quedi just a la vora
+  const cx = scene.walkable[0].reduce((s, q) => s + q[0], 0) / scene.walkable[0].length, cy = scene.walkable[0].reduce((s, q) => s + q[1], 0) / scene.walkable[0].length;
+  for (let k = 0.04; k < 1; k += 0.04) { const q = [best[0] + (cx - best[0]) * k, best[1] + (cy - best[1]) * k]; if (scene.walkable.some((w) => inside(w, q))) return q; }
+  return best;
+}
+const byId = Object.fromEntries(P.scenes.map((s) => [s.id, s]));
+for (const s of P.scenes) {
+  for (const n of s.characters) { n.position = onFloor(s, n.position); n.walkTo = onFloor(s, n.walkTo); }
+  for (const o of s.objects) o.walkTo = onFloor(s, o.walkTo);
+  for (const h of s.hotspots) if (h.exit?.arrival) h.exit.arrival = onFloor(byId[h.exit.sceneId], h.exit.arrival);
+}
 
 /* ---------- De 320×200 a 640×480 ---------- */
 // Tot el joc s'ha col·locat en coordenades de 320×200; aquí es passen a les dels fons (x×2, y×2,4)
@@ -94,7 +140,7 @@ const actions = [...P.cutscenes.flatMap((c) => c.actions), ...P.rules.flatMap((r
 for (const a of actions) { if (a.type === "walk") a.point = pt(a.point); if (a.type === "goto") a.arrival = pt(a.arrival); }
 
 /* ---------- Títol i escriure ---------- */
-const titol = E.fons(join(HERE, "imatges", "borgo.jpg"), OPTS.borgo ?? {});
+const titol = K.zoomed(T.render(DECORATS.borgo, T.DRACULA).bg, 2);
 titol.rect(112, 32, 416, 116, [7, 6, 11, 210]);
 titol.text(320 - K.Canvas.textWidth("DRACULA", 12) / 2 + 4, 48, "DRACULA", "#3a0a10", 12);
 titol.text(320 - K.Canvas.textWidth("DRACULA", 12) / 2, 44, "DRACULA", "#cc2a2a", 12);
@@ -105,5 +151,3 @@ await P.write(join(HERE, "joc.zip"), {
   titleScreen: { image: titol, subtitle: "Una aventura gràfica a partir de la novel·la de Bram Stoker", music: "so-dracula" },
   credits: "Adaptació lliure de «Dracula», de Bram Stoker (1897).\nFet amb el skill aventura-grafica de l'editor d'aventures.",
 });
-// Els crèdits complets de les imatges (al joc hi van resumits, perquè hi caben 3000 caràcters)
-writeFileSync(join(HERE, "CREDITS.md"), `# Crèdits de les imatges de «Dràcula»\n\nTotes són de Wikimedia Commons, adaptades a pixel art amb la paleta del joc.\n\n${P.credits.map((l) => `- ${l}`).join("\n")}\n`);

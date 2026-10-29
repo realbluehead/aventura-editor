@@ -49,7 +49,7 @@ export default function acte3({ P, K, E, O, pj, escena, aparicio }) {
 
   /* ---------- Escenaris ---------- */
   escena("hampstead", "Hampstead Heath", "El bruguerar de Hampstead, al nord de Londres. De nit, s'hi perden els nens.", {
-    walkable: [[[0, 163], [320, 167], [320, 199], [0, 199]]], music: "so-londres",
+    music: "so-londres",
     hotspots: [
       exit("ex-hs-picc", "Tornar a Londres", leftEdge(163), "s-piccadilly", [150, 184]),
       exit("ex-hs-king", "Cap al cementiri de Kingstead", rightEdge(167), "s-kingstead", [110, 188]),
@@ -60,7 +60,7 @@ export default function acte3({ P, K, E, O, pj, escena, aparicio }) {
     characters: [npc("c-policia", [200, 188], "left")],
   });
   escena("kingstead", "Cementiri de Kingstead", "El cementiri de Kingstead, a mitjanit. Àngels de pedra, heura i silenci.", {
-    walkable: [[[110, 140], [200, 140], [260, 199], [60, 199]]], music: "so-dracula",
+    music: "so-dracula",
     hotspots: [
       exit("ex-kg-hs", "Tornar a Hampstead", rect(40, 170, 22, 29), "s-hampstead", [290, 188]),
       exit("ex-kg-cripta", "Panteó dels Westenra", rect(130, 100, 40, 40), "s-cripta", [290, 190], {
@@ -72,7 +72,7 @@ export default function acte3({ P, K, E, O, pj, escena, aparicio }) {
     characters: [npc("c-vh-king", [212, 192], "left"), npc("c-arthur-king", [92, 192], "right")],
   });
   escena("cripta", "Panteó dels Westenra", "Dins del panteó dels Westenra. Fa olor de flors marcides i d'una altra cosa.", {
-    walkable: [[[0, 176], [320, 176], [320, 199], [0, 199]]], transition: "iris",
+    transition: "iris",
     hotspots: [
       exit("ex-cr-sortir", "Sortir", rightEdge(176), "s-kingstead", [150, 152]),
       spot("ho-cr-porta", "porta del panteó", "La porta del panteó. Les escletxes són prou amples perquè hi passi... la boira.", rect(0, 60, 40, 110)),
@@ -82,7 +82,7 @@ export default function acte3({ P, K, E, O, pj, escena, aparicio }) {
     characters: [npc("c-arthur-cripta", [60, 194], "right")],
   });
   escena("asil", "Asil de Purfleet", "L'asil del doctor Seward, a Purfleet. Darrere el mur del jardí, Carfax.", {
-    walkable: [[[0, 166], [320, 161], [320, 199], [0, 199]]], music: "so-londres",
+    music: "so-londres",
     hotspots: [
       exit("ex-as-picc", "Tren a Londres", leftEdge(166), "s-piccadilly", [290, 188]),
       exit("ex-as-despatx", "Despatx del doctor Seward", rect(130, 112, 40, 40), "s-despatx", [40, 192]),
@@ -96,7 +96,6 @@ export default function acte3({ P, K, E, O, pj, escena, aparicio }) {
     characters: [npc("c-zelador", [150, 188], "right")],
   });
   escena("despatx", "Despatx del doctor Seward", "El despatx del doctor Seward. Llibres, estatuetes i un fonògraf on dicta el seu diari.", {
-    walkable: [[[0, 186], [180, 166], [320, 170], [320, 199], [0, 199]]],
     hotspots: [
       exit("ex-dp-asil", "Sortir", leftEdge(186), "s-asil", [140, 188]),
       spot("ho-dp-fonograf", "fonògraf", "El fonògraf del doctor. Hi grava el diari en cilindres de cera. Diu que és més ràpid que escriure. Jo uso taquigrafia.", rect(170, 70, 40, 40)),
@@ -107,7 +106,6 @@ export default function acte3({ P, K, E, O, pj, escena, aparicio }) {
     characters: [npc("c-seward-desp", [252, 192], "left")],
   });
   escena("cella", "Cel·la de Renfield", "La cel·la del pacient Renfield. Neta, buida, i amb una finestra amb reixa.", {
-    walkable: [[[30, 152], [290, 152], [320, 199], [0, 199]]],
     hotspots: [
       exit("ex-ce-asil", "Sortir", leftEdge(160), "s-asil", [60, 188]),
       spot("ho-ce-finestra", "finestra", "Una finestra amb reixa. Per aquí entren les mosques que en Renfield caça.", rect(140, 15, 40, 50)),
@@ -116,7 +114,6 @@ export default function acte3({ P, K, E, O, pj, escena, aparicio }) {
     characters: [npc("c-renfield", [200, 184], "left")],
   });
   escena("jardi", "Jardí de l'asil", "El jardí tancat de l'asil. Al fons, el mur que el separa de Carfax.", {
-    walkable: [[[0, 176], [320, 171], [320, 199], [0, 199]]],
     hotspots: [
       exit("ex-jd-asil", "Tornar a l'asil", leftEdge(176), "s-asil", [290, 188]),
       exit("ex-jd-mur", "Mur de Carfax", rect(270, 60, 50, 105), "s-carfax", [290, 190], {
@@ -127,7 +124,6 @@ export default function acte3({ P, K, E, O, pj, escena, aparicio }) {
     ],
   });
   escena("sala-reunio", "Saló de l'asil", "El saló on ens reunim. Aquí hem jurat destruir el comte.", {
-    walkable: [[[0, 192], [60, 173], [320, 173], [320, 199], [0, 199]]],
     hotspots: [
       exit("ex-sr-asil", "Sortir", rightEdge(173), "s-asil", [230, 188]),
       spot("ho-sr-taula", "taula", "Mapes, diaris, cartes i telegrames. Hem posat en ordre totes les peces del trencaclosques.", rect(50, 130, 140, 69)),
@@ -136,7 +132,6 @@ export default function acte3({ P, K, E, O, pj, escena, aparicio }) {
     characters: [npc("c-vh-sala", [250, 188], "left"), npc("c-quincey-sala", [296, 194], "left")],
   });
   escena("habitacio-mina", "Habitació de la Mina", "La nostra habitació a l'asil. Per primera vegada, la Mina no em somriu en entrar.", {
-    walkable: [[[0, 177], [110, 173], [320, 190], [320, 199], [0, 199]]],
     onEnter: { cutsceneId: "cs-atac", once: true },
     hotspots: [
       exit("ex-hm-asil", "Sortir", leftEdge(177), "s-asil", [270, 182]),
@@ -145,7 +140,7 @@ export default function acte3({ P, K, E, O, pj, escena, aparicio }) {
     characters: [npc("c-mina-asil", [60, 190], "right")],
   });
   escena("carfax", "Carfax", "Carfax, la finca vella que vaig vendre al comte. A la lluna, sembla un cementiri amb finestres.", {
-    walkable: [[[0, 180], [320, 180], [320, 199], [0, 199]]], music: "so-dracula",
+    music: "so-dracula",
     hotspots: [
       exit("ex-cx-jardi", "Saltar el mur", rightEdge(180), "s-jardi", [290, 188]),
       exit("ex-cx-capella", "Capella de Carfax", rect(40, 60, 40, 110), "s-carfax-capella", [160, 184], {
@@ -156,7 +151,6 @@ export default function acte3({ P, K, E, O, pj, escena, aparicio }) {
     ],
   });
   escena("carfax-capella", "Capella de Carfax", "La capella de Carfax. Les caixes de terra del comte són aquí.", {
-    walkable: [[[100, 130], [230, 130], [320, 199], [0, 199]]],
     hotspots: [
       exit("ex-cc-sortir", "Sortir", rect(0, 170, 20, 29), "s-carfax", [60, 188]),
       spot("ho-cc-murs", "murs", "Murs antics coberts d'heura. Fa una olor espantosa: a terra remoguda i a sang vella.", rect(0, 0, 100, 160)),
@@ -164,7 +158,7 @@ export default function acte3({ P, K, E, O, pj, escena, aparicio }) {
     objects: [place("o-rates", [160, 176], [150, 190]), place("o-caixes-carfax", [266, 182], [240, 190]), place("o-llista", [92, 186], [102, 192])],
   });
   escena("piccadilly", "Piccadilly", "Piccadilly, el cor de Londres. Carruatges, gent, i en algun lloc d'aquí, una casa del comte.", {
-    walkable: [[[0, 171], [320, 171], [320, 199], [0, 199]]], music: "so-londres",
+    music: "so-londres",
     hotspots: [
       exit("ex-pc-hill", "Cap a Hillingham", leftEdge(171), "s-hillingham", [290, 192]),
       exit("ex-pc-hs", "Cotxe a Hampstead", rect(150, 120, 40, 40), "s-hampstead", [40, 188]),
@@ -182,7 +176,6 @@ export default function acte3({ P, K, E, O, pj, escena, aparicio }) {
     characters: [npc("c-serraller", [70, 192], "right")],
   });
   escena("casa-piccadilly", "Casa del comte a Piccadilly", "El menjador de la casa de Piccadilly. Tot és pols, menys les caixes.", {
-    walkable: [[[0, 177], [320, 173], [320, 199], [0, 199]]],
     hotspots: [
       exit("ex-cp-sortir", "Sortir al carrer", rightEdge(173), "s-piccadilly", [90, 188]),
       spot("ho-cp-llar", "llar de foc", "La llar de foc és freda. Hi ha papers cremats: noms de vaixells, i la paraula «Varna».", rect(75, 80, 45, 60)),
@@ -192,7 +185,7 @@ export default function acte3({ P, K, E, O, pj, escena, aparicio }) {
     objects: [place("o-caixes-picc", [232, 190], [206, 194]), place("o-rebut", [112, 186], [112, 192])],
   });
   escena("mile-end", "Mile End", "L'East End. Fang, carros, botigues i més gent de la que hi cap.", {
-    walkable: [[[0, 177], [320, 173], [320, 199], [0, 199]]], music: "so-londres",
+    music: "so-londres",
     hotspots: [
       exit("ex-me-picc", "Tornar a Piccadilly", leftEdge(177), "s-piccadilly", [200, 190]),
       exit("ex-me-docks", "Cap als molls", rightEdge(173), "s-docks", [40, 190], {
@@ -204,7 +197,6 @@ export default function acte3({ P, K, E, O, pj, escena, aparicio }) {
     characters: [npc("c-carreter", [242, 192], "left")],
   });
   escena("zoo", "Zoo de Londres", "El zoo de Regent's Park. D'aquí es va escapar un llop la nit que va morir la Lucy.", {
-    walkable: [[[0, 182], [320, 182], [320, 199], [0, 199]]],
     hotspots: [
       exit("ex-zo-hs", "Tornar a Hampstead", leftEdge(182), "s-hampstead", [290, 190]),
       spot("ho-zo-elefant", "elefant", "Un elefant que em mira amb uns ulls molt més tranquils que els meus.", rect(30, 15, 210, 165)),
@@ -212,7 +204,7 @@ export default function acte3({ P, K, E, O, pj, escena, aparicio }) {
     characters: [npc("c-bilder", [276, 194], "left")],
   });
   escena("docks", "Docks de Londres", "Els molls de Londres. Vaixells cap a tot el món. Un d'ells s'emporta el comte.", {
-    walkable: [[[0, 179], [320, 179], [320, 199], [0, 199]]], music: "so-persecucio",
+    music: "so-persecucio",
     hotspots: [
       exit("ex-dk-me", "Tornar a l'East End", leftEdge(179), "s-mile-end", [290, 190]),
       exit("ex-dk-tren", "Estació de Charing Cross", rightEdge(179), "s-tren", [130, 192], {
@@ -223,7 +215,7 @@ export default function acte3({ P, K, E, O, pj, escena, aparicio }) {
     characters: [npc("c-agent", [200, 192], "left")],
   });
   escena("tren", "L'Orient Exprés", "Un vagó de l'Orient Exprés, camí de Varna. El tren fa un soroll de cor accelerat.", {
-    walkable: [[[100, 170], [220, 170], [260, 199], [60, 199]]], music: "so-persecucio",
+    music: "so-persecucio",
     onEnter: { cutsceneId: "cs-tren", once: true },
     hotspots: [
       exit("ex-tr-varna", "Baixar a Varna", rect(150, 90, 30, 70), "s-varna", [240, 186], {

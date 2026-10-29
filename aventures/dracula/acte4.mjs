@@ -25,7 +25,7 @@ export default function acte4({ P, K, E, O, pj, escena, aparicio }) {
 
   /* ---------- Escenaris ---------- */
   escena("varna", "Port de Varna", "El port de Varna, al mar Negre. Fa dies que esperem un vaixell que no arriba.", {
-    walkable: [[[0, 186], [180, 171], [320, 171], [320, 199], [0, 199]]], music: "so-persecucio",
+    music: "so-persecucio",
     onEnter: { cutsceneId: "cs-varna", once: true },
     hotspots: [
       exit("ex-va-galatz", "Tren a Galatz", rightEdge(171), "s-galatz", [40, 186], {
@@ -36,7 +36,7 @@ export default function acte4({ P, K, E, O, pj, escena, aparicio }) {
     characters: [npc("c-telegrafista", [242, 190], "left")],
   });
   escena("galatz", "Port de Galatz", "Galatz, al Danubi. El Czarina Catherine és aquí, amarrat. Buit.", {
-    walkable: [[[0, 150], [110, 150], [150, 199], [0, 199]]], music: "so-persecucio",
+    music: "so-persecucio",
     hotspots: [
       exit("ex-ga-magatzem", "Magatzem de Skinsky", rect(0, 40, 50, 90), "s-magatzem", [290, 190]),
       exit("ex-ga-riu", "Llanxa de vapor", rect(100, 160, 60, 30), "s-riu", [60, 190], {
@@ -47,7 +47,6 @@ export default function acte4({ P, K, E, O, pj, escena, aparicio }) {
     characters: [npc("c-viceconsol", [60, 188], "right")],
   });
   escena("magatzem", "Magatzem de Skinsky", "El magatzem de Skinsky. Fosc, humit, i amb una olor que ja conec massa bé.", {
-    walkable: [[[0, 176], [320, 176], [320, 199], [0, 199]]],
     hotspots: [
       exit("ex-mg-galatz", "Sortir", rightEdge(176), "s-galatz", [40, 160]),
       spot("ho-mg-caixes", "fardells", "Fardells, sacs i caixes. Cap no fa olor de terra de cementiri. La que buscàvem ja no hi és.", rect(20, 100, 120, 70)),
@@ -55,7 +54,7 @@ export default function acte4({ P, K, E, O, pj, escena, aparicio }) {
     objects: [place("o-skinsky", [222, 196], [200, 194]), place("o-albara", [122, 192], [122, 194])],
   });
   escena("riu", "Riu Bistrița", "El riu, a la nit. Aigua negra i corrent, cap a les muntanyes.", {
-    walkable: [[[0, 176], [140, 176], [160, 199], [0, 199]]], music: "so-persecucio",
+    music: "so-persecucio",
     hotspots: [
       exit("ex-ri-bosc", "Remuntar el riu", rect(170, 100, 50, 60), "s-bosc", [60, 190], {
         conditions: [V("v-vapor")], blocked: "El barquer no engegarà la caldera per res. Ni per ningú.",
@@ -66,7 +65,7 @@ export default function acte4({ P, K, E, O, pj, escena, aparicio }) {
     characters: [npc("c-barquer", [100, 190], "right")],
   });
   escena("bosc", "Bosc nevat", "Els boscos dels Carpats, sota la neu. Fa tant de fred que l'aire fa mal.", {
-    walkable: [[[60, 162], [260, 156], [320, 199], [0, 199]]], music: "so-transilvania",
+    music: "so-transilvania",
     onEnter: { cutsceneId: "cs-bosc", once: true },
     hotspots: [
       exit("ex-bo-riu", "Tornar al riu", leftEdge(176), "s-riu", [100, 188]),
@@ -76,7 +75,7 @@ export default function acte4({ P, K, E, O, pj, escena, aparicio }) {
     characters: [npc("c-quincey-bosc", [240, 188], "left")],
   });
   escena("campament", "Campament", "El campament de Van Helsing i la Mina, a la vista del castell. La nit és plena d'ulls.", {
-    walkable: [[[60, 177], [320, 153], [320, 199], [0, 199]]], music: "so-dracula",
+    music: "so-dracula",
     onEnter: { cutsceneId: "cs-campament", once: true },
     hotspots: [
       exit("ex-cm-bosc", "Tornar al bosc", leftEdge(185), "s-bosc", [290, 188]),
@@ -89,7 +88,7 @@ export default function acte4({ P, K, E, O, pj, escena, aparicio }) {
     characters: [npc("c-mina-camp", [252, 188], "left"), npc("c-vh-camp", [294, 192], "left")],
   });
   escena("castell-neu", "El castell sota la neu", "El castell de Dràcula, cobert de neu, sota un cel de tempesta.", {
-    walkable: [[[0, 176], [320, 171], [320, 199], [0, 199]]], music: "so-dracula",
+    music: "so-dracula",
     onEnter: { cutsceneId: "cs-castell", once: true },
     hotspots: [
       exit("ex-cn-tombes", "Ruïnes de la capella", rect(10, 60, 100, 90), "s-tombes", [290, 190]),
@@ -101,7 +100,6 @@ export default function acte4({ P, K, E, O, pj, escena, aparicio }) {
     ],
   });
   escena("tombes", "Tombes del castell", "Sota el castell, les tombes. La més gran porta un sol nom.", {
-    walkable: [[[0, 184], [320, 180], [320, 199], [0, 199]]],
     hotspots: [
       exit("ex-tb-castell", "Sortir", rightEdge(180), "s-castell-neu", [60, 188]),
       spot("ho-tb-sarcofag", "sarcòfag del comte", "Una tomba enorme, sense cap creu. Només una paraula gravada a la pedra: DRACULA.", rect(60, 10, 220, 150)),
@@ -109,7 +107,7 @@ export default function acte4({ P, K, E, O, pj, escena, aparicio }) {
     objects: [place("o-tombes-germanes", [62, 198], [62, 194])],
   });
   escena("cami", "Camí dels gitanos", "El camí del castell, a la posta de sol. Els gitanos arriben amb el carro.", {
-    walkable: [[[0, 166], [320, 161], [320, 199], [0, 199]]], music: "so-persecucio",
+    music: "so-persecucio",
     onEnter: { cutsceneId: "cs-cami", once: true },
     hotspots: [
       exit("ex-ca-castell", "Tornar al castell", leftEdge(166), "s-castell-neu", [290, 188]),
@@ -119,7 +117,7 @@ export default function acte4({ P, K, E, O, pj, escena, aparicio }) {
     characters: [npc("c-gitano", [202, 186], "left")],
   });
   escena("epileg", "Epíleg", "Set anys després. Les ruïnes del castell, a l'alba.", {
-    walkable: [[[0, 186], [320, 186], [320, 199], [0, 199]]], music: "so-final",
+    music: "so-final",
     hotspots: [spot("ho-ep-ruines", "ruïnes", "Del castell de Dràcula només en queden pedres. I el vent.", rect(30, 10, 200, 170))],
   });
 

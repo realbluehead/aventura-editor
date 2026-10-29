@@ -5,14 +5,15 @@ Protagonista: **Jonathan Harker**. Objectiu final: destruir el comte Dràcula ab
 
 ## Estètica
 
-- Totes les imatges (pintures i fotos de Commons) passen pel mateix tractament (`estil.mjs`): mapa de gradient de
-  lluminositat cap a una rampa nocturna (negre blavós → morat → gris lunar → os), els vermells intensos es conserven
-  com a sang, vinyeta fosca, i quantització a la paleta comuna **«Nosferatu»** amb tramat ordenat suau.
-- Perquè semblin pixel art de debò i no fotos amb pocs colors: un filtre de Kuwahara aplana les textures en taques,
-  el fons es fa a 320×240 i s'amplia ×2 fins a **640×480**, cada escena es queda amb uns 20 colors de la paleta
-  (conservant una part del color original) i es netegen els píxels solts. Prou clar perquè s'hi vegi tot.
-- El joc es col·loca en coordenades de 320×200 i `build.mjs` les passa a 640×480 (x×2, y×2,4); els objectes
-  s'amplien ×2 (×3–×4 els grans i les figures).
+- Els 50 decorats es dibuixen per codi en perspectiva (`decorats/`), amb el motor dels decorats del Barret
+  Desaparegut adaptat a 320×240 (el fons fa 640×480 amb píxels de 2×2): càmera amb punt de fuga, textures de
+  pedra, fusta, maó, neu i aigua, llum freda de lluna i llum càlida d'espelmes i torxes (que fan pampallugues), boira
+  morada i la paleta comuna **«Nosferatu»** (`estil.mjs`) amb tres colors de flama i tramat.
+- Cada decorat porta la seva zona caminable, l'alçada dels actors (calculada amb la mateixa càmera), els punts
+  calents i on va cada personatge o objecte; `build.mjs` ho encaixa a les escenes dels actes. El joc es col·loca
+  en coordenades de 320×200 i es passa a 640×480 (x×2, y×2,4); els objectes s'amplien ×2 (×3–×4 els grans i les
+  figures).
+- Per revisar-los: `node eines/decorats.mjs [clau ...]` (decorats sols i amb les zones, a `prova/decorats/`).
 - Els personatges es pinten amb colors de la mateixa paleta (apagats, freds), perquè no desentonin.
 - Les aparicions que han de desaparèixer (el comte, les germanes, la Lucy) són **objectes** amb estats; els personatges
   que surten a diversos escenaris tenen una entrada per escenari (mateix aspecte i nom, id diferent).

@@ -30,7 +30,7 @@ export default function acte1({ P, K, E, O, pj, escena, aparicio }) {
 
   /* ---------- Escenaris ---------- */
   escena("hotel", "Hotel Corona d'Or", "Bistritz, a les portes dels Carpats. Fa olor de paprika i de por.", {
-    walkable: [[[0, 170], [320, 165], [320, 199], [0, 199]]], music: "so-transilvania",
+    music: "so-transilvania",
     hotspots: [
       exit("ex-hotel-placa", "Sortir a la plaça", rightEdge(165), "s-placa", [40, 186]),
       spot("ho-hotel-finestra", "finestra", "Fora, la nit cau sobre les muntanyes. Algú hi ha penjat una branca d'all.", rect(180, 50, 36, 60)),
@@ -40,7 +40,7 @@ export default function acte1({ P, K, E, O, pj, escena, aparicio }) {
     characters: [npc("c-hostaler", [235, 186], "left"), npc("c-hostalera", [285, 190], "left")],
   });
   escena("placa", "Plaça de Bistritz", "La plaça del poble, sota les muntanyes. La diligència espera.", {
-    walkable: [[[0, 168], [320, 163], [320, 199], [0, 199]]], music: "so-transilvania",
+    music: "so-transilvania",
     hotspots: [
       exit("ex-placa-hotel", "Tornar a l'hotel", leftEdge(168), "s-hotel", [290, 186]),
       exit("ex-placa-diligencia", "Pujar a la diligència", rect(262, 118, 40, 44), "s-borgo", [60, 188], {
@@ -52,7 +52,7 @@ export default function acte1({ P, K, E, O, pj, escena, aparicio }) {
     characters: [npc("c-cotxer", [230, 184], "left"), npc("c-pagesa", [90, 186], "right")],
   });
   escena("borgo", "Pas del Borgo", "El pas del Borgo, a mitjanit. La diligència m'ha deixat aquí, sol, i ha fugit a tota velocitat.", {
-    walkable: [[[0, 172], [320, 172], [320, 199], [0, 199]]], music: "so-dracula", transition: "iris",
+    music: "so-dracula", transition: "iris",
     hotspots: [
       exit("ex-borgo-castell", "Pujar a la calessa", rect(196, 150, 50, 40), "s-pati", [80, 190], {
         conditions: [V("v-calessa")], blocked: "La calessa negra espera. El cotxer em mira sense dir res. Potser hauria de parlar-hi.",
@@ -64,7 +64,6 @@ export default function acte1({ P, K, E, O, pj, escena, aparicio }) {
     objects: [place("o-calessa", [220, 192], [180, 190])],
   });
   escena("pati", "Pati del castell", "El pati del castell de Dràcula. Ruïnes, torres i un silenci que fa mal a les orelles.", {
-    walkable: [[[0, 176], [320, 173], [320, 199], [0, 199]]],
     hotspots: [
       exit("ex-pati-sala", "Porta del castell", rect(140, 110, 40, 60), "s-sala", [120, 192], {
         conditions: [V("v-benvinguda")], blocked: "La porta és tancada. Sento passos a l'altra banda.",
@@ -75,7 +74,6 @@ export default function acte1({ P, K, E, O, pj, escena, aparicio }) {
     objects: [place("o-comte-pati", [166, 184], [140, 188])],
   });
   escena("sala", "Gran saló", "El gran saló del castell. Un sopar per a un sol convidat. El comte no menja mai.", {
-    walkable: [[[0, 188], [150, 182], [320, 180], [320, 199], [0, 199]]],
     hotspots: [
       exit("ex-sala-pati", "Tornar al pati", leftEdge(186), "s-pati", [160, 190]),
       exit("ex-sala-passadis", "Porta del passadís", rect(182, 95, 30, 88), "s-passadis", [60, 190]),
@@ -86,7 +84,6 @@ export default function acte1({ P, K, E, O, pj, escena, aparicio }) {
     objects: [place("o-comte-sala", [252, 194], [225, 194])],
   });
   escena("biblioteca", "Biblioteca", "La biblioteca del comte. Tot són llibres anglesos.", {
-    walkable: [[[0, 166], [320, 162], [320, 199], [0, 199]]],
     hotspots: [
       exit("ex-biblio-passadis", "Tornar al passadís", leftEdge(166), "s-passadis", [40, 192]),
       spot("ho-biblio-mapa", "mapa d'Anglaterra", "Un mapa d'Anglaterra amb cercles a llapis: Exeter, Whitby, Purfleet. Està tort, com si algú el mogués sovint.", rect(185, 40, 30, 35)),
@@ -96,7 +93,6 @@ export default function acte1({ P, K, E, O, pj, escena, aparicio }) {
     ],
   });
   escena("cambra", "La meva cambra", "La cambra on dormo. Luxosa, freda, i sense cap mirall destapat.", {
-    walkable: [[[0, 179], [320, 177], [320, 199], [0, 199]]],
     hotspots: [
       exit("ex-cambra-passadis", "Sortir al passadís", rightEdge(177), "s-passadis", [280, 192]),
       exit("ex-cambra-finestra", "finestra", rect(200, 90, 50, 60), "s-muralla", [40, 190], {
@@ -109,7 +105,6 @@ export default function acte1({ P, K, E, O, pj, escena, aparicio }) {
     objects: [place("o-mirall", [206, 156], [206, 186], { layer: "back" })],
   });
   escena("passadis", "Passadís", "Un passadís llarg, de voltes de pedra. Al fons, una porta tancada.", {
-    walkable: [[[120, 150], [200, 150], [320, 199], [0, 199]]],
     hotspots: [
       exit("ex-passadis-sala", "Al gran saló", rect(25, 80, 35, 90), "s-sala", [200, 192]),
       exit("ex-passadis-biblio", "A la biblioteca", rect(85, 90, 25, 60), "s-biblioteca", [40, 186]),
@@ -121,7 +116,7 @@ export default function acte1({ P, K, E, O, pj, escena, aparicio }) {
     ],
   });
   escena("ala-sud", "Ala sud", "Les cambres abandonades de l'ala sud, on fa segles que no viu ningú. O això diu el comte.", {
-    walkable: [[[0, 176], [320, 176], [320, 199], [0, 199]]], music: "so-dracula",
+    music: "so-dracula",
     onEnter: { cutsceneId: "cs-germanes", once: true },
     hotspots: [
       exit("ex-alasud-passadis", "Tornar al passadís", leftEdge(176), "s-passadis", [160, 160]),
@@ -131,7 +126,7 @@ export default function acte1({ P, K, E, O, pj, escena, aparicio }) {
     objects: [place("o-germanes", [170, 194], [130, 192]), place("o-clau-ferro", [276, 152], [262, 190], { layer: "back" })],
   });
   escena("muralla", "La muralla", "Per fora del castell, sobre la muralla. El vent udola. A sota, el no-res.", {
-    walkable: [[[0, 178], [320, 176], [320, 199], [0, 199]]], transition: "iris",
+    transition: "iris",
     hotspots: [
       exit("ex-muralla-cambra", "Tornar per la finestra", leftEdge(178), "s-cambra", [230, 190]),
       exit("ex-muralla-comte", "Finestra de la cambra del comte", rect(255, 140, 40, 40), "s-cambra-comte", [40, 192]),
@@ -140,7 +135,6 @@ export default function acte1({ P, K, E, O, pj, escena, aparicio }) {
     ],
   });
   escena("cambra-comte", "Cambra del comte", "La cambra del comte. Luxe antic, pols, i cap llit on dormir.", {
-    walkable: [[[0, 174], [70, 167], [250, 162], [320, 166], [320, 199], [0, 199]]],
     hotspots: [
       exit("ex-ccomte-muralla", "Sortir a la muralla", leftEdge(174), "s-muralla", [290, 190]),
       exit("ex-ccomte-capella", "Porta de roure", rect(280, 50, 36, 96), "s-capella", [40, 194], {
@@ -152,7 +146,7 @@ export default function acte1({ P, K, E, O, pj, escena, aparicio }) {
     objects: [place("o-cofre", [292, 194], [268, 192])],
   });
   escena("capella", "Capella del castell", "La capella en ruïnes, sota el castell. Fa olor de terra remoguda i de mort.", {
-    walkable: [[[0, 184], [320, 184], [320, 199], [0, 199]]], music: "so-dracula",
+    music: "so-dracula",
     hotspots: [
       exit("ex-capella-ccomte", "Escala amunt", leftEdge(184), "s-cambra-comte", [250, 190]),
       exit("ex-capella-esquerda", "Esquerda del mur", rightEdge(184), "s-espadat", [100, 186], {
@@ -164,7 +158,7 @@ export default function acte1({ P, K, E, O, pj, escena, aparicio }) {
     objects: [place("o-caixes-castell", [70, 199], [70, 192]), place("o-comte-caixa", [176, 199], [148, 194]), place("o-pala", [272, 197], [254, 194])],
   });
   escena("espadat", "L'espadat", "Un camí de cabres a la vora del precipici. Baix de tot, el riu i la llibertat.", {
-    walkable: [[[60, 170], [320, 165], [320, 199], [60, 199]]], music: "so-transilvania",
+    music: "so-transilvania",
     onEnter: { cutsceneId: "cs-espadat", once: true },
     hotspots: [
       exit("ex-espadat-baixar", "Baixar per l'espadat", rightEdge(165), "s-budapest", [80, 190]),
