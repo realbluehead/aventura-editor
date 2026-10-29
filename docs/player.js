@@ -1055,35 +1055,51 @@ function createPlayer(container, adventure, {
 
   /* ---------- Coses: a l'escenari i a l'inventari ---------- */
 
-  // Els objectes i personatges queden per sobre dels punts calents; d'entre ells, el que es dibuixa a sobre
-  function targetAt(p) {
+  // Els objectes i personatges queden per sobre dels punts calents; d'entre ells, el que es dibuixa a sobre.
+  // Amb el dit (tol > 0, en píxels de la imatge), si el toc no cau just a sobre de res, val l'objecte o personatge
+  // més proper a menys de «tol» de la seva capsa, i si no, el punt calent petit més proper: les coses petites costen
+  // d'encertar al mòbil
+  function targetAt(p, tol = 0) {
     if (!scene) return null;
-    for (const d of drawables().reverse()) {
+    const objectTarget = (o) => ({
+      kind: "object", id: o.object.id, name: o.object.name, description: o.object.description, object: o.object,
+      inScene: true, walkTo: o.p.walkTo ?? o.p.position, facing: o.p.facing, anchor: o.p.position,
+    });
+    const npcTarget = (n, pose) => ({
+      kind: "character", id: n.ch.id, name: n.ch.name, description: n.ch.description, npc: n, inScene: true,
+      walkTo: n.placement.walkTo ?? defaultApproach([n.x, n.y], n.placement.facing, pose.height),
+      facing: "auto", anchor: [n.x, n.y],
+    });
+    const hotspotTarget = (h) => ({ kind: "hotspot", id: h.id, name: h.name, description: h.description, inScene: true, walkTo: p, facing: "auto", anchor: p, exit: h.exit });
+    const things = drawables().reverse().filter((d) => d.kind === "npc" || (d.kind === "object" && !d.item.object.decor));   // els decoratius no es toquen
+    for (const d of things) {
       if (d.kind === "object") {
         const o = d.item, { x, y, w, h } = o.rect;
-        if (o.object.decor) continue;   // els objectes decoratius (llums, espelmes...) no es poden tocar
-        if (p[0] >= x && p[0] < x + w && p[1] >= y && p[1] < y + h && opaqueAt(o.sprite, p[0] - x, p[1] - y)) {
-          return {
-            kind: "object", id: o.object.id, name: o.object.name, description: o.object.description, object: o.object,
-            inScene: true, walkTo: o.p.walkTo ?? o.p.position, facing: o.p.facing, anchor: o.p.position,
-          };
-        }
-      } else if (d.kind === "npc") {
+        if (p[0] >= x && p[0] < x + w && p[1] >= y && p[1] < y + h && opaqueAt(o.sprite, p[0] - x, p[1] - y)) return objectTarget(o);
+      } else {
         const n = d.item, pose = poseOf(n);
-        if (characterHit(n.ch, sheetOf(n.ch), pose, p)) {
-          return {
-            kind: "character", id: n.ch.id, name: n.ch.name, description: n.ch.description, npc: n, inScene: true,
-            walkTo: n.placement.walkTo ?? defaultApproach([n.x, n.y], n.placement.facing, pose.height),
-            facing: "auto", anchor: [n.x, n.y],
-          };
-        }
+        if (characterHit(n.ch, sheetOf(n.ch), pose, p)) return npcTarget(n, pose);
       }
     }
-    for (let i = scene.hotspots.length - 1; i >= 0; i--) {
-      const h = scene.hotspots[i];
-      if (pointInPolygon(p, h.polygon)) {
-        return { kind: "hotspot", id: h.id, name: h.name, description: h.description, inScene: true, walkTo: p, facing: "auto", anchor: p, exit: h.exit };
+    if (tol > 0) {
+      const toRect = ({ x, y, w, h }) => Math.hypot(Math.max(x - p[0], 0, p[0] - x - w), Math.max(y - p[1], 0, p[1] - y - h));
+      let best = null, bd = tol;
+      for (const d of things) {
+        const pose = d.kind === "npc" ? poseOf(d.item) : null;
+        const rect = d.kind === "object" ? d.item.rect : characterRect(d.item.ch, sheetOf(d.item.ch), d.item.x, d.item.y, pose.height);
+        const dist = toRect(rect);
+        if (dist <= bd) { bd = dist; best = d.kind === "object" ? objectTarget(d.item) : npcTarget(d.item, pose); }
       }
+      if (best) return best;
+    }
+    for (let i = scene.hotspots.length - 1; i >= 0; i--) if (pointInPolygon(p, scene.hotspots[i].polygon)) return hotspotTarget(scene.hotspots[i]);
+    if (tol > 0) {
+      const toSeg = (a, b) => { const dx = b[0] - a[0], dy = b[1] - a[1], t = Math.max(0, Math.min(1, ((p[0] - a[0]) * dx + (p[1] - a[1]) * dy) / (dx * dx + dy * dy || 1))); return Math.hypot(a[0] + dx * t - p[0], a[1] + dy * t - p[1]); };
+      let best = null, bd = tol;
+      // només els punts calents petits: els grans ja són fàcils d'encertar, i al costat sol haver-hi terra per caminar
+      const small = (h) => { const xs = h.polygon.map((q) => q[0]), ys = h.polygon.map((q) => q[1]); return Math.max(...xs) - Math.min(...xs) < tol * 4 && Math.max(...ys) - Math.min(...ys) < tol * 4; };
+      for (const h of scene.hotspots.filter(small)) h.polygon.forEach((a, i) => { const dist = toSeg(a, h.polygon[(i + 1) % h.polygon.length]); if (dist <= bd) { bd = dist; best = h; } });
+      if (best) return hotspotTarget(best);
     }
     return null;
   }
@@ -1469,10 +1485,12 @@ function createPlayer(container, adventure, {
 
   // Doble clic en una sortida: s'hi passa de seguida, sense esperar que el protagonista hi arribi caminant
   let lastClick = { t: 0, id: null };
+  // Amb el dit, les coses es poden tocar fins a uns 22 píxels de la pantalla de distància
+  const touchTolerance = (e) => (e.pointerType === "mouse" ? 0 : (22 * W) / canvas.getBoundingClientRect().width);
   canvas.addEventListener("pointerdown", (e) => {
     if (e.button !== 0 || menuOpen) return;
     const p = toImage(e);
-    const target = targetAt(p);
+    const target = targetAt(p, touchTolerance(e));
     const now = performance.now();
     const double = target?.exit && target.id === lastClick.id && now - lastClick.t < 400;
     lastClick = { t: now, id: target?.id ?? null };
