@@ -1,7 +1,8 @@
 // Editor d'un personatge: les dades, el full de sprites tallat en fotogrames i les animacions.
 // Es tria una animació (per exemple «Camina de costat») i es van clicant els fotogrames del full en ordre.
 import { request, imageUrl } from "../api.js";
-import { $, el, toast, loadImage } from "../ui.js";
+import { $, el, toast, loadImage, blobToDataUrl } from "../ui.js";
+import { openPaintEditor } from "../paint/editor.js";
 import { ANIMATIONS, DIRECTIONS } from "../defaults.js";
 import { sheetGrid, frameSource, animationKeyFor, drawCharacter } from "../player/characters.js";
 
@@ -36,6 +37,7 @@ export async function renderCharacter(view, a, ch) {
         <label>Color de les frases <span class="color-row"><input type="color" name="color"><span class="color-sample">Hola, sóc jo!</span></span></label>
         <div class="field">Full de sprites <small>Una imatge amb tots els fotogrames en una graella de caselles iguals. Pots arrossegar-la aquí.</small>
           <div class="sheet-pick" tabindex="0" role="button"></div>
+          <button type="button" class="small" data-act="paint-sheet" style="align-self:flex-start" title="Dibuixa el full o retoca'l, amb la graella dels fotogrames">🎨 Pinta el full…</button>
           <input type="file" accept="image/png,image/jpeg,image/gif,image/webp" hidden>
         </div>
         <div class="pair">
@@ -134,6 +136,26 @@ export async function renderCharacter(view, a, ch) {
   pick.ondragleave = () => pick.classList.remove("over");
   pick.ondrop = (e) => { e.preventDefault(); pick.classList.remove("over"); setSheet(e.dataTransfer.files[0]); };
   fileInput.onchange = () => setSheet(fileInput.files[0]);
+  // Un full nou en blanc té lloc per a 4 fotogrames de llarg i 3 files (quiet, caminar i parlar)
+  $("[data-act=paint-sheet]", view).onclick = async () => {
+    try {
+      const blob = await openPaintEditor({
+        title: `Full de sprites · ${draft.name || "personatge"}`,
+        src: draft.sheet ? sheetSrc() : null,
+        width: draft.frameWidth * 4, height: draft.frameHeight * 3,
+        grid: { w: draft.frameWidth, h: draft.frameHeight },
+      });
+      if (!blob) return;
+      draft.sheet = await blobToDataUrl(blob);
+      sheet = await loadImage(draft.sheet);
+      markDirty();
+      renderPick();
+      renderSheet();
+      renderSlot();
+    } catch (err) {
+      toast(err.message);
+    }
+  };
 
   // El full ampliat, amb la graella i el número de cada fotograma; clicar-ne un l'afegeix a l'animació triada
   const sheetCanvas = $(".sheet-view canvas", view);
@@ -273,7 +295,7 @@ export async function renderCharacter(view, a, ch) {
 
   $("#save-char").onclick = async () => {
     try {
-      const saved = await request("PUT", `/api/adventures/${a.id}/characters/${ch.id}`, draft);
+      const saved = await request("PUT", `api/adventures/${a.id}/characters/${ch.id}`, draft);
       Object.assign(ch, saved);
       draft = structuredClone(saved);
       dirty = false;

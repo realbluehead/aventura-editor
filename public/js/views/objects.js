@@ -58,7 +58,7 @@ export function renderObjects(view, a, { refresh }) {
       const extra = scene ? ` També es traurà de «${scene.name}».` : "";
       if (!await confirmDelete("Esborrar objecte", `Segur que vols esborrar «${o.name}»?${extra} No es pot desfer.`)) return;
       try {
-        await request("DELETE", `/api/adventures/${a.id}/objects/${o.id}`);
+        await request("DELETE", `api/adventures/${a.id}/objects/${o.id}`);
         toast("Objecte esborrat");
         refresh();
       } catch (err) {

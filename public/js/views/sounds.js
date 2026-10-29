@@ -40,7 +40,7 @@ export function renderSounds(view, a, { refresh }) {
       if (file.size > MAX_AUDIO) { toast(`«${file.name}» fa més de 10 MB`); continue; }
       try {
         // El nom del fitxer, sense extensió, fa de nom del so
-        await request("POST", `/api/adventures/${a.id}/sounds`, { name: file.name.replace(/\.[^.]+$/, "").slice(0, 120), file: await readAsDataUrl(file) });
+        await request("POST", `api/adventures/${a.id}/sounds`, { name: file.name.replace(/\.[^.]+$/, "").slice(0, 120), file: await readAsDataUrl(file) });
         added++;
       } catch (err) {
         toast(err.message);
@@ -77,7 +77,7 @@ export function renderSounds(view, a, { refresh }) {
     // Es reanomena en sortir del camp; el fitxer no canvia
     name.onchange = async () => {
       try {
-        await request("PUT", `/api/adventures/${a.id}/sounds/${snd.id}`, { name: name.value, file: snd.file });
+        await request("PUT", `api/adventures/${a.id}/sounds/${snd.id}`, { name: name.value, file: snd.file });
         snd.name = name.value;
         toast("Nom desat");
       } catch (err) {
@@ -92,7 +92,7 @@ export function renderSounds(view, a, { refresh }) {
       const extra = uses.length ? ` Es fa servir a: ${uses.join(", ")}.` : "";
       if (!await confirmDelete("Esborrar el so", `Segur que vols esborrar «${snd.name}»?${extra}`)) return;
       try {
-        await request("DELETE", `/api/adventures/${a.id}/sounds/${snd.id}`);
+        await request("DELETE", `api/adventures/${a.id}/sounds/${snd.id}`);
         toast("So esborrat");
         refresh();
       } catch (err) {

@@ -1,7 +1,8 @@
 // Finestra per crear i editar un objecte de la biblioteca: nom, descripció, estats amb la seva imatge,
 // si es pot agafar i la icona d'inventari. Les imatges noves s'envien com a data URL dins del mateix JSON.
 import { request, imageUrl } from "./api.js";
-import { $, el, toast } from "./ui.js";
+import { $, el, toast, blobToDataUrl } from "./ui.js";
+import { openPaintEditor } from "./paint/editor.js";
 
 const IMAGE_TYPES = ["image/png", "image/jpeg", "image/gif", "image/webp"];
 const MAX_SPRITE = 5 * 1024 * 1024;
@@ -63,6 +64,18 @@ function picker(value, onChange, emptyText) {
   } else {
     box.textContent = emptyText;
   }
+  // Dibuixar-la (o retocar-la) a l'editor de dibuix
+  const paint = el(`<button type="button" class="paint-btn" title="Dibuixa-la o retoca-la" aria-label="Dibuixa la imatge">🎨</button>`);
+  paint.onclick = async (e) => {
+    e.stopPropagation();
+    try {
+      const blob = await openPaintEditor({ title: `Imatge · ${form.name.value || "objecte nou"}`, src: value ? preview(value) : null, width: 32, height: 32 });
+      if (blob) onChange(await blobToDataUrl(blob));
+    } catch (err) {
+      $(".error", form).textContent = err.message;
+    }
+  };
+  box.append(paint);
   const pick = () => { pickTarget = onChange; fileInput.value = ""; fileInput.click(); };
   box.onclick = pick;
   box.onkeydown = (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); pick(); } };
@@ -160,7 +173,7 @@ form.addEventListener("submit", async (e) => {
   const save = $("[type=submit]", form);
   save.disabled = true;
   try {
-    const url = `/api/adventures/${adventure.id}/objects`;
+    const url = `api/adventures/${adventure.id}/objects`;
     const object = editing ? await request("PUT", `${url}/${editing.id}`, body) : await request("POST", url, body);
     dialog.close();
     toast(editing ? "Objecte desat" : "Objecte creat");

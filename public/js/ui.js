@@ -49,6 +49,15 @@ export function background(adventureId, file, emptyText = "Sense fons") {
   return img;
 }
 
+export function blobToDataUrl(blob) {
+  return new Promise((resolve, reject) => {
+    const r = new FileReader();
+    r.onload = () => resolve(r.result);
+    r.onerror = () => reject(new Error("No s'ha pogut llegir la imatge"));
+    r.readAsDataURL(blob);
+  });
+}
+
 export function loadImage(url) {
   return new Promise((resolve, reject) => {
     const img = new Image();

@@ -1,6 +1,7 @@
 // Finestres per crear i editar aventures i escenaris (nom, descripció i imatge de fons)
-import { request, scenesUrl, sceneUrl, saveAdventure, saveScene } from "./api.js";
+import { request, scenesUrl, sceneUrl, saveAdventure, saveScene, imageUrl } from "./api.js";
 import { $, el, toast, background } from "./ui.js";
+import { openPaintEditor } from "./paint/editor.js";
 
 const IMAGE_TYPES = ["image/png", "image/jpeg", "image/gif", "image/webp"];
 const MAX_IMAGE = 10 * 1024 * 1024;
@@ -102,6 +103,23 @@ drop.ondragleave = () => drop.classList.remove("over");
 drop.ondrop = (e) => { e.preventDefault(); drop.classList.remove("over"); pickFile(e.dataTransfer.files[0]); };
 $("#pick").onclick = () => $("#file").click();
 $("#file").onchange = (e) => pickFile(e.target.files[0]);
+// El fons s'obre a l'editor de dibuix: el que s'hagi triat, el que ja té l'escenari o un llenç en blanc de 320×200
+$("#paint-bg").onclick = async () => {
+  const existing = !clearBackground && editingScene?.background;
+  const src = pendingFile ? URL.createObjectURL(pendingFile) : existing ? imageUrl(sceneAdventure.id, existing) : null;
+  const shapes = editingScene && (editingScene.walkable.length || editingScene.hotspots.length || editingScene.objects.length || editingScene.characters.length);
+  try {
+    const blob = await openPaintEditor({
+      title: `Fons · ${$("#scene-form").name.value || "escenari nou"}`, src, width: 320, height: 200,
+      sizeNote: shapes ? "Compte: les zones, els punts calents i les posicions de l'escenari van en píxels del fons; si en canvies la mida, quedaran desplaçades." : "",
+    });
+    if (blob) pickFile(new File([blob], "fons.png", { type: "image/png" }));
+  } catch (err) {
+    $("#scene-form .error").textContent = err.message;
+  } finally {
+    if (src?.startsWith("blob:")) URL.revokeObjectURL(src);
+  }
+};
 $("#clear-bg").onclick = () => { pendingFile = null; clearBackground = true; $("#file").value = ""; renderDrop(); };
 
 $("#scene-form").addEventListener("submit", async (e) => {

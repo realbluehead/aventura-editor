@@ -1,6 +1,7 @@
 // Presentació de l'aventura: la pantalla de títol, la seqüència d'inici, els crèdits del final i el cursor
 import { saveAdventure, imageUrl } from "../api.js";
-import { $, el, toast } from "../ui.js";
+import { $, el, toast, blobToDataUrl } from "../ui.js";
+import { openPaintEditor } from "../paint/editor.js";
 import { select } from "../logic-fields.js";
 
 const IMAGE_TYPES = ["image/png", "image/jpeg", "image/gif", "image/webp"];
@@ -23,6 +24,7 @@ export function renderPresentation(view, a) {
         <h3>Pantalla de títol</h3>
         <div class="field">Imatge <small>Opcional. Si no n'hi ha, el títol surt sobre negre.</small>
           <div class="sheet-pick title-pick" tabindex="0" role="button"></div>
+          <button type="button" class="small" data-act="paint-title" style="align-self:flex-start">🎨 Pinta-la…</button>
           <input type="file" accept="image/png,image/jpeg,image/gif,image/webp" hidden>
         </div>
         <label>Subtítol <input name="subtitle" maxlength="200" placeholder="Per exemple: Una aventura de pirates"></label>
@@ -70,6 +72,17 @@ export function renderPresentation(view, a) {
   pick.ondragleave = () => pick.classList.remove("over");
   pick.ondrop = (e) => { e.preventDefault(); pick.classList.remove("over"); setImage(e.dataTransfer.files[0]); };
   file.onchange = () => setImage(file.files[0]);
+  $("[data-act=paint-title]", view).onclick = async () => {
+    try {
+      const blob = await openPaintEditor({ title: "Pantalla de títol", src: draft.titleScreen.image ? imageSrc() : null, width: 320, height: 200 });
+      if (!blob) return;
+      draft.titleScreen.image = await blobToDataUrl(blob);
+      renderPick();
+      markDirty();
+    } catch (err) {
+      toast(err.message);
+    }
+  };
 
   const subtitle = $("[name=subtitle]", view);
   subtitle.value = draft.titleScreen.subtitle;

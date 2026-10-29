@@ -31,7 +31,7 @@ export function renderCharacters(view, a, { refresh }) {
   $("#new-character").onclick = async () => {
     try {
       const n = a.characters.length + 1;
-      const ch = await request("POST", `/api/adventures/${a.id}/characters`, { name: `Personatge ${n}` });
+      const ch = await request("POST", `api/adventures/${a.id}/characters`, { name: `Personatge ${n}` });
       // El primer personatge que es crea fa de protagonista, que és el que gairebé sempre es vol
       if (!a.playerId) await saveAdventure(a, { playerId: ch.id });
       location.hash = `${base}/personatges/${ch.id}`;
@@ -84,7 +84,7 @@ export function renderCharacters(view, a, { refresh }) {
       const extra = isPlayer ? " És el protagonista: tornarà a ser la figura provisional." : scene ? ` També es traurà de «${scene.name}».` : "";
       if (!await confirmDelete("Esborrar personatge", `Segur que vols esborrar «${ch.name}»?${extra} No es pot desfer.`)) return;
       try {
-        await request("DELETE", `/api/adventures/${a.id}/characters/${ch.id}`);
+        await request("DELETE", `api/adventures/${a.id}/characters/${ch.id}`);
         toast("Personatge esborrat");
         refresh();
       } catch (err) {

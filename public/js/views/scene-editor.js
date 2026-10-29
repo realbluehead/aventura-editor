@@ -1,6 +1,7 @@
 // Editor visual d'un escenari: zones caminables, punts calents i sortides dibuixats sobre la imatge de fons.
 // Tot es guarda en píxels de la imatge original, així no depèn del zoom ni de la mida de la finestra.
-import { saveScene, imageUrl } from "../api.js";
+import { saveScene, imageUrl, request, sceneUrl } from "../api.js";
+import { openPaintEditor } from "../paint/editor.js";
 import { $, el, loadImage, toast, colorSwatch } from "../ui.js";
 import { openSceneDialog } from "../dialogs.js";
 import { pointInPolygon, distToSegment, isSelfIntersecting, centroid, bounds } from "../geometry.js";
@@ -38,10 +39,11 @@ export async function renderSceneEditor(view, adventure, scene, { refresh }) {
         <a class="back" href="${back}">← Aventura</a>
         <div class="empty-state"><strong>Aquest escenari no té fons</strong>
           Per dibuixar-hi zones i punts calents cal una imatge de fons.<br><br>
-          <button class="primary" id="upload">Puja un fons</button>
+          <button class="primary" id="upload">Puja un fons</button> <button id="paint">🎨 Dibuixa'l</button>
         </div>
       </div>`;
     $("#upload").onclick = () => openSceneDialog(adventure, scene, refresh);
+    $("#paint").onclick = () => paintBackground(adventure, scene, null, refresh);
     return;
   }
 
@@ -153,6 +155,7 @@ export async function renderSceneEditor(view, adventure, scene, { refresh }) {
           <button id="zoom-in" title="Apropa (+)" aria-label="Apropa">+</button>
           <button id="zoom-fit" title="Ajusta a la finestra (0)">Ajusta</button>
         </div>
+        <button class="small" id="paint-bg" title="Obre el fons a l'editor de dibuix">🎨 Pinta el fons</button>
         <a class="button small" href="#/aventura/${adventure.id}/juga/${scene.id}" title="Juga des d'aquest escenari">▶ Prova</a>
         <span class="save-status" id="save-status" role="status"></span>
       </div>
@@ -1312,6 +1315,13 @@ export async function renderSceneEditor(view, adventure, scene, { refresh }) {
   $("#zoom-in").onclick = () => zoomAt(2);
   $("#zoom-out").onclick = () => zoomAt(0.5);
   $("#zoom-fit").onclick = fit;
+  $("#paint-bg").onclick = async () => {
+    // Primer es desa el que quedi pendent: en acabar de pintar es torna a carregar l'escenari
+    if (timer) await save();
+    else if (inflight) await inflight;
+    const hasShapes = doc.walkable.length || doc.hotspots.length || doc.objects.length || doc.characters.length;
+    paintBackground(adventure, scene, hasShapes ? "Compte: les zones, els punts calents i les posicions van en píxels del fons; si en canvies la mida, quedaran desplaçades." : "", refresh);
+  };
 
   setTool("select");
   renderPanel();
@@ -1326,6 +1336,23 @@ export async function renderSceneEditor(view, adventure, scene, { refresh }) {
     if (timer) await save();
     else if (inflight) await inflight;
   };
+}
+
+// Obre el fons de l'escenari a l'editor de dibuix i, si s'accepta, el puja
+async function paintBackground(adventure, scene, sizeNote, refresh) {
+  try {
+    const blob = await openPaintEditor({
+      title: `Fons · ${scene.name}`,
+      src: scene.background ? imageUrl(adventure.id, scene.background) : null,
+      width: 320, height: 200, sizeNote: sizeNote ?? "",
+    });
+    if (!blob) return;
+    await request("PUT", `${sceneUrl(adventure.id, scene.id)}/background`, blob, "image/png");
+    toast("Fons desat");
+    refresh();
+  } catch (err) {
+    toast(`No s'ha pogut desar el fons: ${err.message}`);
+  }
 }
 
 function escapeHtml(s) {
