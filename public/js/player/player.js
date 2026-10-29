@@ -362,22 +362,44 @@ export function createPlayer(container, adventure, {
 
   /* ---------- Verbs i frase ---------- */
 
+  function pickVerb(v) {
+    verb = verb?.id === v.id ? null : v;
+    first = null;
+    renderVerbs();
+    renderInventory();
+    updateSentence();
+  }
+
+  // Les tecles d'un verb: la seva drecera i, si cap verb no l'ha agafada, el número de la seva posició (1-9)
+  function verbKeys(v) {
+    const keys = v.key ? [v.key] : [];
+    const n = String(adventure.verbs.indexOf(v) + 1);
+    if (n.length === 1 && n !== "0" && !adventure.verbs.some((o) => o.key === n)) keys.push(n);
+    return keys;
+  }
+  const verbForKey = (k) => adventure.verbs.find((v) => verbKeys(v).includes(k));
+
   function renderVerbs() {
     verbBox.replaceChildren();
     for (const v of adventure.verbs) {
       const b = document.createElement("button");
       b.type = "button";
-      b.textContent = v.name;
+      // La lletra de la drecera surt subratllada al nom, com als menús clàssics
+      const at = v.key ? v.name.toLowerCase().indexOf(v.key) : -1;
+      if (at >= 0) {
+        const u = document.createElement("u");
+        u.textContent = v.name[at];
+        b.append(v.name.slice(0, at), u, v.name.slice(at + 1));
+      } else b.textContent = v.name;
       b.setAttribute("aria-pressed", String(verb?.id === v.id));
-      const n = adventure.verbs.indexOf(v) + 1;
-      if (n <= 9) b.title = `Tecla ${n}`;
+      const keys = verbKeys(v);
+      if (keys.length) {
+        b.title = `Tecla ${keys.map((k) => k.toUpperCase()).join(" o ")}`;
+        b.setAttribute("aria-keyshortcuts", keys.map((k) => k.toUpperCase()).join(" "));
+      }
       b.onclick = () => {
         if (busy || scripting) return;
-        verb = verb?.id === v.id ? null : v;
-        first = null;
-        renderVerbs();
-        renderInventory();
-        updateSentence();
+        pickVerb(v);
       };
       verbBox.append(b);
     }
@@ -875,16 +897,12 @@ export function createPlayer(container, adventure, {
       else skipCutscene();
       return;
     }
-    // Les tecles 1-9 trien els verbs, en l'ordre de la graella (tornar a prémer el mateix el desfà)
-    if (/^[1-9]$/.test(e.key) && !e.target.closest?.("input, textarea, select") && !e.metaKey && !e.ctrlKey && !e.altKey) {
-      const v = adventure.verbs[Number(e.key) - 1];
-      if (!v || busy || scripting || menuOpen || !optionsBox.hidden) return;
-      verb = verb?.id === v.id ? null : v;
-      first = null;
-      renderVerbs();
-      renderInventory();
-      updateSentence();
-    }
+    // Les dreceres dels verbs (i els números 1-9, per posició): tornar a prémer el mateix el desfà
+    if (e.key.length !== 1 || e.target.closest?.("input, textarea, select") || e.metaKey || e.ctrlKey || e.altKey || e.shiftKey) return;
+    const v = verbForKey(e.key.toLowerCase());
+    if (!v || busy || scripting || menuOpen || !optionsBox.hidden) return;
+    e.preventDefault();
+    pickVerb(v);
   }
   window.addEventListener("keydown", onKey);
 

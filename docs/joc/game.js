@@ -598,17 +598,21 @@ modules["defaults.js"] = (() => {
 // «response» és el que diu el personatge quan el verb no té cap efecte sobre una cosa.
 // «look» és especial: amb un objecte o un punt calent, el personatge en diu la descripció.
 // «preposition» fa que el verb pugui unir dos objectes: «Fes servir la clau amb la porta», «Dóna el rom al pirata».
+// «key» és la drecera de teclat del joc (una lletra o un número, o "" si no en té).
 const DEFAULT_VERBS = [
-  { id: "give", name: "Dóna", response: "No crec que ho vulgui.", preposition: "a" },
-  { id: "pickup", name: "Agafa", response: "No ho puc agafar." },
-  { id: "use", name: "Fes servir", response: "No sé com fer-ho servir.", preposition: "amb" },
-  { id: "open", name: "Obre", response: "No es pot obrir." },
-  { id: "look", name: "Mira", response: "No hi veig res d'especial." },
-  { id: "push", name: "Empeny", response: "No es mou." },
-  { id: "close", name: "Tanca", response: "No es pot tancar." },
-  { id: "talk", name: "Parla amb", response: "No crec que em contesti." },
-  { id: "pull", name: "Estira", response: "No es mou." },
+  { id: "give", name: "Dóna", response: "No crec que ho vulgui.", preposition: "a", key: "d" },
+  { id: "pickup", name: "Agafa", response: "No ho puc agafar.", key: "a" },
+  { id: "use", name: "Fes servir", response: "No sé com fer-ho servir.", preposition: "amb", key: "f" },
+  { id: "open", name: "Obre", response: "No es pot obrir.", key: "o" },
+  { id: "look", name: "Mira", response: "No hi veig res d'especial.", key: "m" },
+  { id: "push", name: "Empeny", response: "No es mou.", key: "e" },
+  { id: "close", name: "Tanca", response: "No es pot tancar.", key: "t" },
+  { id: "talk", name: "Parla amb", response: "No crec que em contesti.", key: "p" },
+  { id: "pull", name: "Estira", response: "No es mou.", key: "s" },
 ].map((v) => ({ preposition: "", ...v }));
+
+// Les tecles que poden ser drecera d'un verb
+const VERB_KEY = /^[a-z0-9ç]$/;
 
 const LOOK = "look";
 const PICKUP = "pickup";
@@ -630,7 +634,7 @@ const CHARACTER_FACINGS = ["down", "left", "right", "up"];
 const TRANSITIONS = ["fade", "cut", "iris"];
 const CURSORS = ["cross", "system"];
 
-return { DEFAULT_VERBS, LOOK, PICKUP, CONDITION_TYPES, ACTION_TYPES, VARIABLE_TYPES, OPS, ANIMATIONS, DIRECTIONS, ANIMATION_KEYS, CHARACTER_FACINGS, TRANSITIONS, CURSORS };
+return { DEFAULT_VERBS, VERB_KEY, LOOK, PICKUP, CONDITION_TYPES, ACTION_TYPES, VARIABLE_TYPES, OPS, ANIMATIONS, DIRECTIONS, ANIMATION_KEYS, CHARACTER_FACINGS, TRANSITIONS, CURSORS };
 })();
 
 // player/audio.js
@@ -1108,22 +1112,44 @@ function createPlayer(container, adventure, {
 
   /* ---------- Verbs i frase ---------- */
 
+  function pickVerb(v) {
+    verb = verb?.id === v.id ? null : v;
+    first = null;
+    renderVerbs();
+    renderInventory();
+    updateSentence();
+  }
+
+  // Les tecles d'un verb: la seva drecera i, si cap verb no l'ha agafada, el número de la seva posició (1-9)
+  function verbKeys(v) {
+    const keys = v.key ? [v.key] : [];
+    const n = String(adventure.verbs.indexOf(v) + 1);
+    if (n.length === 1 && n !== "0" && !adventure.verbs.some((o) => o.key === n)) keys.push(n);
+    return keys;
+  }
+  const verbForKey = (k) => adventure.verbs.find((v) => verbKeys(v).includes(k));
+
   function renderVerbs() {
     verbBox.replaceChildren();
     for (const v of adventure.verbs) {
       const b = document.createElement("button");
       b.type = "button";
-      b.textContent = v.name;
+      // La lletra de la drecera surt subratllada al nom, com als menús clàssics
+      const at = v.key ? v.name.toLowerCase().indexOf(v.key) : -1;
+      if (at >= 0) {
+        const u = document.createElement("u");
+        u.textContent = v.name[at];
+        b.append(v.name.slice(0, at), u, v.name.slice(at + 1));
+      } else b.textContent = v.name;
       b.setAttribute("aria-pressed", String(verb?.id === v.id));
-      const n = adventure.verbs.indexOf(v) + 1;
-      if (n <= 9) b.title = `Tecla ${n}`;
+      const keys = verbKeys(v);
+      if (keys.length) {
+        b.title = `Tecla ${keys.map((k) => k.toUpperCase()).join(" o ")}`;
+        b.setAttribute("aria-keyshortcuts", keys.map((k) => k.toUpperCase()).join(" "));
+      }
       b.onclick = () => {
         if (busy || scripting) return;
-        verb = verb?.id === v.id ? null : v;
-        first = null;
-        renderVerbs();
-        renderInventory();
-        updateSentence();
+        pickVerb(v);
       };
       verbBox.append(b);
     }
@@ -1621,16 +1647,12 @@ function createPlayer(container, adventure, {
       else skipCutscene();
       return;
     }
-    // Les tecles 1-9 trien els verbs, en l'ordre de la graella (tornar a prémer el mateix el desfà)
-    if (/^[1-9]$/.test(e.key) && !e.target.closest?.("input, textarea, select") && !e.metaKey && !e.ctrlKey && !e.altKey) {
-      const v = adventure.verbs[Number(e.key) - 1];
-      if (!v || busy || scripting || menuOpen || !optionsBox.hidden) return;
-      verb = verb?.id === v.id ? null : v;
-      first = null;
-      renderVerbs();
-      renderInventory();
-      updateSentence();
-    }
+    // Les dreceres dels verbs (i els números 1-9, per posició): tornar a prémer el mateix el desfà
+    if (e.key.length !== 1 || e.target.closest?.("input, textarea, select") || e.metaKey || e.ctrlKey || e.altKey || e.shiftKey) return;
+    const v = verbForKey(e.key.toLowerCase());
+    if (!v || busy || scripting || menuOpen || !optionsBox.hidden) return;
+    e.preventDefault();
+    pickVerb(v);
   }
   window.addEventListener("keydown", onKey);
 
@@ -1836,8 +1858,8 @@ const player = createPlayer(document.querySelector(".play-stage"), adventure, {
   startSceneId: adventure.startSceneId ?? adventure.scenes[0]?.id,
   title: true,
 });
-// M silencia el so
+// Maj+M silencia el so (les lletres soles són les dreceres dels verbs)
 let muted = false;
 window.addEventListener("keydown", (e) => {
-  if (e.key.toLowerCase() === "m" && !e.metaKey && !e.ctrlKey) player.setMuted((muted = !muted));
+  if (e.key.toLowerCase() === "m" && e.shiftKey && !e.metaKey && !e.ctrlKey) player.setMuted((muted = !muted));
 });

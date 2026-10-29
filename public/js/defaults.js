@@ -4,17 +4,21 @@
 // «response» és el que diu el personatge quan el verb no té cap efecte sobre una cosa.
 // «look» és especial: amb un objecte o un punt calent, el personatge en diu la descripció.
 // «preposition» fa que el verb pugui unir dos objectes: «Fes servir la clau amb la porta», «Dóna el rom al pirata».
+// «key» és la drecera de teclat del joc (una lletra o un número, o "" si no en té).
 export const DEFAULT_VERBS = [
-  { id: "give", name: "Dóna", response: "No crec que ho vulgui.", preposition: "a" },
-  { id: "pickup", name: "Agafa", response: "No ho puc agafar." },
-  { id: "use", name: "Fes servir", response: "No sé com fer-ho servir.", preposition: "amb" },
-  { id: "open", name: "Obre", response: "No es pot obrir." },
-  { id: "look", name: "Mira", response: "No hi veig res d'especial." },
-  { id: "push", name: "Empeny", response: "No es mou." },
-  { id: "close", name: "Tanca", response: "No es pot tancar." },
-  { id: "talk", name: "Parla amb", response: "No crec que em contesti." },
-  { id: "pull", name: "Estira", response: "No es mou." },
+  { id: "give", name: "Dóna", response: "No crec que ho vulgui.", preposition: "a", key: "d" },
+  { id: "pickup", name: "Agafa", response: "No ho puc agafar.", key: "a" },
+  { id: "use", name: "Fes servir", response: "No sé com fer-ho servir.", preposition: "amb", key: "f" },
+  { id: "open", name: "Obre", response: "No es pot obrir.", key: "o" },
+  { id: "look", name: "Mira", response: "No hi veig res d'especial.", key: "m" },
+  { id: "push", name: "Empeny", response: "No es mou.", key: "e" },
+  { id: "close", name: "Tanca", response: "No es pot tancar.", key: "t" },
+  { id: "talk", name: "Parla amb", response: "No crec que em contesti.", key: "p" },
+  { id: "pull", name: "Estira", response: "No es mou.", key: "s" },
 ].map((v) => ({ preposition: "", ...v }));
+
+// Les tecles que poden ser drecera d'un verb
+export const VERB_KEY = /^[a-z0-9ç]$/;
 
 export const LOOK = "look";
 export const PICKUP = "pickup";

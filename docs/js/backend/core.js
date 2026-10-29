@@ -2,7 +2,7 @@
 // El fa servir el servidor local (server.mjs, amb les dades en carpetes) i el service worker de la versió web
 // (sw.js, amb les dades a IndexedDB del navegador). On es guarden les coses ho decideix «store», i com es
 // fan i es llegeixen els zips, «platform»: totes dues coses es passen a configure().
-import { DEFAULT_VERBS, LOOK, CONDITION_TYPES, ACTION_TYPES, VARIABLE_TYPES, OPS, ANIMATION_KEYS, CHARACTER_FACINGS, TRANSITIONS, CURSORS } from "../defaults.js";
+import { DEFAULT_VERBS, LOOK, CONDITION_TYPES, ACTION_TYPES, VARIABLE_TYPES, OPS, ANIMATION_KEYS, CHARACTER_FACINGS, TRANSITIONS, CURSORS, VERB_KEY } from "../defaults.js";
 
 let store, platform;
 
@@ -23,7 +23,7 @@ const MAX_IMAGE = 10 * 1024 * 1024;
 const MAX_SPRITE = 5 * 1024 * 1024;
 
 // Versió del format de adventure.json. Si canvia, upgrade() ha de saber portar les aventures antigues al nou format.
-export const FORMAT_VERSION = 9;
+export const FORMAT_VERSION = 10;
 const LIMITS = {
   title: 120, name: 120, description: 5000, response: 500, preposition: 20, text: 500,
   shapes: 100, points: 500, verbs: 20, objects: 300, states: 20,
@@ -54,6 +54,16 @@ export function upgrade(a) {
   // Format 5: «Fes servir» i «Dóna» poden unir dos objectes
   const prepositions = Object.fromEntries(DEFAULT_VERBS.map((v) => [v.id, v.preposition]));
   for (const v of a.verbs) v.preposition ??= prepositions[v.id] ?? "";
+  // Format 10: dreceres de teclat. Els verbs clàssics prenen la de sempre si no la fa servir cap altre verb.
+  if (a.verbs.some((v) => v.key === undefined)) {
+    const keys = Object.fromEntries(DEFAULT_VERBS.map((v) => [v.id, v.key]));
+    const used = new Set(a.verbs.map((v) => v.key).filter(Boolean));
+    for (const v of a.verbs) {
+      if (v.key !== undefined) continue;
+      v.key = keys[v.id] && !used.has(keys[v.id]) ? keys[v.id] : "";
+      if (v.key) used.add(v.key);
+    }
+  }
   for (const s of a.scenes) {
     s.background ??= null;
     s.walkable ??= [];
@@ -118,10 +128,20 @@ function list(v, label, errors) {
 
 const validId = (v, seen) => typeof v === "string" && /^[\w-]{1,64}$/.test(v) && !seen.has(v);
 
+// La drecera d'un verb: una lletra o un número, sense repetir; "" vol dir que no en té
+function verbKey(value, label, keys, errors) {
+  const k = text(value).toLowerCase();
+  if (!k) return "";
+  if (!VERB_KEY.test(k)) return errors.push(`${label}: la drecera ha de ser una lletra o un número`), "";
+  if (keys.has(k)) return errors.push(`${label}: la tecla «${k.toUpperCase()}» ja és la drecera d'un altre verb`), "";
+  keys.add(k);
+  return k;
+}
+
 function cleanVerbs(v, errors) {
   if (!Array.isArray(v) || !v.length) return errors.push("Cal almenys un verb"), [];
   if (v.length > LIMITS.verbs) return errors.push(`Com a màxim ${LIMITS.verbs} verbs`), [];
-  const seen = new Set();
+  const seen = new Set(), keys = new Set();
   const verbs = v.map((verb, i) => {
     const id = validId(verb?.id, seen) ? verb.id : crypto.randomUUID();
     seen.add(id);
@@ -130,6 +150,7 @@ function cleanVerbs(v, errors) {
       name: textField(verb, "name", `Verb ${i + 1}: el nom`, errors, true),
       response: textField(verb, "response", `Verb ${i + 1}: la resposta`, errors),
       preposition: textField(verb, "preposition", `Verb ${i + 1}: la preposició`, errors),
+      key: verbKey(verb?.key, `Verb ${i + 1}`, keys, errors),
     };
   });
   // El reproductor necessita «Mira» per mostrar les descripcions

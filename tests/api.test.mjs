@@ -48,7 +48,7 @@ const square = [[10, 10], [100, 10], [100, 80], [10, 80]];
 test("crear una aventura amb escenaris, geometria i sortides", async () => {
   const { body: adv } = await api("POST", "/api/adventures", { title: "  Illa  ", description: "Proves" });
   assert.equal(adv.title, "Illa");
-  assert.equal(adv.formatVersion, 9);
+  assert.equal(adv.formatVersion, 10);
   assert.deepEqual(adv.scenes, []);
 
   const { body: moll } = await api("POST", `/api/adventures/${adv.id}/scenes`, { name: "Moll" });
@@ -146,7 +146,7 @@ test("migra les dades del format 1 (un sol fitxer)", async () => {
     const { body: list } = await s.api("GET", "/api/adventures");
     assert.equal(list.length, 2);
     const a1 = list.find((a) => a.id === "a1");
-    assert.equal(a1.formatVersion, 9);
+    assert.equal(a1.formatVersion, 10);
     assert.equal(a1.scenes[0].actorHeight, null);
     assert.equal(a1.scenes[0].background, "s1-1.png");
     assert.equal(a1.scenes[1].background, null, "la imatge que faltava queda com a sense fons");
@@ -174,6 +174,18 @@ test("verbs: per defecte els 9 clàssics, editables, i «Mira» no es pot treure
   assert.match(r.body.verbs[1].id, /^[\w-]+$/, "un verb nou rep un id");
   assert.equal((await api("PUT", `/api/adventures/${adv.id}`, { title: "Verbs", verbs: [{ id: "x", name: "X" }] })).status, 400);
   assert.equal((await api("PUT", `/api/adventures/${adv.id}`, { title: "Verbs", verbs: [{ id: "look", name: "" }] })).status, 400);
+});
+
+test("verbs: dreceres de teclat", async () => {
+  const { body: adv } = await api("POST", "/api/adventures", { title: "Dreceres" });
+  assert.deepEqual(adv.verbs.map((v) => v.key).join(""), "dafometps", "els 9 clàssics porten la seva lletra");
+  const put = (verbs) => api("PUT", `/api/adventures/${adv.id}`, { title: "Dreceres", verbs });
+  const ok = await put([{ id: "look", name: "Mira", key: "X" }, { name: "Salta", key: "3" }, { name: "Corre" }]);
+  assert.equal(ok.status, 200);
+  assert.deepEqual(ok.body.verbs.map((v) => v.key), ["x", "3", ""], "en minúscula, i sense drecera si no se'n posa");
+  assert.equal((await put([{ id: "look", name: "Mira", key: "m" }, { name: "Mossega", key: "M" }])).status, 400, "repetida");
+  assert.equal((await put([{ id: "look", name: "Mira", key: "!" }])).status, 400, "ha de ser una lletra o un número");
+  assert.equal((await put([{ id: "look", name: "Mira", key: "ab" }])).status, 400);
 });
 
 test("objectes: imatges per estat, col·locació en un sol escenari i neteja en esborrar", async () => {
@@ -437,4 +449,16 @@ test("sortides amb condicions i el que es diu si no es pot passar", async () => 
   assert.deepEqual(r.body.hotspots[0].exit, { sceneId: b.id, arrival: [1, 1], conditions: [{ type: "has", objectId: "clau", not: false }], blocked: "Està tancat." });
   assert.deepEqual((await door({ sceneId: b.id })).body.hotspots[0].exit.conditions, [], "sense condicions, sempre oberta");
   assert.equal((await door({ sceneId: b.id, conditions: [{ type: "màgia" }] })).status, 400);
+});
+
+test("aventures d'abans del format 10: els verbs clàssics reben la drecera si està lliure", async () => {
+  const { upgrade } = await import("../public/js/backend/core.js");
+  const a = upgrade({ title: "Vella", verbs: [
+    { id: "look", name: "Mira", response: "" },
+    { id: "pickup", name: "Agafa", response: "" },
+    { id: "lick", name: "Llepa", response: "" },
+  ] });
+  assert.deepEqual(a.verbs.map((v) => v.key), ["m", "a", ""]);
+  const b = upgrade({ title: "Ja en tenia", verbs: [{ id: "look", name: "Mira", response: "", key: "" }, { id: "x", name: "Mossega", response: "", key: "m" }, { id: "pickup", name: "Agafa", response: "" }] });
+  assert.deepEqual(b.verbs.map((v) => v.key), ["", "m", "a"], "no toca les que ja hi són");
 });

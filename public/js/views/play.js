@@ -41,9 +41,9 @@ export function renderPlay(view, adventure, { sceneId }) {
         <span class="editor-title"></span>
         <span class="meta" id="scene-name"></span>
         <div class="tools">
-          <button id="debug" aria-pressed="false" title="Mostra les zones caminables, els punts calents i el camí (D)">Mostra zones</button>
-          <button id="testing" aria-pressed="false" title="Canvia l'escenari, l'inventari, els estats i les variables (T)">Proves</button>
-          <button id="mute" aria-pressed="false" title="Silencia la música i els sons (M)">So</button>
+          <button id="debug" aria-pressed="false" title="Mostra les zones caminables, els punts calents i el camí (Maj+D)">Mostra zones</button>
+          <button id="testing" aria-pressed="false" title="Canvia l'escenari, l'inventari, els estats i les variables (Maj+T)">Proves</button>
+          <button id="mute" aria-pressed="false" title="Silencia la música i els sons (Maj+M)">So</button>
           <button id="restart" title="Torna a començar">Reinicia</button>
           <a class="button small" id="edit-scene">Edita l'escenari</a>
         </div>
@@ -223,8 +223,9 @@ export function renderPlay(view, adventure, { sceneId }) {
   };
   $("#mute").onclick = toggleMute;
 
+  // Les eines de prova van amb Maj, perquè les lletres soles són les dreceres dels verbs del joc
   function onKey(e) {
-    if (e.target.closest?.("input, textarea, select") || e.metaKey || e.ctrlKey || e.altKey) return;
+    if (e.target.closest?.("input, textarea, select") || e.metaKey || e.ctrlKey || e.altKey || !e.shiftKey) return;
     const k = e.key.toLowerCase();
     if (k === "d") toggleDebug();
     else if (k === "t") toggleTesting();
