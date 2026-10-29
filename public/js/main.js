@@ -137,5 +137,14 @@ async function route() {
   window.scrollTo(0, 0);
 }
 
+// La versió web (tools/web/build.mjs) marca la pàgina amb window.EDITOR_WEB: abans de res, cal el service worker
+if (window.EDITOR_WEB) {
+  try {
+    await (await import("./web.js")).startWeb();
+  } catch (err) {
+    $("#view").textContent = err.message;
+    throw err;
+  }
+}
 window.addEventListener("hashchange", route);
 route();

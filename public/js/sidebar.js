@@ -35,7 +35,7 @@ export function renderSidebar(adventure, sub) {
     nav.append(group);
   }
   const exp = el(`<a class="button small side-export" download title="Un zip amb el joc a punt per jugar (obre index.html), que també es pot tornar a importar">Exporta el joc…</a>`);
-  exp.href = `/api/adventures/${adventure.id}/export`;
+  exp.href = `api/adventures/${adventure.id}/export`;
   nav.append(exp);
   nav.hidden = false;
 }

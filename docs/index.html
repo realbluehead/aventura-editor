@@ -3,18 +3,78 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>La rosa de Sant Jordi</title>
+<title>Editor d'aventures</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="player.css">
-<style>
-  * { box-sizing: border-box; }
-  body { margin: 0; height: 100vh; overflow: hidden; display: flex; flex-direction: column; background: #000; }
-</style>
+<link rel="stylesheet" href="css/app.css">
+<link rel="stylesheet" href="css/player.css">
+<script>window.EDITOR_WEB = true;</script>
+<script type="module" src="js/main.js"></script>
 </head>
 <body>
-<div class="play-stage"></div>
-<script src="adventure.js"></script>
-<script src="game.js"></script>
+<header class="top">
+  <h1><a href="#/">Editor d'aventures</a></h1>
+  <div class="win-buttons" aria-hidden="true"><span>_</span><span>□</span><span>×</span></div>
+</header>
+
+<div class="app-body">
+  <nav id="sidebar" aria-label="Seccions de l'aventura" hidden></nav>
+  <main id="view"></main>
+</div>
+
+<dialog id="adventure-editor">
+  <form id="adventure-form">
+    <h3 id="adventure-form-title">Nova aventura</h3>
+    <label>Títol
+      <input name="title" maxlength="120" required autocomplete="off">
+    </label>
+    <label>Descripció <small>Opcional. De què va l'aventura?</small>
+      <textarea name="description" maxlength="5000"></textarea>
+    </label>
+    <p class="error"></p>
+    <div class="row-end">
+      <button type="button" data-close>Cancel·la</button>
+      <button type="submit" class="primary">Desa</button>
+    </div>
+  </form>
+</dialog>
+
+<dialog id="scene-editor">
+  <form id="scene-form">
+    <h3 id="scene-form-title">Nou escenari</h3>
+    <label>Nom
+      <input name="name" maxlength="120" required autocomplete="off" placeholder="Ex: El moll de Mêlée">
+    </label>
+    <div class="field">Imatge de fons <small>PNG, JPG, GIF o WebP, fins a 10 MB. Pots arrossegar-la aquí.</small>
+      <div class="drop" id="drop" tabindex="0" role="button" aria-label="Tria la imatge de fons"></div>
+      <div class="bg-actions">
+        <button type="button" class="small" id="pick">Tria imatge…</button>
+        <button type="button" class="small danger" id="clear-bg">Treu el fons</button>
+      </div>
+      <input type="file" id="file" accept="image/png,image/jpeg,image/gif,image/webp" hidden>
+    </div>
+    <label>Descripció <small>Opcional. Què hi ha en aquest escenari?</small>
+      <textarea name="description" maxlength="5000"></textarea>
+    </label>
+    <p class="error"></p>
+    <div class="row-end">
+      <button type="button" data-close>Cancel·la</button>
+      <button type="submit" class="primary">Desa</button>
+    </div>
+  </form>
+</dialog>
+
+<dialog id="confirm">
+  <form method="dialog">
+    <h3 id="confirm-title"></h3>
+    <p id="confirm-text" style="margin:0"></p>
+    <div class="row-end">
+      <button value="no">Cancel·la</button>
+      <button value="yes" class="danger">Esborra</button>
+    </div>
+  </form>
+</dialog>
+
+<div id="toast" role="status"></div>
 </body>
 </html>

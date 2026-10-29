@@ -81,6 +81,7 @@ input:focus-visible, textarea:focus-visible, select:focus-visible { outline: 1px
 
 .toolbar { display: flex; gap: 8px; align-items: center; margin-bottom: 16px; flex-wrap: wrap; }
 .toolbar input { flex: 1; min-width: 180px; }
+.web-note { margin: -8px 0 16px; padding: 6px 10px; background: #ffffe1; border: 1px solid #808080; font-size: 13px; }
 .count { color: var(--muted); font-size: 12px; white-space: nowrap; }
 
 .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 12px; }

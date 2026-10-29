@@ -1,4 +1,5 @@
-// Accés a l'API del servidor local
+// Accés a l'API: el servidor local, o el service worker a la versió web. Les adreces són relatives
+// perquè la versió web pot viure en una subcarpeta (a GitHub Pages, /aventura-editor/).
 
 export async function request(method, url, body, type = "application/json") {
   const isJson = body !== undefined && type === "application/json";
@@ -13,10 +14,10 @@ export async function request(method, url, body, type = "application/json") {
   return data;
 }
 
-export const adventureUrl = (id) => `/api/adventures/${id}`;
-export const scenesUrl = (adventureId) => `/api/adventures/${adventureId}/scenes`;
+export const adventureUrl = (id) => `api/adventures/${id}`;
+export const scenesUrl = (adventureId) => `api/adventures/${adventureId}/scenes`;
 export const sceneUrl = (adventureId, sceneId) => `${scenesUrl(adventureId)}/${sceneId}`;
-export const imageUrl = (adventureId, file) => `/files/${adventureId}/${encodeURIComponent(file)}`;
+export const imageUrl = (adventureId, file) => `files/${adventureId}/${encodeURIComponent(file)}`;
 
 // Desa una aventura sense tocar els escenaris (el servidor només accepta aquests camps)
 export const saveAdventure = (a, changes = {}) =>

@@ -2,6 +2,8 @@
 
 Eina web per crear aventures gràfiques a l'estil de Monkey Island o Maniac Mansion. El pla complet és a [PLA.md](PLA.md).
 
+**Prova-la en línia:** https://realbluehead.github.io/aventura-editor/ — l'editor sencer, sense instal·lar res, amb l'aventura «La rosa de Sant Jordi» ja carregada. A la versió web les aventures es guarden al navegador de cadascú (IndexedDB); «Exporta el joc…» en treu un zip que es pot tornar a importar.
+
 De moment gestiona:
 
 - **Aventures**: títol, descripció i escenari inicial.
@@ -37,7 +39,7 @@ npm start
 
 ## Joc d'exemple: «La rosa de Sant Jordi»
 
-**Juga-hi en línia:** https://realbluehead.github.io/aventura-editor/ (és el joc exportat, a la carpeta `docs/`).
+**Juga-hi en línia:** https://realbluehead.github.io/aventura-editor/joc/ — o obre-la a l'[editor en línia](https://realbluehead.github.io/aventura-editor/), on ja hi és carregada.
 
 Una aventura per Barcelona amb 10 escenaris (Plaça de Catalunya, la Rambla, la Boqueria, el Barri Gòtic, el Port Vell, la Barceloneta, el Passeig de Gràcia, la Sagrada Família, Montjuïc i el Park Güell), 10 personatges, 9 objectes, diàlegs, seqüències i música. En Jordi ha d'aconseguir una rosa i un llibre per a la Laia, amb una cadena d'intercanvis per tota la ciutat.
 
@@ -47,15 +49,23 @@ Tot (fons, sprites, objectes, música i sons) es genera amb codi a `tools/barcel
 node tools/barcelona/build.mjs --import http://localhost:8821
 ```
 
-Sense `--import` només escriu el zip (`tools/barcelona/la-rosa-de-sant-jordi.zip`), que es pot importar amb «Importa…».
+Sense `--import` només escriu el zip (`tools/barcelona/la-rosa-de-sant-jordi.zip`), que es pot importar amb «Importa…». Ja n'hi ha un de fet a [`docs/exemples/la-rosa-de-sant-jordi.zip`](docs/exemples/la-rosa-de-sant-jordi.zip).
 
 I obre http://localhost:8821. No té dependències, només Node.
 
 Tests: `npm test`.
 
+## Versió web
+
+La mateixa aplicació funciona sense servidor: un service worker fa de servidor dins del navegador, amb el mateix codi de l'API (`public/js/backend/core.js`), i guarda les dades a IndexedDB. Per construir-la a `docs/` (la carpeta que publica GitHub Pages):
+
+```bash
+npm run build:web
+```
+
 ## Estructura
 
-- `server.mjs`: servidor local (127.0.0.1) amb l'API:
+- API del servidor local (127.0.0.1):
   - `GET/POST /api/adventures`, `GET/PUT/DELETE /api/adventures/:id`
   - `GET/POST /api/adventures/:id/scenes`, `GET/PUT/DELETE /api/adventures/:id/scenes/:sceneId`. El `PUT` sempre porta `name` i `description`. `walkable`, `hotspots` i `mapPosition` només es canvien si s'envien.
   - `PUT/DELETE /api/adventures/:id/scenes/:sceneId/background`. El cos del `PUT` és la imatge, amb el seu `content-type`.
@@ -63,7 +73,13 @@ Tests: `npm test`.
   - El `PUT` d'una aventura també accepta `verbs`, `variables`, `rules`, `dialogues` i `playerId`. Les regles només es validen per la forma, no per si existeixen les coses a què apunten.
   - `GET /api/adventures/:id/export`: el zip del joc. `POST /api/import` (cos: el zip) crea una aventura nova.
   - `GET /files/:id/:fitxer`: imatges (fons i objectes).
-- `export.mjs`: empaqueta el reproductor en un sol script i escriu i llegeix zips (amb el zlib de Node).
+- `public/js/backend/`: l'API, compartida pel servidor i la versió web.
+  - `core.js`: la validació i totes les rutes de l'API. No sap on es guarden les dades: li passen un «store».
+  - `game-files.js`: els fitxers del joc exportat.
+  - `sw.js`, `idb-store.js` i `zip.js`: el service worker de la versió web, el «store» d'IndexedDB i els zips al navegador.
+- `server.mjs`: a més de l'API, guarda les aventures en carpetes i serveix la interfície.
+- `export.mjs`: empaqueta el reproductor (i el service worker) en un sol script i escriu i llegeix zips (amb el zlib de Node).
+- `tools/web/build.mjs`: construeix la versió web a `docs/`, amb l'aventura d'exemple i el joc exportat a `docs/joc/`.
 - `public/`: la UI, amb mòduls JS i sense compilació. L'editor té l'aspecte d'una aplicació de Windows 95, amb un menú lateral per a les seccions de cada aventura.
   - `css/app.css`: els estils de l'editor (el tema de Windows 95).
   - `css/player.css`: els estils del joc, independents de l'editor. És l'únic full d'estils que porta el joc exportat.

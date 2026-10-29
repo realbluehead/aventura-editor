@@ -2,8 +2,8 @@
   "title": "La rosa de Sant Jordi",
   "description": "Una aventura gràfica per Barcelona. En Jordi ha de trobar una rosa i un llibre per a la Laia abans d'arribar al Park Güell. Deu escenaris, de la Plaça de Catalunya a Montjuïc.",
   "formatVersion": 9,
-  "createdAt": "2026-10-28T15:54:58.257Z",
-  "updatedAt": "2026-10-28T15:54:58.900Z",
+  "createdAt": "2026-10-29T07:07:34.272Z",
+  "updatedAt": "2026-10-29T07:07:34.272Z",
   "startSceneId": "s-pc",
   "scenes": [
     {
@@ -252,8 +252,8 @@
       "music": "snd-tema",
       "transition": "fade",
       "onEnter": null,
-      "createdAt": "2026-10-28T15:54:58.257Z",
-      "updatedAt": "2026-10-28T15:54:58.257Z"
+      "createdAt": "2026-10-29T07:07:34.272Z",
+      "updatedAt": "2026-10-29T07:07:34.272Z"
     },
     {
       "id": "s-rambla",
@@ -490,8 +490,8 @@
       "music": "snd-carrer",
       "transition": "fade",
       "onEnter": null,
-      "createdAt": "2026-10-28T15:54:58.257Z",
-      "updatedAt": "2026-10-28T15:54:58.257Z"
+      "createdAt": "2026-10-29T07:07:34.272Z",
+      "updatedAt": "2026-10-29T07:07:34.272Z"
     },
     {
       "id": "s-boqueria",
@@ -647,8 +647,8 @@
       "music": null,
       "transition": "fade",
       "onEnter": null,
-      "createdAt": "2026-10-28T15:54:58.257Z",
-      "updatedAt": "2026-10-28T15:54:58.257Z"
+      "createdAt": "2026-10-29T07:07:34.272Z",
+      "updatedAt": "2026-10-29T07:07:34.272Z"
     },
     {
       "id": "s-gotic",
@@ -828,8 +828,8 @@
       "music": null,
       "transition": "fade",
       "onEnter": null,
-      "createdAt": "2026-10-28T15:54:58.257Z",
-      "updatedAt": "2026-10-28T15:54:58.257Z"
+      "createdAt": "2026-10-29T07:07:34.272Z",
+      "updatedAt": "2026-10-29T07:07:34.272Z"
     },
     {
       "id": "s-port",
@@ -1049,8 +1049,8 @@
       "music": "snd-carrer",
       "transition": "fade",
       "onEnter": null,
-      "createdAt": "2026-10-28T15:54:58.257Z",
-      "updatedAt": "2026-10-28T15:54:58.257Z"
+      "createdAt": "2026-10-29T07:07:34.272Z",
+      "updatedAt": "2026-10-29T07:07:34.272Z"
     },
     {
       "id": "s-platja",
@@ -1202,8 +1202,8 @@
       "music": null,
       "transition": "fade",
       "onEnter": null,
-      "createdAt": "2026-10-28T15:54:58.257Z",
-      "updatedAt": "2026-10-28T15:54:58.257Z"
+      "createdAt": "2026-10-29T07:07:34.272Z",
+      "updatedAt": "2026-10-29T07:07:34.272Z"
     },
     {
       "id": "s-pg",
@@ -1405,8 +1405,8 @@
       "music": "snd-carrer",
       "transition": "fade",
       "onEnter": null,
-      "createdAt": "2026-10-28T15:54:58.257Z",
-      "updatedAt": "2026-10-28T15:54:58.257Z"
+      "createdAt": "2026-10-29T07:07:34.272Z",
+      "updatedAt": "2026-10-29T07:07:34.272Z"
     },
     {
       "id": "s-sf",
@@ -1602,8 +1602,8 @@
       "music": null,
       "transition": "fade",
       "onEnter": null,
-      "createdAt": "2026-10-28T15:54:58.257Z",
-      "updatedAt": "2026-10-28T15:54:58.257Z"
+      "createdAt": "2026-10-29T07:07:34.272Z",
+      "updatedAt": "2026-10-29T07:07:34.272Z"
     },
     {
       "id": "s-mj",
@@ -1792,8 +1792,8 @@
       "music": null,
       "transition": "fade",
       "onEnter": null,
-      "createdAt": "2026-10-28T15:54:58.257Z",
-      "updatedAt": "2026-10-28T15:54:58.257Z"
+      "createdAt": "2026-10-29T07:07:34.272Z",
+      "updatedAt": "2026-10-29T07:07:34.272Z"
     },
     {
       "id": "s-park",
@@ -1976,8 +1976,8 @@
         "cutsceneId": "cs-park",
         "once": true
       },
-      "createdAt": "2026-10-28T15:54:58.257Z",
-      "updatedAt": "2026-10-28T15:54:58.257Z"
+      "createdAt": "2026-10-29T07:07:34.272Z",
+      "updatedAt": "2026-10-29T07:07:34.272Z"
     }
   ],
   "verbs": [
@@ -2051,8 +2051,8 @@
       ],
       "initialState": "mapa-normal",
       "icon": "ico-mapa.png",
-      "createdAt": "2026-10-28T15:54:58.257Z",
-      "updatedAt": "2026-10-28T15:54:58.257Z"
+      "createdAt": "2026-10-29T07:07:34.272Z",
+      "updatedAt": "2026-10-29T07:07:34.272Z"
     },
     {
       "id": "o-moneda",
@@ -2068,8 +2068,8 @@
       ],
       "initialState": "moneda-normal",
       "icon": "ico-moneda.png",
-      "createdAt": "2026-10-28T15:54:58.257Z",
-      "updatedAt": "2026-10-28T15:54:58.257Z"
+      "createdAt": "2026-10-29T07:07:34.272Z",
+      "updatedAt": "2026-10-29T07:07:34.272Z"
     },
     {
       "id": "o-rosa",
@@ -2085,8 +2085,8 @@
       ],
       "initialState": "rosa-normal",
       "icon": "ico-rosa.png",
-      "createdAt": "2026-10-28T15:54:58.257Z",
-      "updatedAt": "2026-10-28T15:54:58.257Z"
+      "createdAt": "2026-10-29T07:07:34.272Z",
+      "updatedAt": "2026-10-29T07:07:34.272Z"
     },
     {
       "id": "o-peix",
@@ -2102,8 +2102,8 @@
       ],
       "initialState": "peix-normal",
       "icon": "ico-peix.png",
-      "createdAt": "2026-10-28T15:54:58.257Z",
-      "updatedAt": "2026-10-28T15:54:58.257Z"
+      "createdAt": "2026-10-29T07:07:34.272Z",
+      "updatedAt": "2026-10-29T07:07:34.272Z"
     },
     {
       "id": "o-pa",
@@ -2119,8 +2119,8 @@
       ],
       "initialState": "pa-normal",
       "icon": "ico-pa.png",
-      "createdAt": "2026-10-28T15:54:58.257Z",
-      "updatedAt": "2026-10-28T15:54:58.257Z"
+      "createdAt": "2026-10-29T07:07:34.272Z",
+      "updatedAt": "2026-10-29T07:07:34.272Z"
     },
     {
       "id": "o-ulleres",
@@ -2141,8 +2141,8 @@
       ],
       "initialState": "ulleres-amagades",
       "icon": "ico-ulleres.png",
-      "createdAt": "2026-10-28T15:54:58.257Z",
-      "updatedAt": "2026-10-28T15:54:58.257Z"
+      "createdAt": "2026-10-29T07:07:34.272Z",
+      "updatedAt": "2026-10-29T07:07:34.272Z"
     },
     {
       "id": "o-llibre",
@@ -2158,8 +2158,8 @@
       ],
       "initialState": "llibre-normal",
       "icon": "ico-llibre.png",
-      "createdAt": "2026-10-28T15:54:58.257Z",
-      "updatedAt": "2026-10-28T15:54:58.257Z"
+      "createdAt": "2026-10-29T07:07:34.272Z",
+      "updatedAt": "2026-10-29T07:07:34.272Z"
     },
     {
       "id": "o-bitllet",
@@ -2175,8 +2175,8 @@
       ],
       "initialState": "bitllet-normal",
       "icon": "ico-bitllet.png",
-      "createdAt": "2026-10-28T15:54:58.257Z",
-      "updatedAt": "2026-10-28T15:54:58.257Z"
+      "createdAt": "2026-10-29T07:07:34.272Z",
+      "updatedAt": "2026-10-29T07:07:34.272Z"
     },
     {
       "id": "o-font",
@@ -2197,8 +2197,8 @@
       ],
       "initialState": "font-engegada",
       "icon": null,
-      "createdAt": "2026-10-28T15:54:58.257Z",
-      "updatedAt": "2026-10-28T15:54:58.257Z"
+      "createdAt": "2026-10-29T07:07:34.272Z",
+      "updatedAt": "2026-10-29T07:07:34.272Z"
     }
   ],
   "variables": [
@@ -3064,8 +3064,8 @@
           "fps": 4
         }
       },
-      "createdAt": "2026-10-28T15:54:58.257Z",
-      "updatedAt": "2026-10-28T15:54:58.257Z"
+      "createdAt": "2026-10-29T07:07:34.272Z",
+      "updatedAt": "2026-10-29T07:07:34.272Z"
     },
     {
       "id": "c-florista",
@@ -3142,8 +3142,8 @@
           "fps": 4
         }
       },
-      "createdAt": "2026-10-28T15:54:58.257Z",
-      "updatedAt": "2026-10-28T15:54:58.257Z"
+      "createdAt": "2026-10-29T07:07:34.272Z",
+      "updatedAt": "2026-10-29T07:07:34.272Z"
     },
     {
       "id": "c-estatua",
@@ -3167,8 +3167,8 @@
           "fps": 1
         }
       },
-      "createdAt": "2026-10-28T15:54:58.257Z",
-      "updatedAt": "2026-10-28T15:54:58.257Z"
+      "createdAt": "2026-10-29T07:07:34.272Z",
+      "updatedAt": "2026-10-29T07:07:34.272Z"
     },
     {
       "id": "c-remei",
@@ -3245,8 +3245,8 @@
           "fps": 4
         }
       },
-      "createdAt": "2026-10-28T15:54:58.257Z",
-      "updatedAt": "2026-10-28T15:54:58.257Z"
+      "createdAt": "2026-10-29T07:07:34.272Z",
+      "updatedAt": "2026-10-29T07:07:34.272Z"
     },
     {
       "id": "c-pere",
@@ -3323,8 +3323,8 @@
           "fps": 4
         }
       },
-      "createdAt": "2026-10-28T15:54:58.257Z",
-      "updatedAt": "2026-10-28T15:54:58.257Z"
+      "createdAt": "2026-10-29T07:07:34.272Z",
+      "updatedAt": "2026-10-29T07:07:34.272Z"
     },
     {
       "id": "c-quim",
@@ -3401,8 +3401,8 @@
           "fps": 4
         }
       },
-      "createdAt": "2026-10-28T15:54:58.257Z",
-      "updatedAt": "2026-10-28T15:54:58.257Z"
+      "createdAt": "2026-10-29T07:07:34.272Z",
+      "updatedAt": "2026-10-29T07:07:34.272Z"
     },
     {
       "id": "c-tomas",
@@ -3479,8 +3479,8 @@
           "fps": 4
         }
       },
-      "createdAt": "2026-10-28T15:54:58.257Z",
-      "updatedAt": "2026-10-28T15:54:58.257Z"
+      "createdAt": "2026-10-29T07:07:34.272Z",
+      "updatedAt": "2026-10-29T07:07:34.272Z"
     },
     {
       "id": "c-anna",
@@ -3557,8 +3557,8 @@
           "fps": 4
         }
       },
-      "createdAt": "2026-10-28T15:54:58.257Z",
-      "updatedAt": "2026-10-28T15:54:58.257Z"
+      "createdAt": "2026-10-29T07:07:34.272Z",
+      "updatedAt": "2026-10-29T07:07:34.272Z"
     },
     {
       "id": "c-manel",
@@ -3635,8 +3635,8 @@
           "fps": 4
         }
       },
-      "createdAt": "2026-10-28T15:54:58.257Z",
-      "updatedAt": "2026-10-28T15:54:58.257Z"
+      "createdAt": "2026-10-29T07:07:34.272Z",
+      "updatedAt": "2026-10-29T07:07:34.272Z"
     },
     {
       "id": "c-laia",
@@ -3713,8 +3713,8 @@
           "fps": 4
         }
       },
-      "createdAt": "2026-10-28T15:54:58.257Z",
-      "updatedAt": "2026-10-28T15:54:58.257Z"
+      "createdAt": "2026-10-29T07:07:34.272Z",
+      "updatedAt": "2026-10-29T07:07:34.272Z"
     }
   ],
   "playerId": "c-jordi",
@@ -4688,6 +4688,5 @@
     "music": "snd-tema"
   },
   "credits": "Guió, dibuixos i música generats amb tools/barcelona.\nFet amb l'editor d'aventures gràfiques.",
-  "cursor": "cross",
-  "id": "a62366cb-174f-4897-a18c-50ddb074c100"
+  "cursor": "cross"
 }

@@ -6,7 +6,7 @@ import { openAdventureDialog } from "../dialogs.js";
 let search = "";
 
 export async function renderList(view) {
-  let adventures = await request("GET", "/api/adventures");
+  let adventures = await request("GET", "api/adventures");
   view.innerHTML = `
     <div class="toolbar">
       <input id="search" type="search" placeholder="Cerca per títol o descripció…" aria-label="Cerca">
@@ -15,7 +15,9 @@ export async function renderList(view) {
       <button class="primary" id="new-adventure">+ Nova aventura</button>
       <input type="file" accept=".zip,application/zip" id="import-file" hidden>
     </div>
+    <p class="web-note" hidden>Versió web: les aventures es guarden en aquest navegador. Fes servir «Exporta el joc…» per tenir-ne una còpia (el zip es pot tornar a importar).</p>
     <div id="list"></div>`;
+  $(".web-note").hidden = !window.EDITOR_WEB;
   const input = $("#search");
   input.value = search;
   input.oninput = () => { search = input.value; renderCards(); };
@@ -26,7 +28,7 @@ export async function renderList(view) {
     const file = $("#import-file").files[0];
     if (!file) return;
     try {
-      const imported = await request("POST", "/api/import", file, "application/zip");
+      const imported = await request("POST", "api/import", file, "application/zip");
       toast(`«${imported.title}» importada`);
       location.hash = `#/aventura/${imported.id}`;
     } catch (err) {

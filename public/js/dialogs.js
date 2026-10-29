@@ -32,7 +32,7 @@ $("#adventure-form").addEventListener("submit", async (e) => {
   try {
     const saved = editingAdventure
       ? await saveAdventure({ ...editingAdventure, ...body })
-      : await request("POST", "/api/adventures", body);
+      : await request("POST", "api/adventures", body);
     $("#adventure-editor").close();
     toast(editingAdventure ? "Aventura desada" : "Aventura creada");
     onAdventureSaved?.(saved, !editingAdventure);

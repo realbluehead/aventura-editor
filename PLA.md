@@ -133,6 +133,7 @@ Fem el joc jugable de seguida, encara que sigui pobre, perquè cada fase següen
 - Sortides amb condicions i frase quan no s'hi pot passar (format 9). L'anàlisi de puzles les té en compte.
 - Al joc: doble clic a una sortida per passar-hi de seguida, i tecles 1-9 per als verbs.
 - **Joc d'exemple**: «La rosa de Sant Jordi», 10 escenaris de Barcelona generats amb codi (`tools/barcelona/`). Un test comprova que es genera i que es pot acabar.
+- **Versió web** a GitHub Pages: l'API és compartida (`public/js/backend/core.js`) i, sense servidor, la fa un service worker que guarda les dades a IndexedDB.
 
 ### Més endavant (idees)
 - Traduccions: tots els textos en diverses llengües.

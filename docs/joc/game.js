@@ -1779,8 +1779,9 @@ function createPlayer(container, adventure, {
     showOptions(false);
     const sceneId = st?.sceneId && adventure.scenes.some((x) => x.id === st.sceneId) ? st.sceneId : startSceneId;
     await enterScene(sceneId);
-    // La seqüència d'inici, només quan es comença de veritat (no en una situació de prova)
-    if (!st && adventure.introCutsceneId && sceneId === startSceneId) {
+    // La seqüència d'inici, només quan es comença de veritat: ni en una situació de prova ni provant un altre escenari
+    const realStart = adventure.startSceneId ?? adventure.scenes[0]?.id;
+    if (!st && adventure.introCutsceneId && sceneId === startSceneId && sceneId === realStart) {
       await script([{ type: "cutscene", cutsceneId: adventure.introCutsceneId }]);
     }
   }
@@ -1825,7 +1826,7 @@ function createPlayer(container, adventure, {
 return { createPlayer };
 })();
 
-window.AventuraPlayer = modules["player/player.js"];
+globalThis.AventuraPlayer = modules["player/player.js"];
 })();
 
 const { createPlayer } = window.AventuraPlayer;
