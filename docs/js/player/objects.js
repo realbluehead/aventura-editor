@@ -1,9 +1,19 @@
 // Ajudes sobre els objectes compartides per l'editor i el reproductor
 
-// Fitxer de la imatge d'un objecte en un estat (per defecte, l'inicial), o null si en aquest estat no té imatge
-export function spriteFile(object, stateId = object.initialState) {
-  return object.states.find((s) => s.id === stateId)?.image ?? null;
+// Fitxer de la imatge d'un objecte en un estat (per defecte, l'inicial), o null si en aquest estat no té imatge.
+// Si l'estat és animat (frames, fps), el del fotograma que toca a l'instant «time» (en segons).
+export function spriteFile(object, stateId = object.initialState, time = 0) {
+  const st = object.states.find((s) => s.id === stateId);
+  if (!st) return null;
+  if (st.frames?.length > 1) return st.frames[Math.floor(time * (st.fps || 8)) % st.frames.length];
+  return st.image ?? null;
 }
+
+// Tots els fitxers que pot mostrar un estat (per carregar-los abans)
+export const stateFiles = (object, stateId = object.initialState) => {
+  const st = object.states.find((s) => s.id === stateId);
+  return st ? [st.image, ...(st.frames ?? [])].filter(Boolean) : [];
+};
 
 // Rectangle que ocupa la imatge: la posició és el punt de baix al mig, com els peus del personatge
 export function spriteRect(position, img) {

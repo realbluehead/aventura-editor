@@ -40,3 +40,13 @@ test("cap on mira, on s'hi acosta el protagonista i el rectangle", () => {
   assert.deepEqual(defaultApproach([100, 50], "down", 40), [124, 50]);
   assert.deepEqual(characterRect(ch, sheet, 100, 80, 64), { x: 84, y: 16, w: 32, h: 64 }, "mateixa proporció que el fotograma");
 });
+
+test("objectes animats: el fotograma de cada instant", async () => {
+  const { spriteFile, stateFiles } = await import("../public/js/player/objects.js");
+  const o = { initialState: "a", states: [{ id: "a", image: "f0.png", frames: ["f0.png", "f1.png", "f2.png"], fps: 4 }, { id: "b", image: "quiet.png" }] };
+  assert.equal(spriteFile(o), "f0.png");
+  assert.equal(spriteFile(o, "a", 0.3), "f1.png");
+  assert.equal(spriteFile(o, "a", 0.8), "f0.png", "torna a començar");
+  assert.equal(spriteFile(o, "b", 5), "quiet.png");
+  assert.deepEqual(stateFiles(o), ["f0.png", "f0.png", "f1.png", "f2.png"]);
+});

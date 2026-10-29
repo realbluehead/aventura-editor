@@ -113,7 +113,8 @@ function render() {
       <label class="check"><input type="radio" name="initial"> Inicial</label>
       <button type="button" class="small danger">Treu</button>
     </div>`);
-    $(".slot", row).append(picker(st.image, (v) => { st.image = v; render(); }, "+ imatge"));
+    // Canviar la imatge d'un estat animat en treu l'animació (els fotogrames eren de l'antiga)
+    $(".slot", row).append(picker(st.image, (v) => { st.image = v; delete st.frames; delete st.fps; render(); }, "+ imatge"));
     const name = $("input[maxlength]", row);
     name.value = st.name;
     name.oninput = () => { st.name = name.value; };

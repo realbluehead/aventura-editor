@@ -61,7 +61,7 @@ export async function checkZip(bytes) {
   const refs = [
     ...a.scenes.map((s) => [s.background, `fons de «${s.name}»`]),
     ...a.characters.map((c) => [c.sheet, `full de «${c.name}»`]),
-    ...a.objects.flatMap((o) => [[o.icon, `icona de «${o.name}»`], ...o.states.map((s) => [s.image, `imatge de «${o.name}» (${s.name})`])]),
+    ...a.objects.flatMap((o) => [[o.icon, `icona de «${o.name}»`], ...o.states.flatMap((s) => [[s.image, `imatge de «${o.name}» (${s.name})`], ...(s.frames ?? []).map((f, k) => [f, `fotograma ${k + 1} de «${o.name}» (${s.name})`])])]),
     ...a.sounds.map((s) => [s.file, `so «${s.name}»`]),
     [a.titleScreen?.image, "pantalla de títol"],
   ].filter(([f]) => f);

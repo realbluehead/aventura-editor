@@ -239,6 +239,30 @@ test("objectes: imatges per estat, col·locació en un sol escenari i neteja en 
   assert.deepEqual(await readdir(imgDir), []);
 });
 
+test("objectes animats i decoratius: fotogrames per estat, fps i decor", async () => {
+  const { body: adv } = await api("POST", "/api/adventures", { title: "Animats" });
+  const imgDir = join(dir, "adventures", adv.id, "images");
+  const create = await api("POST", `/api/adventures/${adv.id}/objects`, {
+    name: "espelmes", decor: true,
+    states: [{ id: "n", name: "Normal", image: dataUrl(PNG), frames: [dataUrl(PNG), dataUrl(PNG), dataUrl(PNG)], fps: 99 }],
+  });
+  assert.equal(create.status, 201);
+  const o = create.body;
+  assert.equal(o.decor, true);
+  assert.equal(o.states[0].frames.length, 3);
+  assert.equal(o.states[0].fps, 8, "un fps fora de rang torna al de per defecte");
+  assert.equal((await readdir(imgDir)).length, 4, "la imatge i els tres fotogrames");
+  // L'editor d'objectes no envia «decor»: es conserva. Els fotogrames que es tornen a enviar per nom es mantenen.
+  const upd = await api("PUT", `/api/adventures/${adv.id}/objects/${o.id}`, { name: "espelmes", states: o.states, initialState: o.initialState });
+  assert.equal(upd.body.decor, true);
+  assert.deepEqual(upd.body.states[0].frames, o.states[0].frames);
+  // Treure l'animació n'esborra els fotogrames
+  const still = await api("PUT", `/api/adventures/${adv.id}/objects/${o.id}`, { name: "espelmes", decor: false, states: [{ ...o.states[0], frames: undefined }] });
+  assert.equal(still.body.decor, false);
+  assert.equal(still.body.states[0].frames, undefined);
+  assert.deepEqual(await readdir(imgDir), [o.states[0].image]);
+});
+
 test("variables i regles: es validen per la forma i es conserven si apunten a coses esborrades", async () => {
   const { body: adv } = await api("POST", "/api/adventures", { title: "Regles" });
   assert.equal(adv.verbs.find((v) => v.id === "use").preposition, "amb");

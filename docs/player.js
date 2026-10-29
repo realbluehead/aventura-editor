@@ -288,10 +288,20 @@ modules["player/objects.js"] = (() => {
 
 // Ajudes sobre els objectes compartides per l'editor i el reproductor
 
-// Fitxer de la imatge d'un objecte en un estat (per defecte, l'inicial), o null si en aquest estat no té imatge
-function spriteFile(object, stateId = object.initialState) {
-  return object.states.find((s) => s.id === stateId)?.image ?? null;
+// Fitxer de la imatge d'un objecte en un estat (per defecte, l'inicial), o null si en aquest estat no té imatge.
+// Si l'estat és animat (frames, fps), el del fotograma que toca a l'instant «time» (en segons).
+function spriteFile(object, stateId = object.initialState, time = 0) {
+  const st = object.states.find((s) => s.id === stateId);
+  if (!st) return null;
+  if (st.frames?.length > 1) return st.frames[Math.floor(time * (st.fps || 8)) % st.frames.length];
+  return st.image ?? null;
 }
+
+// Tots els fitxers que pot mostrar un estat (per carregar-los abans)
+const stateFiles = (object, stateId = object.initialState) => {
+  const st = object.states.find((s) => s.id === stateId);
+  return st ? [st.image, ...(st.frames ?? [])].filter(Boolean) : [];
+};
 
 // Rectangle que ocupa la imatge: la posició és el punt de baix al mig, com els peus del personatge
 function spriteRect(position, img) {
@@ -324,7 +334,7 @@ function opaqueAt(img, x, y) {
   return data[(py * img.naturalWidth + px) * 4 + 3] > 16;
 }
 
-return { spriteFile, spriteRect, opaqueAt };
+return { spriteFile, stateFiles, spriteRect, opaqueAt };
 })();
 
 // player/characters.js
@@ -743,7 +753,7 @@ const { pointInPolygon } = modules["geometry.js"];
 const { createNavMesh } = modules["player/navmesh.js"];
 const { actorHeightAt } = modules["player/actor.js"];
 const { drawCharacter, characterRect, characterHit, facingToDir, defaultApproach } = modules["player/characters.js"];
-const { spriteFile, spriteRect, opaqueAt } = modules["player/objects.js"];
+const { spriteFile, stateFiles, spriteRect, opaqueAt } = modules["player/objects.js"];
 const { createGameState, checkCondition, findRule, applyStateAction, runActions, startNode, availableOptions, markSaid, dialogueFor, serializeGame, restoreGame } = modules["player/rules.js"];
 const { LOOK, PICKUP } = modules["defaults.js"];
 const { createAudio } = modules["player/audio.js"];
@@ -921,7 +931,7 @@ function createPlayer(container, adventure, {
     return scene.objects.flatMap((p) => {
       const object = library.get(p.objectId);
       if (!object || game.location.get(object.id) !== scene.id) return [];
-      const file = spriteFile(object, game.states.get(object.id));
+      const file = spriteFile(object, game.states.get(object.id), performance.now() / 1000);
       if (!file) return [];
       if (!images.has(file)) imageFor(file);
       const sprite = images.get(file);
@@ -996,7 +1006,7 @@ function createPlayer(container, adventure, {
     await Promise.all([
       ...scene.objects.map((p) => {
         const o = library.get(p.objectId);
-        return o ? imageFor(spriteFile(o, game.states.get(o.id))) : null;
+        return o ? Promise.all(stateFiles(o, game.states.get(o.id)).map(imageFor)) : null;
       }),
       imageFor(playerCh?.sheet),
       ...scene.characters.map((p) => imageFor(cast.get(p.characterId)?.sheet)),
@@ -1039,6 +1049,7 @@ function createPlayer(container, adventure, {
     for (const d of drawables().reverse()) {
       if (d.kind === "object") {
         const o = d.item, { x, y, w, h } = o.rect;
+        if (o.object.decor) continue;   // els objectes decoratius (llums, espelmes...) no es poden tocar
         if (p[0] >= x && p[0] < x + w && p[1] >= y && p[1] < y + h && opaqueAt(o.sprite, p[0] - x, p[1] - y)) {
           return {
             kind: "object", id: o.object.id, name: o.object.name, description: o.object.description, object: o.object,

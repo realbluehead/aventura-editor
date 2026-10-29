@@ -92,7 +92,7 @@ npm run build:web
   - `GET/POST /api/adventures`, `GET/PUT/DELETE /api/adventures/:id`
   - `GET/POST /api/adventures/:id/scenes`, `GET/PUT/DELETE /api/adventures/:id/scenes/:sceneId`. El `PUT` sempre porta `name` i `description`. `walkable`, `hotspots` i `mapPosition` només es canvien si s'envien.
   - `PUT/DELETE /api/adventures/:id/scenes/:sceneId/background`. El cos del `PUT` és la imatge, amb el seu `content-type`.
-  - `GET/POST /api/adventures/:id/objects`, `GET/PUT/DELETE /api/adventures/:id/objects/:objectId`, i el mateix per a `characters` (el full de sprites va dins del JSON, com les imatges dels objectes). Les imatges dels estats i la icona s'envien dins del JSON: el nom d'un fitxer que l'objecte ja tenia, una imatge nova com a data URL, o `null`. Les que deixen de fer-se servir s'esborren.
+  - `GET/POST /api/adventures/:id/objects`, `GET/PUT/DELETE /api/adventures/:id/objects/:objectId`, i el mateix per a `characters` (el full de sprites va dins del JSON, com les imatges dels objectes). Les imatges dels estats i la icona s'envien dins del JSON: el nom d'un fitxer que l'objecte ja tenia, una imatge nova com a data URL, o `null`. Les que deixen de fer-se servir s'esborren. Un estat pot ser animat (`frames`: una llista d'imatges com `image`, i `fps`), i un objecte amb `decor: true` es veu però no es pot tocar (llums, fum...).
   - El `PUT` d'una aventura també accepta `verbs`, `variables`, `rules`, `dialogues` i `playerId`. Les regles només es validen per la forma, no per si existeixen les coses a què apunten.
   - `GET /api/adventures/:id/export`: el zip del joc. `POST /api/import` (cos: el zip) crea una aventura nova.
   - `GET /files/:id/:fitxer`: imatges (fons i objectes).

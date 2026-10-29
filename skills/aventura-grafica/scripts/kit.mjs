@@ -266,14 +266,20 @@ export class Project {
     return id;
   }
 
-  // Un objecte de la biblioteca. states: [[idEstat, nom, Canvas o null], ...]; el primer és l'inicial.
+  // Un objecte de la biblioteca. states: [[idEstat, nom, Canvas o null, fps?], ...]; el primer és l'inicial.
+  // En lloc d'un Canvas, una llista de Canvas fa l'estat animat (fotogrames en bucle a «fps», per defecte 8).
+  // decor: true el fa decoratiu (es veu però no es pot tocar: llums, fum, espelmes...).
   // Els que es poden agafar reben una icona d'inventari de 24×24 feta de la imatge (o «icon», si es passa).
-  object({ id, name, description = "", pickable = false, states, icon: iconCanvas = null, initial }) {
-    const st = states.map(([sid, sname, img]) => ({ id: `${id}-${sid}`, name: sname, image: img ? this.file(`${id}-${sid}.png`, img) : null }));
-    const firstImg = states.find(([, , img]) => img)?.[2];
+  object({ id, name, description = "", pickable = false, decor = false, states, icon: iconCanvas = null, initial }) {
+    const st = states.map(([sid, sname, img, fps]) => {
+      if (!Array.isArray(img)) return { id: `${id}-${sid}`, name: sname, image: img ? this.file(`${id}-${sid}.png`, img) : null };
+      const frames = img.map((f, k) => this.file(`${id}-${sid}-${k}.png`, f));
+      return { id: `${id}-${sid}`, name: sname, image: frames[0], frames, fps: fps ?? 8 };
+    });
+    const firstImg = states.map(([, , img]) => (Array.isArray(img) ? img[0] : img)).find(Boolean);
     const ico = iconCanvas ?? (pickable && firstImg ? icon(firstImg) : null);
     this.objects.push({
-      id, name, description, pickable, states: st, initialState: initial ? `${id}-${initial}` : st[0].id,
+      id, name, description, pickable, ...(decor ? { decor: true } : {}), states: st, initialState: initial ? `${id}-${initial}` : st[0].id,
       icon: ico ? this.file(`${id}-icona.png`, ico) : null, createdAt: this.now, updatedAt: this.now,
     });
     return id;

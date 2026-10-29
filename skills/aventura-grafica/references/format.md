@@ -92,6 +92,12 @@ P.object({ id: "o-clau", name: "clau", description: "Una clau rovellada.", picka
 - `place(id, [x, y], walkTo, { facing: "auto"|"left"|"right", layer: "auto"|"back"|"front" })`: la posició és la
   base de la imatge. `walkTo` és on es posa el protagonista per tocar-lo (dins de la zona caminable).
   `layer: "back"` el deixa sempre darrere del protagonista (per a coses penjades a la paret, per exemple).
+- **Estats animats**: en lloc d'un Canvas, una llista de Canvas (de la mateixa mida) fa els fotogrames d'un bucle;
+  el quart element és el ritme: `["crema", "Crema", [f0, f1, f2, f3], 6]` (fotogrames per segon, 1–30, per defecte 8;
+  com a molt 64 fotogrames). Per a flames, bombolles, una snitch que bat les ales, un quadre viu...
+- **Objectes decoratius** (`decor: true`): es veuen però no es poden tocar ni tapen els clics (llums, espelmes que
+  suren, fum, cuques de llum, boira). Amb un estat animat, són la manera de fer el decorat viu. Col·loca'ls amb
+  `layer: "back"` perquè quedin darrere dels personatges. `aventures/barret-perdut/fx.mjs` en té una vintena.
 
 ## 5. Regles
 

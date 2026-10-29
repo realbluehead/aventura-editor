@@ -564,7 +564,7 @@ function cleanSound(input, existing, errors, uploads) {
   return { id, name: textField(input, "name", "El nom", errors, true), file };
 }
 
-const objectFiles = (o) => [...o.states.map((s) => s.image), o.icon].filter(Boolean);
+const objectFiles = (o) => [...o.states.flatMap((s) => [s.image, ...(s.frames ?? [])]), o.icon].filter(Boolean);
 const characterFiles = (c) => [c.sheet].filter(Boolean);
 
 const intIn = (v, min, max, fallback) => (Number.isInteger(Number(v)) && Number(v) >= min && Number(v) <= max ? Number(v) : fallback);
@@ -601,17 +601,27 @@ function cleanObject(input, existing, errors, uploads) {
   const cleanStates = states.slice(0, LIMITS.states).map((st, i) => {
     const sid = validId(st?.id, seen) ? st.id : crypto.randomUUID();
     seen.add(sid);
-    return {
+    const clean = {
       id: sid,
       name: textField(st, "name", `Estat ${i + 1}: el nom`, errors, true),
       image: objectImage(st?.image, owned, `Estat ${i + 1}`, errors, uploads, id),
     };
+    // Un estat animat: fotogrames (imatges, com «image») que es repeteixen a «fps» per segon
+    if (Array.isArray(st?.frames) && st.frames.length > 1) {
+      if (st.frames.length > LIMITS.frames) errors.push(`Estat ${i + 1}: com a màxim ${LIMITS.frames} fotogrames`);
+      clean.frames = st.frames.slice(0, LIMITS.frames).map((f, k) => objectImage(f, owned, `Estat ${i + 1}, fotograma ${k + 1}`, errors, uploads, id)).filter(Boolean);
+      clean.fps = intIn(st.fps, 1, 30, 8);
+      if (clean.frames.length < 2) { delete clean.frames; delete clean.fps; }
+    }
+    return clean;
   });
   return {
     id,
     name: textField(input, "name", "El nom", errors, true),
     description: textField(input, "description", "La descripció", errors),
     pickable: input.pickable === true,
+    // Decoratiu: es veu però no es pot tocar (llums, espelmes, fum...). Si no s'envia, es manté el que tenia.
+    decor: "decor" in input ? input.decor === true : existing?.decor === true,
     states: cleanStates,
     initialState: seen.has(input.initialState) ? input.initialState : cleanStates[0]?.id ?? null,
     icon: objectImage(input.icon, owned, "La icona", errors, uploads, id),

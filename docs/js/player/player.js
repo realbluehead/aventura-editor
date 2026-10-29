@@ -6,7 +6,7 @@ import { pointInPolygon } from "../geometry.js";
 import { createNavMesh } from "./navmesh.js";
 import { actorHeightAt } from "./actor.js";
 import { drawCharacter, characterRect, characterHit, facingToDir, defaultApproach } from "./characters.js";
-import { spriteFile, spriteRect, opaqueAt } from "./objects.js";
+import { spriteFile, stateFiles, spriteRect, opaqueAt } from "./objects.js";
 import { createGameState, checkCondition, findRule, applyStateAction, runActions, startNode, availableOptions, markSaid, dialogueFor, serializeGame, restoreGame } from "./rules.js";
 import { LOOK, PICKUP } from "../defaults.js";
 import { createAudio } from "./audio.js";
@@ -171,7 +171,7 @@ export function createPlayer(container, adventure, {
     return scene.objects.flatMap((p) => {
       const object = library.get(p.objectId);
       if (!object || game.location.get(object.id) !== scene.id) return [];
-      const file = spriteFile(object, game.states.get(object.id));
+      const file = spriteFile(object, game.states.get(object.id), performance.now() / 1000);
       if (!file) return [];
       if (!images.has(file)) imageFor(file);
       const sprite = images.get(file);
@@ -246,7 +246,7 @@ export function createPlayer(container, adventure, {
     await Promise.all([
       ...scene.objects.map((p) => {
         const o = library.get(p.objectId);
-        return o ? imageFor(spriteFile(o, game.states.get(o.id))) : null;
+        return o ? Promise.all(stateFiles(o, game.states.get(o.id)).map(imageFor)) : null;
       }),
       imageFor(playerCh?.sheet),
       ...scene.characters.map((p) => imageFor(cast.get(p.characterId)?.sheet)),
@@ -289,6 +289,7 @@ export function createPlayer(container, adventure, {
     for (const d of drawables().reverse()) {
       if (d.kind === "object") {
         const o = d.item, { x, y, w, h } = o.rect;
+        if (o.object.decor) continue;   // els objectes decoratius (llums, espelmes...) no es poden tocar
         if (p[0] >= x && p[0] < x + w && p[1] >= y && p[1] < y + h && opaqueAt(o.sprite, p[0] - x, p[1] - y)) {
           return {
             kind: "object", id: o.object.id, name: o.object.name, description: o.object.description, object: o.object,
