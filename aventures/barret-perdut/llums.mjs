@@ -1,13 +1,6 @@
-// Llums animades: el joc només anima personatges, així que cada escenari amb llums té un «personatge» que és una
-// capa transparent del mida del decorat, amb flames que es mouen i halos que tremolen (6 fotogrames en bucle).
-//
-// Com encaixa amb el reproductor:
-// - Es col·loca amb els peus a la y de dalt de la zona caminable: es dibuixa darrere de tots els personatges i
-//   l'alçada hi és la «far» de l'escenari, de manera que l'escala és far/32 (32 = fotograma d'en Harry).
-//   El fotograma es fa a la resolució que, un cop escalat, torna a caure píxel a píxel sobre el decorat.
-// - Es col·loca a x = 1 i fa 640 px d'ample: el protagonista sempre hi és a la dreta, i si s'hi gira (en
-//   clicar-ne una flama) no s'emmiralla. Les animacions de costat són les mateixes que les de cara.
-// - Els halos tenen opacitat ≤ 16 (el reproductor no compta aquests píxels per als clics): no tapen res.
+// Llums animades: flames de torxes, espelmes i llars de foc que es mouen, halos que tremolen i finestres llunyanes
+// que fan pampallugues. Es dibuixen en coordenades del decorat (6 fotogrames en bucle) i fx.mjs en fa un objecte
+// decoratiu animat (un estat amb fotogrames, que no es pot tocar).
 import { Canvas, rgba } from "./persp.mjs";
 
 const FRAMES = 6, FPS = 7;
@@ -25,18 +18,18 @@ function frame(sc, f) {
     return Number.isNaN(z) || z > Z - 0.8;
   };
   const halo = (x, y, r, k) => {
-    // pols de llum: càlid quan puja, fosc quan baixa (opacitat ≤ 16)
+    // pols de llum: càlid quan puja, fosc quan baixa
     const col = k > 0 ? rgba(PAL.amber) : [0, 0, 0, 255];
     const a = Math.abs(k);
     for (let j = Math.floor(y - r); j <= y + r; j++) for (let i = Math.floor(x - r); i <= x + r; i++) {
       const d = Math.hypot(i - x, j - y) / r;
       if (d >= 1 || i < 0 || j < 0 || i >= 320 || j >= 200) continue;
-      const al = Math.min(16, Math.round(16 * a * (1 - d) * (k > 0 ? 1 : 0.8)));
+      const al = Math.min(44, Math.round(44 * a * (1 - d) * (k > 0 ? 1 : 0.7)));
       if (al > 0) { const o = (j * 320 + i) * 4; c.data[o] = col[0]; c.data[o + 1] = col[1]; c.data[o + 2] = col[2]; c.data[o + 3] = Math.max(c.data[o + 3], al); }
     }
   };
   (bg.lights ?? []).forEach((li, n) => {
-    if (!li.kind || li.kind === "moon") return;
+    if (!li.kind || li.kind === "moon" || (li.kind === "candle" && sc.bg.candles)) return;   // les espelmes que suren ja porten la seva llum
     const r = rnd(n * 977 + f * 131 + 7);
     if (!visible(li.fx, li.fy, li.Z + 0.3)) return;
     const pulse = Math.sin((f / FRAMES) * Math.PI * 2 + n * 1.7) * 0.6 + (r() - 0.5) * 0.8;
@@ -46,7 +39,7 @@ function frame(sc, f) {
       c.ellipse(li.fx + dx, li.fy - (h - li.ry), Math.max(1, Math.round(w)), Math.max(2, Math.round(h)), PAL.orange);
       c.ellipse(li.fx + dx * 0.5, li.fy - (h - li.ry) * 0.5 + 1, Math.max(1, Math.round(w * 0.5)), Math.max(1, Math.round(h * 0.55)), PAL.yellow);
       if (r() < 0.6) c.px(li.fx + dx, li.fy - h * 2 + 1, PAL.amber);           // espurna a la punta
-    } else if (li.kind === "candle") {
+    } else if (li.kind === "candle" && !sc.bg.candles) {
       const on = r();
       c.px(li.fx, li.fy, on < 0.25 ? PAL.amber : on < 0.85 ? PAL.yellow : PAL.white);
       if (on > 0.5) c.px(li.fx, li.fy - 1, PAL.amber);
@@ -70,36 +63,10 @@ function frame(sc, f) {
   return c;
 }
 
-// El full de sprites i la col·locació del «personatge» de llums d'un escenari (null si no n'hi ha)
-export function lightsCharacter(sc) {
+// Els fotogrames (llenços de 320×200) de les flames i els halos d'un escenari, o null si no n'hi ha
+export function lightFrames(sc) {
   const lights = (sc.bg.lights ?? []).filter((l) => l.kind && l.kind !== "moon");
   if (!lights.length && !(sc.bg.twinkles ?? []).length) return null;
-  const frames = Array.from({ length: FRAMES }, (_, f) => frame(sc, f));
-  // fins on arriben les coses que es mouen (per no fer el fotograma més alt del que cal)
-  let top = 200, bottom = 0;
-  for (const c of frames) for (let y = 0; y < 200; y++) for (let x = 0; x < 320; x++) if (c.data[(y * 320 + x) * 4 + 3]) { if (y < top) top = y; if (y > bottom) bottom = y; }
-  const ys = sc.walk.flat().map((p) => p[1]), feet = Math.min(...ys);
-  if (bottom >= feet) frames.forEach((c) => c.data.fill(0, feet * 320 * 4));   // res per sota dels peus (quedaria davant dels personatges)
-  const s = sc.ah.far / 32;                    // píxels del decorat per píxel del fotograma
-  const FW = Math.round(640 / s), FH = Math.max(1, Math.round((feet - Math.max(0, top - 2)) / s));
-  const Hd = FH * s, Wd = FW * s, left = 1 - Wd / 2, topD = feet - Hd;
-  const cols = 2, sheet = new Canvas(FW * cols, FH * Math.ceil(FRAMES / cols));
-  frames.forEach((c, f) => {
-    const ox = (f % cols) * FW, oy = Math.floor(f / cols) * FH;
-    for (let j = 0; j < FH; j++) {
-      const y = Math.floor(topD + (j + 0.5) * s);
-      if (y < 0 || y >= feet) continue;
-      for (let i = 0; i < FW; i++) {
-        const x = Math.floor(left + (i + 0.5) * s);
-        if (x < 0 || x >= 320) continue;
-        const o = (y * 320 + x) * 4;
-        if (!c.data[o + 3]) continue;
-        const d = ((oy + j) * sheet.w + ox + i) * 4;
-        sheet.data[d] = c.data[o]; sheet.data[d + 1] = c.data[o + 1]; sheet.data[d + 2] = c.data[o + 2]; sheet.data[d + 3] = c.data[o + 3];
-      }
-    }
-  });
-  const loop = { frames: Array.from({ length: FRAMES }, (_, i) => i), fps: FPS };
-  const animations = Object.fromEntries(["idle", "walk", "talk"].flatMap((a) => ["side", "down", "up"].map((d) => [`${a}-${d}`, loop])));
-  return { sheet, frameWidth: FW, frameHeight: FH, animations, position: [1, feet] };
+  const fr = Array.from({ length: FRAMES }, (_, f) => frame(sc, f));
+  return fr.some((c) => c.data.some((v, i) => i % 4 === 3 && v)) ? fr : null;
 }

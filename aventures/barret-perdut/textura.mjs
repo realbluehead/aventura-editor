@@ -163,7 +163,7 @@ export function finish(c, cam, estil, { outdoor = false, lights = c.lights ?? []
     const i = y * W + x, o = i * 4;
     if (!src[o + 3]) continue;
     let r = src[o], g = src[o + 1], b = src[o + 2];
-    const X = gb ? gb[i * 3] : NaN;
+    const X = gb && !c.emissive ? gb[i * 3] : NaN;
     if (!Number.isNaN(X)) {
       const Y = gb[i * 3 + 1], Z = gb[i * 3 + 2];
       let lr = amb[0], lg = amb[1], lb = amb[2];
@@ -215,11 +215,12 @@ export function finish(c, cam, estil, { outdoor = false, lights = c.lights ?? []
 }
 
 // Dibuixa un escenari amb un estil: activa les textures, l'il·lumina i il·lumina també els objectes retallats
-export function render(fn, estil, { outdoor = false } = {}) {
-  const th = themeOf(estil);
+// fx(sc): efectes animats (fx.mjs), dibuixats amb el mateix estil i il·luminats com la resta; en tornen la llista a sc.fx
+export function render(fn, estil, { outdoor = false, fx = null } = {}) {
+  const th = { ...themeOf(estil), fx: !!fx };
   setTheme(th); CUTS.length = 0;
   let sc;
-  try { sc = fn(); } finally { setTheme(null); }
+  try { sc = fn(); sc.fx = fx ? fx(sc) : []; } finally { setTheme(null); }
   const cuts = CUTS.splice(0);
   finish(sc.bg, sc.cam, estil, { outdoor });
   for (const o of cuts) for (const c of o.full) if (c) finish(c, sc.cam, estil, { outdoor, lights: [...(sc.bg.lights ?? []), ...(c.lights ?? [])], ref: sc.bg });

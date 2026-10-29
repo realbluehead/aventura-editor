@@ -161,6 +161,8 @@ export function torch(c, cam, X, Y, Z) {
 export function candle(c, cam, X, Y, Z) {
   const [x, y] = cam.p(X, Y, Z), s = cam.s(Z);
   addLight(c, X, Y, Z, [1.0, 0.75, 0.45], 1.6, 0.35, { kind: "candle", fx: x, fy: y - 1, sx: x, sy: y - 1, sr: Math.max(3, s * 0.35) });
+  (c.candles ??= []).push({ X, Y, Z });
+  if (THEME?.fx) return;   // les espelmes que suren les dibuixa fx.mjs, animades
   c.rect(x, y, Math.max(1, s * 0.05), Math.max(2, s * 0.22), "#f4ecd0");
   c.px(x, y - 1, "#ffd23f");
   c.circle(x, y - 1, Math.max(1, s * 0.08), [255, 210, 120, 40]);

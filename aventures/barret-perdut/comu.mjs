@@ -28,7 +28,16 @@ export function cut(...fns) {
   CUTS.push(o);
   return o;
 }
-function crop(full) {
+// Com cut(), però cada estat pot ser una llista de dibuixos (els fotogrames d'una animació). imgs torna, per estat,
+// un Canvas o una llista de Canvas, tots retallats a la mateixa capsa.
+export function cutAnim(...states) {
+  const flat = [], groups = states.map((st) => (Array.isArray(st) ? st.map((f) => flat.push(f) - 1) : flat.push(st) - 1));
+  const o = cut(...flat);
+  return { full: o.full, get imgs() { const im = o.imgs; return groups.map((g) => (Array.isArray(g) ? g.map((i) => im[i]) : im[g])); }, get pos() { return o.pos; } };
+}
+// N fotogrames d'un mateix dibuix: fn(llenç, f, N)
+export const frames = (N, fn) => Array.from({ length: N }, (_, f) => (k) => fn(k, f, N));
+export function crop(full) {
   let x0 = 320, y0 = 200, x1 = -1, y1 = -1;
   for (const c of full) if (c) for (let y = 0; y < 200; y++) for (let x = 0; x < 320; x++) if (c.data[(y * 320 + x) * 4 + 3]) {
     if (x < x0) x0 = x; if (x > x1) x1 = x; if (y < y0) y0 = y; if (y > y1) y1 = y;

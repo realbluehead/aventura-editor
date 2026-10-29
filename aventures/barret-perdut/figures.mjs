@@ -138,3 +138,22 @@ export const ICONS = {
   recepta: () => C(13, 16, (c) => { c.rect(0, 0, 13, 16, "#e8dcb8"); c.rect(0, 0, 13, 2, "#8a5a2a"); for (let y = 4; y < 14; y += 2) c.rect(2, y, 6 + (y % 4), 1, "#3a2a1a"); c.px(10, 6, "#4a7ab8"); c.px(10, 8, "#4a8a3a"); c.px(10, 10, "#e0e0f0"); c.px(10, 12, "#d8401a"); }),
   cromo: () => C(11, 15, (c) => { c.rect(0, 0, 11, 15, "#c9a227"); c.rect(1, 1, 9, 13, "#3a2a5a"); c.circle(5, 5, 2, "#ecd0b4"); c.rect(3, 7, 5, 4, "#f0f0f0"); c.rect(2, 3, 7, 1, "#e4e4e4"); }),
 };
+
+/* ---------- Fantasmes que suren ---------- */
+// Duplica el full (4×4 fotogrames) amb una còpia «dy» píxels més amunt: les animacions de quiet i de parlar
+// alternen les dues alçades, i el personatge sura amunt i avall.
+export function floatSheet(sheet, dy = 1, fw = 16, fh = 32) {
+  const c = new Canvas(sheet.w, sheet.h * 2);
+  c.draw(sheet, 0, 0); c.draw(sheet, 0, sheet.h - dy);
+  for (let y = sheet.h - dy; y < sheet.h; y++) for (let x = 0; x < sheet.w; x++) { const p = sheet.get(x, y); if (p[3]) c.px(x, y, p); }
+  // la còpia de baix no ha de trepitjar l'última fila de la de dalt: es torna a pintar la de dalt
+  for (let y = 0; y < sheet.h; y++) for (let x = 0; x < sheet.w; x++) { const i = (y * c.w + x) * 4; const p = sheet.get(x, y); c.data.set(p, i); }
+  const up = 16;
+  const animations = {
+    "idle-side": { frames: [0, 0, up, up], fps: 3 }, "walk-side": { frames: [1, 2, 3, 2], fps: 8 },
+    "idle-down": { frames: [4, 4, 4 + up, 4 + up], fps: 3 }, "walk-down": { frames: [5, 6, 7, 6], fps: 8 },
+    "idle-up": { frames: [8, 8, 8 + up, 8 + up], fps: 3 }, "walk-up": { frames: [9, 10, 11, 10], fps: 8 },
+    "talk-side": { frames: [0, 12, up, 12 + up], fps: 6 }, "talk-down": { frames: [4, 13, 4 + up, 13 + up], fps: 6 }, "talk-up": { frames: [8, 8 + up], fps: 4 },
+  };
+  return { sheet: c, frameWidth: fw, frameHeight: fh, animations };
+}

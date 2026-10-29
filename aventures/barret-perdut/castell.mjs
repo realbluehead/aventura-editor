@@ -4,8 +4,10 @@
 import {
   Canvas, mix, rng, Cam, fill, quad, seg, box, floorQ, backQ, sideQ, stoneBack, stoneSide, floorPoly, tiles, planks,
   torch, candle, gothicWindow, sideWindow, door, sideDoor, banner, shelfBack, shelfSide, nightSky,
-  STD, hb, hbBox, hbBack, hbSide, at, cut, room, beams, table, bench, bed, armchair, fire, fireplace, painting, portraitFace, stairsUp, stairsDown,
+  STD, hb, hbBox, hbBack, hbSide, at, cut, cutAnim, frames, room, beams, table, bench, bed, armchair, fire, fireplace, painting, portraitFace, stairsUp, stairsDown,
 } from "./comu.mjs";
+import { theme } from "./persp.mjs";
+const wave = (f, N, ph = 0) => Math.sin((2 * Math.PI * f) / N + ph);
 
 const W = 320;
 const scene = (cam, walk, yt, yb = 197) => ({ cam, walk, ah: cam.actor(yt, yb) });
@@ -94,7 +96,7 @@ export function comuna() {
     },
     pts: { ron: at(cam, -2.7, 9.0), deDormitori: at(cam, -2.6, 11.2), deRetrat: at(cam, 2.8, 11.6), quisq: at(cam, 3.9, 9.0, 0.7), escacs: at(cam, -4.0, 9.0, 0.75) },
     objs: {
-      escacs: cut((k) => { const r2 = rng(3); for (let i = 0; i < 4; i++) for (let j = 0; j < 4; j++) floorQ(k, cam, -4.4 + i * 0.2, -4.2 + i * 0.2, 8.6 + j * 0.2, 8.8 + j * 0.2, (i + j) % 2 ? "#e8e0d0" : "#2a2020", 0.76); for (let n = 0; n < 6; n++) { const [x, y] = cam.p(-4.3 + r2() * 0.7, 0.76, 8.7 + r2() * 0.7); k.rect(x, y - 3, 1, 3, n % 2 ? "#f4f0e0" : "#1a1a1a"); } }),
+      escacs: cutAnim(frames(8, (k, f, N) => { const r2 = rng(3); for (let i = 0; i < 4; i++) for (let j = 0; j < 4; j++) floorQ(k, cam, -4.4 + i * 0.2, -4.2 + i * 0.2, 8.6 + j * 0.2, 8.8 + j * 0.2, (i + j) % 2 ? "#e8e0d0" : "#2a2020", 0.76); for (let n = 0; n < 6; n++) { const hop = n === f % 6 ? 2 : 0, slide = n === (f + 3) % 6 ? 0.08 : 0; const [x, y] = cam.p(-4.3 + r2() * 0.7 + slide, 0.76, 8.7 + r2() * 0.7); k.rect(x, y - 3 - hop, 1, 3, n % 2 ? "#f4f0e0" : "#1a1a1a"); } })),
       quisquiller: cut((k) => { floorQ(k, cam, 3.7, 4.1, 8.8, 9.15, "#e8c83a", 0.71); floorQ(k, cam, 3.75, 4.05, 8.85, 8.95, "#1a1a8a", 0.715); }),
     },
   };
@@ -147,12 +149,14 @@ export function escala() {
     pts: { deComuna: at(cam, -3.8, 10.6), deBiblioteca: at(cam, -3.4, 12.2), deGargola: at(cam, 0, 12.2), deLavabo: at(cam, 3.4, 12.2), deSetena: at(cam, 3.9, 9.6), deVestibul: at(cam, -2.4, 8.6) },
     objs: {
       // la Dama Grassa, a la paret esquerra
-      grassa: cut((k) => {
+      grassa: cutAnim(frames(8, (k, f, N) => {
+        const d = wave(f, N) * 0.08, fan = wave(f, N / 2) * 0.12;
         sideQ(k, cam, xl + 0.02, 9.6, 11.2, 0.4, 2.8, "#b08a2a"); sideQ(k, cam, xl + 0.03, 9.7, 11.1, 0.5, 2.7, "#3a2a3a");
-        sideQ(k, cam, xl + 0.04, 9.95, 10.85, 0.5, 1.7, "#e07ab0");
-        quad(k, cam, [[xl + 0.04, 1.6, 10.15], [xl + 0.04, 1.6, 10.65], [xl + 0.04, 2.3, 10.6], [xl + 0.04, 2.3, 10.2]], "#f0c8a8");
-        sideQ(k, cam, xl + 0.045, 10.15, 10.65, 2.25, 2.5, "#e8d070");
-      }),
+        sideQ(k, cam, xl + 0.04, 9.95 + d * 0.5, 10.85 + d * 0.5, 0.5, 1.7, "#e07ab0");
+        quad(k, cam, [[xl + 0.04, 1.6, 10.15 + d], [xl + 0.04, 1.6, 10.65 + d], [xl + 0.04, 2.3, 10.6 + d], [xl + 0.04, 2.3, 10.2 + d]], "#f0c8a8");
+        sideQ(k, cam, xl + 0.045, 10.15 + d, 10.65 + d, 2.25, 2.5, "#e8d070");
+        quad(k, cam, [[xl + 0.05, 1.55, 10.72], [xl + 0.05, 1.55 + fan + 0.3, 10.95], [xl + 0.05, 1.85 + fan, 11.0]], "#f4e8f0");   // ventall
+      })),
     },
   };
 }
@@ -201,13 +205,13 @@ export function vestibul() {
       k.rect(...cam.p(-0.25, 2.0, zb - 0.05), 2, 2, "#c9a227"); k.rect(...cam.p(0.15, 2.0, zb - 0.05), 2, 2, "#c9a227");
     }
   };
-  const pear = (tickled) => tickled ? (k) => { sideQ(k, cam, -2.8, zb - 0.9, zb - 0.03, 0.3, 1.4, "#b08a2a"); sideQ(k, cam, -2.79, zb - 0.85, zb - 0.06, 0.35, 1.35, "#2a1e2a"); } : (k) => {
+  const pear = (tickled, f = 0) => tickled ? (k) => { sideQ(k, cam, -2.8, zb - 0.9, zb - 0.03, 0.3, 1.4, "#b08a2a"); sideQ(k, cam, -2.79, zb - 0.85, zb - 0.06, 0.35, 1.35, "#2a1e2a"); } : (k) => {
     painting(k, cam, -2.8, -1.8, 0.3, 1.4, zb - 0.02, (cc, x, y, w, h) => {
       cc.rect(x, y, w, h, "#2a1e2a");
       cc.ellipse(x + w / 2, y + h * 0.8, w * 0.42, h * 0.16, "#c0c0c8");
       cc.circle(x + w * 0.3, y + h * 0.58, Math.max(1, w * 0.13), "#b02a3a");
       cc.circle(x + w * 0.7, y + h * 0.6, Math.max(1, w * 0.12), "#6a2a8a");
-      cc.ellipse(x + w * 0.5, y + h * 0.45, Math.max(1, w * 0.12), Math.max(2, h * 0.22), tickled ? "#e8f060" : "#9ac040");
+      cc.ellipse(x + w * 0.5 + (f % 4 === 1 ? 1 : f % 4 === 3 ? -1 : 0), y + h * 0.45, Math.max(1, w * 0.12), Math.max(2, h * 0.22), tickled ? "#e8f060" : "#9ac040");
       cc.px(x + w * 0.5, y + h * 0.2, "#4a2a10");
       if (tickled) { cc.px(x + w * 0.45, y + h * 0.45, "#111"); cc.px(x + w * 0.56, y + h * 0.45, "#111"); }
     });
@@ -223,7 +227,7 @@ export function vestibul() {
       cuines: hbBack(cam, -2.75, -1.85, 0, 1.4, zb, 0),
     },
     pts: { filch: at(cam, 0.4, 13.6), dePorta: at(cam, 0, 14.6), deGransalo: at(cam, -5.6, 12.6), deEscala: at(cam, 3.0, 11.0), deMasmorra: at(cam, -2.2, 8.8), deCuines: at(cam, -2.3, 14.8) },
-    objs: { porta: cut(doorMain(false), doorMain(true)), pera: cut(pear(false), pear(true)) },
+    objs: { porta: cut(doorMain(false), doorMain(true)), pera: cutAnim([0, 1, 2, 3, 0, 0, 0, 0].map((f) => pear(false, f)), pear(true)) },
   };
 }
 
@@ -234,7 +238,8 @@ export function gransalo() {
   // sostre encantat: cel de nit amb núvols
   nightSky(c, 120, { top: "#0a0e2a", bottom: "#28305a", moon: [70, 22, 7], seed: 21 });
   const r = rng(4);
-  for (let k = 0; k < 6; k++) c.ellipse(20 + r() * 280, 20 + r() * 40, 18 + r() * 20, 3 + r() * 2, [120, 130, 170, 60]);
+  c.clouds = Array.from({ length: 6 }, () => [20 + r() * 280, 20 + r() * 40, 18 + r() * 20, 3 + r() * 2]);
+  if (!theme()?.fx) for (const [x, y, rx, ry] of c.clouds) c.ellipse(x, y, rx, ry, [120, 130, 170, 60]);
   stoneSide(c, cam, xl, 0.5, zb, 0, 8, "#5e5668", "#474052", { h: 0.6, w: 1.2 });
   stoneSide(c, cam, xr, 0.5, zb, 0, 8, "#585062", "#474052", { h: 0.6, w: 1.2 });
   stoneBack(c, cam, xl, xr, 0, 8, zb, "#665e70", "#4d4658", { h: 0.6, w: 1.2 });
@@ -262,6 +267,8 @@ export function gransalo() {
   for (let k = 0; k < 9; k++) {
     const [px, py] = cam.p(-6 + r() * 12, 3.6 + r() * 1.6, 11 + r() * 15), s = cam.s(11 + k);
     const rr = Math.max(2, Math.round(s * 0.28));
+    (c.pumpkins ??= []).push([px, py, rr]);
+    if (theme()?.fx) continue;
     c.circle(px, py, rr, "#e07a1a"); c.rect(px - 1, py - rr - 1, 2, 2, "#2a5a1a");
     c.px(px - 1, py - 1, "#ffe060"); c.px(px + 1, py - 1, "#ffe060"); c.rect(px - 1, py + 1, 3, 1, "#ffe060");
   }
@@ -349,7 +356,7 @@ export function masmorra() {
   torch(c, cam, -4, 2.3, zb - 0.05); torch(c, cam, 4, 2.3, zb - 0.05);
   // escala de pujada al vestíbul (davant a l'esquerra)
   stairsUp(c, cam, -5.4, -4.0, 6.4, 5, 0.4, 0.3, "#525c58");
-  const cauldron = (st) => (k) => {
+  const cauldron = (st, f = 0, N = 1) => (k) => {
     const X = 2.9, Z = 8.8, [x, y] = cam.p(X, 0, Z), s = cam.s(Z);
     // foc a sota
     if (st === "bull" || st === "llest") fire(k, cam, X, Z - 0.1, 0.8, 6); else { k.rect(x - s * 0.35, y - 2, s * 0.7, 2, "#3a2a1a"); }
@@ -358,7 +365,10 @@ export function masmorra() {
     k.ellipse(x, y - s * 0.78, s * 0.47, s * 0.1, "#1a1a1e");
     const liquid = { buit: null, aigua: "#4a7ab8", ingredients: "#7a6ab0", bull: "#8a5ac8", llest: "#e8c84a" }[st];
     if (liquid) k.ellipse(x, y - s * 0.78, s * 0.38, s * 0.07, liquid);
-    if (st === "bull" || st === "llest") for (let i = 0; i < 6; i++) { const rr = rng(i + 1); k.circle(x + (rr() - 0.5) * s * 0.6, y - s * (0.9 + rr() * 0.4), 1, mix(liquid, "#fff", 0.4)); }
+    // bombolles que pugen i rebenten (més com més calent)
+    const n = { aigua: 2, ingredients: 4, llest: 7 }[st] ?? 0;
+    for (let i = 0; i < n; i++) { const rr = rng(i * 7 + 1), ph = (f / N + rr()) % 1; k.circle(x + (rr() - 0.5) * s * 0.6, y - s * (0.82 + ph * (st === "llest" ? 0.7 : 0.25)), ph > 0.8 ? 2 : 1, mix(liquid, "#fff", 0.4)); }
+    if (st === "llest") for (let i = 0; i < 3; i++) { const ph = (f / N + i / 3) % 1; k.circle(x + Math.sin(ph * 6 + i) * s * 0.15, y - s * (1.0 + ph * 0.9), Math.max(1, s * 0.08 * (1 - ph)), [230, 220, 160, 110]); }
   };
   return {
     ...scene(cam, [floorPoly(cam, -3.8, 4.6, 130)], 130), bg: c,
@@ -369,7 +379,7 @@ export function masmorra() {
       armari: hbBox(cam, xr - 0.5, xr, 0, 2.6, 10.5, 12.8, 0),
     },
     pts: { snape: at(cam, -0.4, 12.0), arribada: at(cam, -3.2, 8.2), calderWalk: at(cam, 2.0, 8.2) },
-    objs: { calder: cut(...["buit", "aigua", "ingredients", "bull", "llest"].map(cauldron)) },
+    objs: { calder: cutAnim(cauldron("buit"), ...["aigua", "ingredients", "llest"].map((st) => frames(8, (k, f, N) => cauldron(st, f, N)(k)))) },
   };
 }
 
@@ -392,7 +402,7 @@ export function lavabo() {
   // bassal al terra
   fill(c, Array.from({ length: 16 }, (_, k) => { const a = (k / 16) * Math.PI * 2; return cam.p(-0.5 + Math.cos(a) * 1.2, 0, 9 + Math.sin(a) * 0.6); }), [120, 160, 200, 120]);
   gothicWindow(c, cam, 2.2, 3.0, 1.8, 3.4, zb, { moon: true });
-  const trevor = (k) => { const [x, y] = cam.p(-0.85, 0.9, zb - 0.3); k.ellipse(x, y - 2, 4, 2, "#6a7a2a"); k.rect(x - 3, y - 4, 2, 1, "#8a9a3a"); k.rect(x + 1, y - 4, 2, 1, "#8a9a3a"); k.px(x - 2, y - 4, "#111"); k.px(x + 2, y - 4, "#111"); k.rect(x - 4, y - 1, 2, 1, "#5a6a1a"); k.rect(x + 2, y - 1, 2, 1, "#5a6a1a"); };
+  const trevor = (k, f) => { const [x, y] = cam.p(-0.85, 0.9, zb - 0.3); k.ellipse(x, y - 2, 4, 2, "#6a7a2a"); if (f === 2 || f === 3) k.ellipse(x, y - 1, 2, 1, "#c8c870"); k.rect(x - 3, y - 4, 2, 1, "#8a9a3a"); k.rect(x + 1, y - 4, 2, 1, "#8a9a3a"); if (f !== 5) { k.px(x - 2, y - 4, "#111"); k.px(x + 2, y - 4, "#111"); } k.rect(x - 4, y - 1, 2, 1, "#5a6a1a"); k.rect(x + 2, y - 1, 2, 1, "#5a6a1a"); };
   return {
     ...scene(cam, [floorPoly(cam, -4.1, 2.9, 136)], 136), bg: c,
     spots: {
@@ -402,7 +412,7 @@ export function lavabo() {
       bassal: hbBox(cam, -1.7, 0.7, 0, 0.05, 8.4, 9.6, 1),
     },
     pts: { myrtle: at(cam, 2.3, 9.6), arribada: at(cam, -3.0, 7.6), trevorWalk: at(cam, -0.9, 11.0) },
-    objs: { trevor: cut(trevor) },
+    objs: { trevor: cutAnim(frames(6, (k, f) => trevor(k, f))) },
   };
 }
 
@@ -454,7 +464,7 @@ export function gargola() {
   backQ(c, cam, -1.3, 1.3, 0, 3.6, zb - 0.02, "#2a2632");
   backQ(c, cam, -1.0, 1.0, 0, 3.2, zb - 0.35, "#0e0c14");
   for (let i = 0; i < 6; i++) box(c, cam, -0.8 + (i % 2) * 0.3, 0.5 + (i % 2) * 0.3, i * 0.45, i * 0.45 + 0.12, zb - 0.4, zb - 0.35, { front: "#8a8292" });
-  const garg = (open) => (k) => {
+  const garg = (open, f = 0) => (k) => {
     const Z = zb - 0.3, [x, y] = cam.p(0, 0, Z), s2 = cam.s(Z);
     if (open) {
       // la gàrgola s'ha apartat
@@ -466,7 +476,8 @@ export function gargola() {
       fill(k, [[x - s2 * 0.35, y - s2 * 1.3], [x - s2 * 1.0, y - s2 * 1.9], [x - s2 * 0.2, y - s2 * 1.6]], "#6a6272");
       fill(k, [[x + s2 * 0.35, y - s2 * 1.3], [x + s2 * 1.0, y - s2 * 1.9], [x + s2 * 0.2, y - s2 * 1.6]], "#6a6272");
       k.circle(x, y - s2 * 1.75, s2 * 0.25, "#7a7282");
-      k.px(x - 1, y - s2 * 1.8, "#ffcc33"); k.px(x + 1, y - s2 * 1.8, "#ffcc33");
+      const eye = ["#ffcc33", "#ffe680", "#ffcc33", "#c89020"][f % 4];
+      k.px(x - 1, y - s2 * 1.8, eye); k.px(x + 1, y - s2 * 1.8, eye);
     }
   };
   return {
@@ -478,7 +489,7 @@ export function gargola() {
       finestres: hbSide(cam, xl, 9, 10, 1.8, 3.4, 1),
     },
     pts: { mcgonagall: at(cam, -1.0, 11.5), arribada: at(cam, -1.4, 7.0), gargolaWalk: at(cam, 0, 16.6) },
-    objs: { gargola: cut(garg(false), garg(true)) },
+    objs: { gargola: cutAnim([0, 1, 2, 3].map((f) => garg(false, f)), garg(true)) },
   };
 }
 
@@ -502,14 +513,15 @@ export function despatx() {
     const [px, py] = cam.p(-0.8, 0.86, 10.8); k.rect(px - 2, py - 4, 4, 4, "#c0c8d0"); k.circle(px, py - 5, 2, "#a0e0ff");
     const [qx, qy] = cam.p(0.9, 0.86, 10.7); k.rect(qx - 3, qy - 2, 6, 2, "#e8e0c8"); k.line(qx + 2, qy - 2, qx + 4, qy - 7, "#e8e0e8");
   };
-  const fawkes = (st) => (k) => {
+  const fawkes = (st, f = 0, N = 1) => (k) => {
     const [x, y] = cam.p(-3.6, 0, 10.6), s = cam.s(10.6);
     k.rect(x - s * 0.25, y - 2, s * 0.5, 2, "#c9a227"); k.rect(x - 1, y - s * 1.6, 2, s * 1.6, "#c9a227"); k.rect(x - s * 0.35, y - s * 1.6, s * 0.7, 2, "#c9a227");
-    const bx = x, by = y - s * 1.6;
-    k.ellipse(bx, by - s * 0.25, s * 0.16, s * 0.25, "#c8301a"); k.circle(bx + s * 0.06, by - s * 0.55, s * 0.1, "#d8401a");
-    k.px(bx + s * 0.13, by - s * 0.56, "#e8c040"); k.rect(bx - s * 0.08, by - s * 0.05, Math.max(1, s * 0.08), s * 0.45, "#e8a020");
+    const bx = x, by = y - s * 1.6, sw = wave(f, N) * s * 0.06, hb = f % 4 === 1 ? 1 : 0;
+    k.rect(bx - s * 0.08 + sw, by - s * 0.05, Math.max(1, s * 0.08), s * 0.45, "#e8a020");
+    k.ellipse(bx, by - s * 0.25, s * 0.16, s * 0.25, "#c8301a"); k.circle(bx + s * 0.06, by - s * 0.55 - hb, s * 0.1, "#d8401a");
+    k.px(bx + s * 0.13, by - s * 0.56 - hb, "#e8c040");
     fill(k, [[bx - s * 0.1, by - s * 0.4], [bx - s * 0.4, by - s * 0.15], [bx - s * 0.1, by - s * 0.05]], st === "canta" ? "#f0c030" : "#a82a10");
-    if (st === "canta") for (let i = 0; i < 3; i++) k.rect(bx + s * (0.3 + i * 0.15), by - s * (0.7 + i * 0.12), 2, 2, "#ffe080");
+    if (st === "canta") for (let i = 0; i < 3; i++) { const ph = (f / N + i / 3) % 1; k.rect(bx + s * (0.3 + ph * 0.5), by - s * (0.6 + ph * 0.6), 2, 2, "#ffe080"); k.px(bx + s * (0.3 + ph * 0.5) + 2, by - s * (0.6 + ph * 0.6) - 2, "#ffe080"); }
   };
   const shelf = (hat) => (k) => {
     box(k, cam, 2.5, 3.7, 1.55, 1.65, zb - 0.35, zb - 0.02, { front: "#4a2e18", top: "#5a3a20" });
@@ -520,7 +532,10 @@ export function despatx() {
       k.rect(x - 3, y - s * 0.3, 2, 1, "#2a1a10"); k.rect(x + 1, y - s * 0.3, 2, 1, "#2a1a10"); k.rect(x - 2, y - s * 0.18, 4, 1, "#2a1a10");
     }
   };
-  const pensieve = (k) => { const [x, y] = cam.p(3.7, 0, 9.0), s = cam.s(9.0); k.rect(x - s * 0.15, y - s * 0.8, s * 0.3, s * 0.8, "#8a8296"); k.ellipse(x, y - s * 0.85, s * 0.42, s * 0.14, "#9a92a6"); k.ellipse(x, y - s * 0.86, s * 0.34, s * 0.09, "#c8e8ff"); k.circle(x, y - s * 0.86, s * 0.7, [180, 220, 255, 30]); };
+  const pensieve = (k, f, N) => { const [x, y] = cam.p(3.7, 0, 9.0), s = cam.s(9.0); k.rect(x - s * 0.15, y - s * 0.8, s * 0.3, s * 0.8, "#8a8296"); k.ellipse(x, y - s * 0.85, s * 0.42, s * 0.14, "#9a92a6"); k.ellipse(x, y - s * 0.86, s * 0.34, s * 0.09, "#c8e8ff");
+    for (let i = 0; i < 3; i++) { const a = (f / N + i / 3) * Math.PI * 2; k.px(x + Math.cos(a) * s * 0.25, y - s * 0.86 + Math.sin(a) * s * 0.06, "#ffffff"); }
+    for (let i = 0; i < 2; i++) { const ph = (f / N + i / 2) % 1; k.px(x + (i ? 2 : -3), y - s * (0.95 + ph * 0.5), [220, 240, 255, 200 - ph * 160]); }
+    k.circle(x, y - s * 0.86, s * 0.7, [180, 220, 255, 22 + wave(f, N) * 10]); };
   const U = [...floorPoly(cam, -4.4, 4.4, 141)];
   const armL = floorPoly(cam, -4.4, -2.0, 128, 145), armR = floorPoly(cam, 2.0, 4.4, 128, 145), back = floorPoly(cam, -4.4, 4.4, 128, 134);
   return {
@@ -532,7 +547,7 @@ export function despatx() {
       finestra: hbBack(cam, -0.6, 0.6, 2.5, 5.2, zb, 1),
     },
     pts: { dumbledore: at(cam, 0, 11.8), arribada: at(cam, -2.6, 7.6), fawkesWalk: at(cam, -2.8, 9.8), shelfWalk: at(cam, 3.0, 12.2), pensWalk: at(cam, 2.8, 8.6), deskWalk: at(cam, 0, 9.8) },
-    objs: { escriptori: cut(desk), fawkes: cut(fawkes("quiet"), fawkes("canta")), prestatge: cut(shelf(false), shelf(true)), pensadora: cut(pensieve) },
+    objs: { escriptori: cut(desk), fawkes: cutAnim(frames(8, (k, f, N) => fawkes("quiet", f, N)(k)), frames(8, (k, f, N) => fawkes("canta", f, N)(k))), prestatge: cut(shelf(false), shelf(true)), pensadora: cutAnim(frames(8, pensieve)) },
   };
 }
 
@@ -637,11 +652,11 @@ export function sala() {
   let y = 0;
   for (let k = 0; k < 9; k++) { const w = 1.6 - k * 0.13 + r() * 0.2, h = 0.45 + r() * 0.25; box(c, cam, -w / 2 + (r() - 0.5) * 0.3, w / 2 + (r() - 0.5) * 0.3, y, y + h, 16, 16 + w * 0.8, { front: cols[k % cols.length] }); y += h; }
   const topY = y;
-  const hat = (k) => {
-    const [x, yy] = cam.p(0, topY, 16.3), s = cam.s(16.3);
+  const hat = (k, f) => {
+    const [x, yy] = cam.p(0, topY, 16.3), s = cam.s(16.3), m = f % 3 === 1 ? 1 : 0;
     k.ellipse(x, yy - 1, s * 0.45, s * 0.1, "#6a5030");
     fill(k, [[x - s * 0.3, yy - 2], [x + s * 0.3, yy - 2], [x + s * 0.06, yy - s * 0.85], [x + s * 0.3, yy - s * 0.7]], "#7a5a38");
-    k.rect(x - 3, yy - s * 0.35, 2, 1, "#2a1a10"); k.rect(x + 1, yy - s * 0.35, 2, 1, "#2a1a10"); k.rect(x - 2, yy - s * 0.2, 4, 1, "#2a1a10");
+    k.rect(x - 3, yy - s * 0.35, 2, 1, "#2a1a10"); k.rect(x + 1, yy - s * 0.35, 2, 1, "#2a1a10"); k.rect(x - 2, yy - s * 0.2 - m, 4, 1 + m, "#2a1a10");
   };
   return {
     ...scene(cam, [floorPoly(cam, -1.5, 1.5, 112, 160), floorPoly(cam, -5, 5, 156)], 112), bg: c,
@@ -652,6 +667,6 @@ export function sala() {
       torre: hbBox(cam, -1.0, 1.0, 0, topY - 0.1, 16, 17.3, 0),
     },
     pts: { arribada: at(cam, 3.4, 7.2), torreWalk: at(cam, 0, 15.2) },
-    objs: { barret: cut(hat) },
+    objs: { barret: cutAnim(frames(6, hat)) },
   };
 }

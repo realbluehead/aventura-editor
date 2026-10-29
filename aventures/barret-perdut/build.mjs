@@ -54,11 +54,12 @@ P.sound("so-moneda", "Dring", SFX.coin());
 /* ---------- Escenaris (els dibuixos) ---------- */
 // Estil dels decorats (textura.mjs): A pedra i torxes, B lluna i molsa, C aquarel·la, D retro 32 colors
 const T = await import(new URL("./textura.mjs", import.meta.url));
+const FX = await import(new URL("./fx.mjs", import.meta.url));
 const ESTIL = T.ESTILS.find((e) => e.id === "D");
 const FNS = { ...CA, ...FO };
 const S = Object.fromEntries(["dormitori", "comuna", "escala", "vestibul", "gransalo", "biblioteca", "masmorra", "lavabo", "cuines", "gargola",
   "despatx", "astronomia", "setena", "sala", "jardins", "cabana", "hivernacle", "quidditch", "bosc", "llac"]
-  .map((k) => [k, T.render(FNS[k], ESTIL, { outdoor: T.OUTDOOR.has(k) })]));
+  .map((k) => [k, T.render(FNS[k], ESTIL, { outdoor: T.OUTDOOR.has(k), fx: FX.fx(k) })]));
 
 // Un punt dins de la zona caminable a prop d'un altre (per on es posa el protagonista per tocar una cosa)
 const inside = (poly, [x, y]) => { let c = false; for (let i = 0, j = poly.length - 1; i < poly.length; j = i++) { const [xi, yi] = poly[i], [xj, yj] = poly[j]; if ((yi > y) !== (yj > y) && x < ((xj - xi) * (y - yi)) / (yj - yi) + xi) c = !c; } return c; };
@@ -67,11 +68,12 @@ function walkNear(sc, [x, y]) {
   for (let d = 0; d < 120; d++) for (const p of [[x, y + d], [x - d, y + d], [x + d, y + d], [x - d, y], [x + d, y]]) if (ok(p)) return p.map(Math.round);
   throw new Error(`No trobo terra a prop de ${x},${y}`);
 }
-// Un objecte dibuixat dins d'un escenari: [idEstat, nom] per a cada imatge del retall (null = invisible)
+// Un objecte dibuixat dins d'un escenari: [idEstat, nom, fps?] per a cada imatge del retall (null = invisible;
+// una llista d'imatges = estat animat)
 function sobj(sc, key, { id, name, description, states = [["normal", "Normal"]], imgs, pickable = false, initial, walkTo, layer = "auto", icon }) {
   const o = sc.objs[key];
   const images = imgs ?? o.imgs;
-  P.object({ id, name, description, pickable, states: states.map(([s, n], i) => [s, n, images[i] ?? null]), initial, icon });
+  P.object({ id, name, description, pickable, states: states.map(([s, n, fps], i) => [s, n, images[i] ?? null, fps]), initial, icon });
   return place(id, o.pos, walkNear(sc, walkTo ?? o.pos), { layer });
 }
 // Un objecte que només és a l'inventari
@@ -90,10 +92,11 @@ P.character({ id: "c-hagrid", name: "Hagrid", description: "En Hagrid, el guarda
   sheet: F.scale(characterSheet(F.LOOKS.hagrid), 2), frameWidth: 32, frameHeight: 64 });
 pj("c-pince", "Madame Pince", "Madame Pince, la bibliotecària. Sembla un voltor que vigila llibres.", "#d0c0e0", F.LOOKS.pince);
 pj("c-filch", "Filch", "L'Argus Filch, el conserge. Odia els alumnes, en Peeves i, per aquest ordre, el bon humor.", "#d8c890", F.LOOKS.filch);
-pj("c-peeves", "Peeves", "En Peeves, el poltergeist del castell. Un fantasma no, una plaga.", "#ff9a4a", F.LOOKS.peeves);
-P.character({ id: "c-nick", name: "Nick Quasi Decapitat", description: "En Nick Quasi Decapitat, el fantasma de Gryffindor. El cap li penja d'un fil de pell. Literalment.", color: "#d8e8ff", sheet: F.ghostSheet(F.LOOKS.nick) });
-P.character({ id: "c-myrtle", name: "Myrtle", description: "La Myrtle, el fantasma que viu al lavabo de les noies. Plora més que una aixeta espatllada.", color: "#c0f0e0", sheet: F.ghostSheet(F.LOOKS.myrtle) });
-P.character({ id: "c-baro", name: "Baró Sagnant", description: "El Baró Sagnant, el fantasma de Slytherin. Va cobert de taques platejades i fa una cara de pomes agres.", color: "#e8b0c0", sheet: F.ghostSheet(F.LOOKS.baro, 175) });
+P.character({ id: "c-peeves", name: "Peeves", description: "En Peeves, el poltergeist del castell. Un fantasma no, una plaga.", color: "#ff9a4a", ...F.floatSheet(characterSheet(F.LOOKS.peeves), 3) });
+// Els fantasmes i en Peeves suren (una còpia del full una mica més amunt, alternant)
+P.character({ id: "c-nick", name: "Nick Quasi Decapitat", description: "En Nick Quasi Decapitat, el fantasma de Gryffindor. El cap li penja d'un fil de pell. Literalment.", color: "#d8e8ff", ...F.floatSheet(F.ghostSheet(F.LOOKS.nick), 2) });
+P.character({ id: "c-myrtle", name: "Myrtle", description: "La Myrtle, el fantasma que viu al lavabo de les noies. Plora més que una aixeta espatllada.", color: "#c0f0e0", ...F.floatSheet(F.ghostSheet(F.LOOKS.myrtle), 2) });
+P.character({ id: "c-baro", name: "Baró Sagnant", description: "El Baró Sagnant, el fantasma de Slytherin. Va cobert de taques platejades i fa una cara de pomes agres.", color: "#e8b0c0", ...F.floatSheet(F.ghostSheet(F.LOOKS.baro, 175), 1) });
 P.character({ id: "c-dobby", name: "Dobby", description: "En Dobby, l'elf domèstic. Orelles de ratpenat, ulls com pilotes de tennis i una coixinera per roba.", color: "#a8f0a0", ...F.dobbySheet(), animations: F.DOBBY_ANIM });
 pj("c-draco", "Draco", "En Draco Malfoy. Cabells engominats i un somriure que demana un cop de puny.", "#c0f0c0", F.LOOKS.draco);
 pj("c-sprout", "professora Sprout", "La professora Sprout, d'Herbologia. Va tota plena de terra i fa olor de fems. Això és bo, en el seu cas.", "#c8e078", F.LOOKS.sprout);
@@ -267,7 +270,7 @@ P.scene({ id: "s-masmorra", name: "Masmorra de Pocions", background: S.masmorra.
     spot("ho-masm-armari", "armari d'ingredients", "L'armari privat de l'Snape. Té un cadenat amb cara de pocs amics.", SP("masmorra", "armari")),
   ],
   objects: [sobj(S.masmorra, "calder", { id: "o-calder", name: "calder", description: "Un calder de peltre del número 2. Està net, cosa rara en aquesta aula.",
-    states: [["buit", "Buit"], ["aigua", "Amb aigua"], ["ingredients", "Amb ingredients"], ["llest", "Poció feta"]], imgs: [0, 1, 2, 4].map((i) => S.masmorra.objs.calder.imgs[i]), walkTo: PT("masmorra", "calderWalk") })],
+    states: [["buit", "Buit"], ["aigua", "Amb aigua", 6], ["ingredients", "Amb ingredients", 7], ["llest", "Poció feta", 8]], walkTo: PT("masmorra", "calderWalk") })],
   characters: [npc("c-snape", PT("masmorra", "snape"), "down")],
 });
 // 8. Lavabo
@@ -441,14 +444,15 @@ P.scene({ id: "s-llac", name: "Riba del Llac Negre", background: S.llac.bg, walk
   characters: [npc("c-luna", PT("llac", "luna"), "right")],
 });
 
-/* ---------- Llums animades (llums.mjs) ---------- */
-const LL = await import(new URL("./llums.mjs", import.meta.url));
+/* ---------- Efectes animats (fx.mjs): objectes decoratius ---------- */
 for (const [k, sc] of Object.entries(S)) {
-  const L = LL.lightsCharacter(sc);
-  if (!L) continue;
-  P.character({ id: `c-llum-${k}`, name: "llum", description: "La llum tremola i fa ballar les ombres.", color: "#feae34",
-    sheet: L.sheet, frameWidth: L.frameWidth, frameHeight: L.frameHeight, animations: L.animations });
-  P.scenes.find((x) => x.id === `s-${k}`).characters.push(npc(`c-llum-${k}`, L.position, "down"));
+  const scene = P.scenes.find((x) => x.id === `s-${k}`);
+  const lights = FX.lightsFx(k, sc);
+  for (const e of [...sc.fx, ...(lights ? [lights] : [])]) {
+    const imgs = e.imgs ?? e.cut.imgs[0], pos = e.pos ?? e.cut.pos;
+    P.object({ id: `o-${e.id}-${k}`, name: e.name, description: "", decor: true, states: [["anim", "Animació", imgs, e.fps]] });
+    scene.objects.push(place(`o-${e.id}-${k}`, pos, walkNear(sc, pos), { layer: e.layer }));
+  }
 }
 
 /* ---------- Regles ---------- */

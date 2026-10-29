@@ -4,10 +4,11 @@ import { theme } from "./persp.mjs";
 import {
   Canvas, mix, rng, Cam, fill, quad, seg, box, floorQ, backQ, sideQ, stoneBack, stoneSide, floorPoly, tiles, planks,
   torch, gothicWindow, sideWindow, door, sideDoor, nightSky, castle, standee, pine, oak,
-  STD, hb, hbBox, hbBack, hbSide, at, cut, room, beams, table, bench, fire, fireplace,
+  STD, hb, hbBox, hbBack, hbSide, at, cut, cutAnim, frames, room, beams, table, bench, fire, fireplace,
 } from "./comu.mjs";
 
 const W = 320;
+const wave = (f, N, ph = 0) => Math.sin((2 * Math.PI * f) / N + ph);
 const scene = (cam, walk, yt, yb = 197) => ({ cam, walk, ah: cam.actor(yt, yb) });
 
 // Terra d'herba amb franges segons la profunditat (més fosca lluny)
@@ -110,7 +111,7 @@ export function cabana() {
   const dz0 = 7.8, dz1 = 9.2;
   const sack = (k) => { const [x, y] = cam.p(1.2, 0, 10.0), s = cam.s(10.0); k.ellipse(x, y - s * 0.35, s * 0.36, s * 0.38, "#7a6a40"); k.rect(x - s * 0.15, y - s * 0.8, s * 0.3, s * 0.12, "#5a4a2a"); k.text(x - 5, y - s * 0.45, "FEMS", "#3a2a10"); };
   const cakes = (k) => { for (let i = 0; i < 3; i++) { const [x, y] = cam.p(-3.2 + i * 0.25, 0.96, 7.5 + (i % 2) * 0.2); k.circle(x, y - 2, 2, "#8a7a5a"); k.px(x - 1, y - 3, "#5a4a2a"); } };
-  const fang = (k) => { const [x, y] = cam.p(-1.0, 0, 9.4), s = cam.s(9.4); k.ellipse(x, y - s * 0.22, s * 0.6, s * 0.22, "#2a2220"); k.circle(x - s * 0.55, y - s * 0.3, s * 0.18, "#2a2220"); k.px(x - s * 0.62, y - s * 0.34, "#c0a060"); k.rect(x - s * 0.7, y - s * 0.16, 3, 2, "#c06070"); };
+  const fang = (k, f) => { const [x, y] = cam.p(-1.0, 0, 9.4), s = cam.s(9.4); k.line(x + s * 0.55, y - s * 0.3, x + s * (0.75 + (f % 2) * 0.1), y - s * (0.45 - (f % 2) * 0.25), "#2a2220"); k.ellipse(x, y - s * 0.22, s * 0.6, s * 0.22, "#2a2220"); k.circle(x - s * 0.55, y - s * 0.3, s * 0.18, "#2a2220"); k.px(x - s * 0.62, y - s * 0.34, "#c0a060"); k.rect(x - s * 0.7, y - s * 0.16, 3, 2, "#c06070"); };
   return {
     ...scene(cam, [floorPoly(cam, -3.8, 2.0, 150)], 150), bg: c,
     spots: {
@@ -122,7 +123,7 @@ export function cabana() {
       tassa: hbBox(cam, -2.4, -1.9, 0.9, 1.3, 7.4, 7.8, 1),
     },
     pts: { hagrid: at(cam, 0.6, 8.4), arribada: at(cam, 1.4, 6.8), sackWalk: at(cam, 1.0, 9.4), cakesWalk: at(cam, -1.6, 7.0) },
-    objs: { fems: cut(sack), galetes: cut(cakes), fang: cut(fang) },
+    objs: { fems: cut(sack), galetes: cut(cakes), fang: cutAnim(frames(4, fang)) },
   };
 }
 
@@ -153,14 +154,16 @@ export function hivernacle() {
   }
   // tentàcula venenosa al fons
   const [vx, vy] = cam.p(0.2, 0, zb - 0.4), s2 = cam.s(zb);
-  for (let i = 0; i < 5; i++) c.line(vx, vy, vx + (i - 2) * s2 * 0.5, vy - s2 * (1.2 + (i % 2) * 0.6), "#3a8a4a");
+  c.tentacula = [vx, vy, s2];
+  if (!theme()?.fx) for (let i = 0; i < 5; i++) c.line(vx, vy, vx + (i - 2) * s2 * 0.5, vy - s2 * (1.2 + (i % 2) * 0.6), "#3a8a4a");
   c.rect(vx - s2 * 0.3, vy - s2 * 0.4, s2 * 0.6, s2 * 0.4, "#7a4a3a");
-  const mandrake = (pulled) => (k) => {
+  const mandrake = (pulled, f = 0, N = 1) => (k) => {
     for (let i = 0; i < 4; i++) {
       const Z = 7.2 + i * 0.85, [x, y] = cam.p(3.5, 0.9, Z), s = cam.s(Z);
       k.rect(x - s * 0.2, y - s * 0.32, s * 0.4, s * 0.32, "#b0603a"); k.rect(x - s * 0.22, y - s * 0.34, s * 0.44, 2, "#c8784a");
       if (pulled && i === 0) { k.ellipse(x - s * 0.6, y - s * 0.6, s * 0.1, s * 0.16, "#c8a070"); k.px(x - s * 0.62, y - s * 0.66, "#111"); continue; }
-      for (let j = -1; j <= 1; j++) k.ellipse(x + j * s * 0.1, y - s * 0.5, Math.max(1, s * 0.07), Math.max(2, s * 0.18), j ? "#4a8a3a" : "#6aaa4a");
+      const sw = Math.round(wave(f, N, i * 1.7) * 1.2);
+      for (let j = -1; j <= 1; j++) k.ellipse(x + j * s * 0.1 + (j ? sw : 0), y - s * 0.5, Math.max(1, s * 0.07), Math.max(2, s * 0.18), j ? "#4a8a3a" : "#6aaa4a");
     }
   };
   return {
@@ -172,7 +175,7 @@ export function hivernacle() {
       vidres: [[0, 0], [319, 0], [319, 30], [0, 30]],
     },
     pts: { sprout: at(cam, -1.2, 11.2), arribada: at(cam, -1.4, 7.0), mandWalk: at(cam, 2.2, 7.6) },
-    objs: { mandragora: cut(mandrake(false), mandrake(true)) },
+    objs: { mandragora: cutAnim(frames(8, (k, f, N) => mandrake(false, f, N)(k)), mandrake(true)) },
   };
 }
 
@@ -200,7 +203,7 @@ export function quidditch() {
     c.ellipse(x, yt - s * 1.3, s * 1.3, s * 1.3, "#c9a227"); c.ellipse(x, yt - s * 1.3, s * 1.0, s * 1.0, mix("#283a5a", "#08102a", 0.3));
   }
   // caseta de les escombres (davant a l'esquerra)
-  const snitch = (k) => { const [x, y] = cam.p(1.8, 4.4, 12), s = cam.s(12); k.circle(x, y, Math.max(1, s * 0.08), "#f0c830"); k.px(x, y, "#fff0a0"); fill(k, [[x - 1, y], [x - 7, y - 4], [x - 6, y - 1]], "#e8e8f0"); fill(k, [[x + 1, y], [x + 7, y - 4], [x + 6, y - 1]], "#e8e8f0"); k.circle(x, y, 4, [255, 220, 80, 40]); };
+  const snitch = (k, f) => { let [x, y] = cam.p(1.8, 4.4, 12); x += [0, 2, 3, 1, -1, -3, -2, 0][f]; y += [0, -1, 0, 1, 2, 1, -1, -2][f]; const s = cam.s(12), up = f % 2 ? -5 : 1; k.circle(x, y, Math.max(1, s * 0.08), "#f0c830"); k.px(x, y, "#fff0a0"); fill(k, [[x - 1, y], [x - 7, y + up], [x - 6, y + up + 3]], "#e8e8f0"); fill(k, [[x + 1, y], [x + 7, y + up], [x + 6, y + up + 3]], "#e8e8f0"); k.circle(x, y, 4, [255, 220, 80, 40]); };
   return {
     ...scene(cam, [floorPoly(cam, -9, 9, 122)], 122), bg: c,
     spots: {
@@ -210,7 +213,7 @@ export function quidditch() {
       graderies2: [[230, 20], [319, 20], [319, 118], [230, 118]],
     },
     pts: { hooch: at(cam, -2.4, 9.0), arribada: at(cam, -5.0, 7.2), snitchWalk: at(cam, 1.6, 11.0) },
-    objs: { snitch: cut(snitch) },
+    objs: { snitch: cutAnim(frames(8, snitch)) },
   };
 }
 
@@ -282,7 +285,7 @@ export function llac() {
   // roques i joncs
   for (const [X, Z, w] of [[-7, 9, 1.6], [6, 8, 1.2], [-4, 11, 0.8]]) { const [x, y] = cam.p(X, 0, Z), s = cam.s(Z); c.ellipse(x, y - s * w * 0.3, s * w * 0.6, s * w * 0.4, "#3a3a40"); c.ellipse(x - s * 0.1, y - s * w * 0.45, s * w * 0.3, s * w * 0.15, "#5a5a60"); }
   for (let k = 0; k < 30; k++) { const X = -12 + r() * 4, Z = 10 + r() * 2, [x, y] = cam.p(X, 0, Z), s = cam.s(Z); c.line(x, y, x + (r() - 0.5) * 3, y - s * (0.6 + r() * 0.6), "#3a5a3a"); }
-  const tentacle = (k) => { const [x, y] = cam.p(-5, 0, 18), s = cam.s(18); for (let i = 0; i < 10; i++) k.circle(x + Math.sin(i * 0.6) * s * 0.4, y - i * s * 0.25, Math.max(1, s * (0.25 - i * 0.02)), i % 2 ? "#8a5a7a" : "#9a6a8a"); for (let i = 0; i < 4; i++) k.px(x + Math.sin(i * 1.2) * s * 0.4 + 1, y - i * s * 0.5 - 1, "#e8c8d8"); };
+  const tentacle = (k, f, N) => { const [x, y] = cam.p(-5, 0, 18), s = cam.s(18), ph = (2 * Math.PI * f) / N; for (let i = 0; i < 10; i++) k.circle(x + Math.sin(i * 0.6 + ph) * s * 0.4 * (i / 9), y - i * s * 0.25, Math.max(1, s * (0.25 - i * 0.02)), i % 2 ? "#8a5a7a" : "#9a6a8a"); for (let i = 0; i < 4; i++) k.px(x + Math.sin(i * 1.2 + ph) * s * 0.4 * (i / 4) + 1, y - i * s * 0.5 - 1, "#e8c8d8"); for (let i = 0; i < 3; i++) k.ellipse(x, y + 1, s * (0.5 + ((f / N + i / 3) % 1) * 1.2), 1, [150, 170, 220, 90]); };
   const dock = floorPoly(cam, 1.15, 2.55, 125, 154);
   return {
     ...scene(cam, [floorPoly(cam, -9, 9, 150), dock], 125), bg: c,
@@ -294,6 +297,6 @@ export function llac() {
       moll: hb(cam, [[1.0, 0.35, 12], [2.7, 0.35, 22]], 2),
     },
     pts: { luna: at(cam, -2.2, 7.4), arribada: at(cam, -6.0, 6.4), aiguaWalk: at(cam, 1.8, 18), tentWalk: at(cam, -3.0, 11.0) },
-    objs: { tentacle: cut(tentacle) },
+    objs: { tentacle: cutAnim(frames(10, tentacle)) },
   };
 }

@@ -2,8 +2,8 @@
   "title": "Harry Potter i el Barret Desaparegut",
   "description": "La nit de Halloween algú ha robat el Barret Seleccionador i ha deixat Dumbledore adormit amb un encanteri. En Harry té fins a l'alba per trobar el barret i despertar el director.",
   "formatVersion": 10,
-  "createdAt": "2026-10-29T14:17:24.059Z",
-  "updatedAt": "2026-10-29T14:17:24.059Z",
+  "createdAt": "2026-10-29T14:40:17.840Z",
+  "updatedAt": "2026-10-29T14:40:17.840Z",
   "startSceneId": "s-dormitori",
   "scenes": [
     {
@@ -248,6 +248,19 @@
           ],
           "facing": "auto",
           "layer": "back"
+        },
+        {
+          "objectId": "o-fx-recordadora-dormitori",
+          "position": [
+            66,
+            126
+          ],
+          "walkTo": [
+            84,
+            144
+          ],
+          "facing": "auto",
+          "layer": "back"
         }
       ],
       "characters": [
@@ -269,8 +282,8 @@
         "near": 63,
         "far": 37
       },
-      "createdAt": "2026-10-29T14:17:24.059Z",
-      "updatedAt": "2026-10-29T14:17:24.059Z"
+      "createdAt": "2026-10-29T14:40:17.840Z",
+      "updatedAt": "2026-10-29T14:40:17.840Z"
     },
     {
       "id": "s-comuna",
@@ -541,6 +554,19 @@
           ],
           "facing": "auto",
           "layer": "back"
+        },
+        {
+          "objectId": "o-fx-llums-comuna",
+          "position": [
+            161,
+            156
+          ],
+          "walkTo": [
+            161,
+            156
+          ],
+          "facing": "auto",
+          "layer": "back"
         }
       ],
       "characters": [
@@ -552,15 +578,6 @@
           ],
           "walkTo": null,
           "facing": "left"
-        },
-        {
-          "characterId": "c-llum-comuna",
-          "position": [
-            1,
-            129
-          ],
-          "walkTo": null,
-          "facing": "down"
         }
       ],
       "music": "so-castell",
@@ -571,8 +588,8 @@
         "near": 63,
         "far": 31
       },
-      "createdAt": "2026-10-29T14:17:24.059Z",
-      "updatedAt": "2026-10-29T14:17:24.059Z"
+      "createdAt": "2026-10-29T14:40:17.840Z",
+      "updatedAt": "2026-10-29T14:40:17.840Z"
     },
     {
       "id": "s-escala",
@@ -922,19 +939,61 @@
           ],
           "facing": "auto",
           "layer": "back"
-        }
-      ],
-      "characters": [
+        },
         {
-          "characterId": "c-llum-escala",
+          "objectId": "o-fx-retrat-cavaller-escala",
           "position": [
-            1,
+            126,
+            64
+          ],
+          "walkTo": [
+            126,
             127
           ],
-          "walkTo": null,
-          "facing": "down"
+          "facing": "auto",
+          "layer": "back"
+        },
+        {
+          "objectId": "o-fx-retrat-bruixa-escala",
+          "position": [
+            195,
+            64
+          ],
+          "walkTo": [
+            195,
+            127
+          ],
+          "facing": "auto",
+          "layer": "back"
+        },
+        {
+          "objectId": "o-fx-escala-mobil-escala",
+          "position": [
+            268,
+            65
+          ],
+          "walkTo": [
+            206,
+            127
+          ],
+          "facing": "auto",
+          "layer": "back"
+        },
+        {
+          "objectId": "o-fx-llums-escala",
+          "position": [
+            161,
+            103
+          ],
+          "walkTo": [
+            161,
+            127
+          ],
+          "facing": "auto",
+          "layer": "back"
         }
       ],
+      "characters": [],
       "music": "so-castell",
       "transition": "fade",
       "onEnter": null,
@@ -943,8 +1002,8 @@
         "near": 63,
         "far": 31
       },
-      "createdAt": "2026-10-29T14:17:24.059Z",
-      "updatedAt": "2026-10-29T14:17:24.059Z"
+      "createdAt": "2026-10-29T14:40:17.840Z",
+      "updatedAt": "2026-10-29T14:40:17.840Z"
     },
     {
       "id": "s-vestibul",
@@ -1257,19 +1316,35 @@
           ],
           "facing": "auto",
           "layer": "auto"
-        }
-      ],
-      "characters": [
+        },
         {
-          "characterId": "c-llum-vestibul",
+          "objectId": "o-fx-rellotges-vestibul",
           "position": [
-            1,
+            81,
+            95
+          ],
+          "walkTo": [
+            81,
             124
           ],
-          "walkTo": null,
-          "facing": "down"
+          "facing": "auto",
+          "layer": "back"
+        },
+        {
+          "objectId": "o-fx-llums-vestibul",
+          "position": [
+            161,
+            89
+          ],
+          "walkTo": [
+            161,
+            124
+          ],
+          "facing": "auto",
+          "layer": "back"
         }
       ],
+      "characters": [],
       "music": "so-castell",
       "transition": "fade",
       "onEnter": null,
@@ -1278,8 +1353,8 @@
         "near": 63,
         "far": 29
       },
-      "createdAt": "2026-10-29T14:17:24.059Z",
-      "updatedAt": "2026-10-29T14:17:24.059Z"
+      "createdAt": "2026-10-29T14:40:17.840Z",
+      "updatedAt": "2026-10-29T14:40:17.840Z"
     },
     {
       "id": "s-gransalo",
@@ -1547,6 +1622,45 @@
           ],
           "facing": "auto",
           "layer": "auto"
+        },
+        {
+          "objectId": "o-fx-nuvols-gransalo",
+          "position": [
+            109,
+            57
+          ],
+          "walkTo": [
+            150,
+            98
+          ],
+          "facing": "auto",
+          "layer": "back"
+        },
+        {
+          "objectId": "o-fx-espelmes-gransalo",
+          "position": [
+            155,
+            51
+          ],
+          "walkTo": [
+            155,
+            92
+          ],
+          "facing": "auto",
+          "layer": "back"
+        },
+        {
+          "objectId": "o-fx-carbasses-gransalo",
+          "position": [
+            189,
+            57
+          ],
+          "walkTo": [
+            154,
+            92
+          ],
+          "facing": "auto",
+          "layer": "back"
         }
       ],
       "characters": [
@@ -1558,15 +1672,6 @@
           ],
           "walkTo": null,
           "facing": "left"
-        },
-        {
-          "characterId": "c-llum-gransalo",
-          "position": [
-            1,
-            92
-          ],
-          "walkTo": null,
-          "facing": "down"
         }
       ],
       "music": "so-castell",
@@ -1577,8 +1682,8 @@
         "near": 63,
         "far": 14
       },
-      "createdAt": "2026-10-29T14:17:24.059Z",
-      "updatedAt": "2026-10-29T14:17:24.059Z"
+      "createdAt": "2026-10-29T14:40:17.840Z",
+      "updatedAt": "2026-10-29T14:40:17.840Z"
     },
     {
       "id": "s-biblioteca",
@@ -1841,6 +1946,32 @@
           ],
           "facing": "auto",
           "layer": "back"
+        },
+        {
+          "objectId": "o-fx-espelmes-biblioteca",
+          "position": [
+            161,
+            58
+          ],
+          "walkTo": [
+            161,
+            125
+          ],
+          "facing": "auto",
+          "layer": "back"
+        },
+        {
+          "objectId": "o-fx-llibre-volador-biblioteca",
+          "position": [
+            97,
+            65
+          ],
+          "walkTo": [
+            157,
+            125
+          ],
+          "facing": "auto",
+          "layer": "back"
         }
       ],
       "characters": [
@@ -1861,15 +1992,6 @@
           ],
           "walkTo": null,
           "facing": "left"
-        },
-        {
-          "characterId": "c-llum-biblioteca",
-          "position": [
-            1,
-            125
-          ],
-          "walkTo": null,
-          "facing": "down"
         }
       ],
       "music": "so-castell",
@@ -1880,8 +2002,8 @@
         "near": 63,
         "far": 30
       },
-      "createdAt": "2026-10-29T14:17:24.059Z",
-      "updatedAt": "2026-10-29T14:17:24.059Z"
+      "createdAt": "2026-10-29T14:40:17.840Z",
+      "updatedAt": "2026-10-29T14:40:17.840Z"
     },
     {
       "id": "s-masmorra",
@@ -2079,6 +2201,32 @@
           ],
           "facing": "auto",
           "layer": "auto"
+        },
+        {
+          "objectId": "o-fx-pots-masmorra",
+          "position": [
+            32,
+            131
+          ],
+          "walkTo": [
+            55,
+            154
+          ],
+          "facing": "auto",
+          "layer": "back"
+        },
+        {
+          "objectId": "o-fx-llums-masmorra",
+          "position": [
+            161,
+            98
+          ],
+          "walkTo": [
+            161,
+            130
+          ],
+          "facing": "auto",
+          "layer": "back"
         }
       ],
       "characters": [
@@ -2087,15 +2235,6 @@
           "position": [
             152,
             131
-          ],
-          "walkTo": null,
-          "facing": "down"
-        },
-        {
-          "characterId": "c-llum-masmorra",
-          "position": [
-            1,
-            130
           ],
           "walkTo": null,
           "facing": "down"
@@ -2109,8 +2248,8 @@
         "near": 63,
         "far": 32
       },
-      "createdAt": "2026-10-29T14:17:24.059Z",
-      "updatedAt": "2026-10-29T14:17:24.059Z"
+      "createdAt": "2026-10-29T14:40:17.840Z",
+      "updatedAt": "2026-10-29T14:40:17.840Z"
     },
     {
       "id": "s-lavabo",
@@ -2312,6 +2451,19 @@
           ],
           "facing": "auto",
           "layer": "back"
+        },
+        {
+          "objectId": "o-fx-gotes-lavabo",
+          "position": [
+            146,
+            158
+          ],
+          "walkTo": [
+            146,
+            158
+          ],
+          "facing": "auto",
+          "layer": "back"
         }
       ],
       "characters": [
@@ -2333,8 +2485,8 @@
         "near": 63,
         "far": 35
       },
-      "createdAt": "2026-10-29T14:17:24.059Z",
-      "updatedAt": "2026-10-29T14:17:24.059Z"
+      "createdAt": "2026-10-29T14:40:17.840Z",
+      "updatedAt": "2026-10-29T14:40:17.840Z"
     },
     {
       "id": "s-cuines",
@@ -2536,6 +2688,32 @@
           ],
           "facing": "auto",
           "layer": "back"
+        },
+        {
+          "objectId": "o-fx-vapor-cuines",
+          "position": [
+            170,
+            109
+          ],
+          "walkTo": [
+            170,
+            130
+          ],
+          "facing": "auto",
+          "layer": "back"
+        },
+        {
+          "objectId": "o-fx-llums-cuines",
+          "position": [
+            162,
+            147
+          ],
+          "walkTo": [
+            162,
+            147
+          ],
+          "facing": "auto",
+          "layer": "back"
         }
       ],
       "characters": [
@@ -2547,15 +2725,6 @@
           ],
           "walkTo": null,
           "facing": "left"
-        },
-        {
-          "characterId": "c-llum-cuines",
-          "position": [
-            1,
-            130
-          ],
-          "walkTo": null,
-          "facing": "down"
         }
       ],
       "music": "so-castell",
@@ -2566,8 +2735,8 @@
         "near": 63,
         "far": 32
       },
-      "createdAt": "2026-10-29T14:17:24.059Z",
-      "updatedAt": "2026-10-29T14:17:24.059Z"
+      "createdAt": "2026-10-29T14:40:17.840Z",
+      "updatedAt": "2026-10-29T14:40:17.840Z"
     },
     {
       "id": "s-gargola",
@@ -2784,6 +2953,32 @@
           ],
           "facing": "auto",
           "layer": "back"
+        },
+        {
+          "objectId": "o-fx-armadura-gargola",
+          "position": [
+            226,
+            100
+          ],
+          "walkTo": [
+            205,
+            121
+          ],
+          "facing": "auto",
+          "layer": "back"
+        },
+        {
+          "objectId": "o-fx-llums-gargola",
+          "position": [
+            148,
+            136
+          ],
+          "walkTo": [
+            148,
+            136
+          ],
+          "facing": "auto",
+          "layer": "back"
         }
       ],
       "characters": [
@@ -2795,15 +2990,6 @@
           ],
           "walkTo": null,
           "facing": "right"
-        },
-        {
-          "characterId": "c-llum-gargola",
-          "position": [
-            1,
-            109
-          ],
-          "walkTo": null,
-          "facing": "down"
         }
       ],
       "music": "so-castell",
@@ -2817,8 +3003,8 @@
         "near": 63,
         "far": 22
       },
-      "createdAt": "2026-10-29T14:17:24.059Z",
-      "updatedAt": "2026-10-29T14:17:24.059Z"
+      "createdAt": "2026-10-29T14:40:17.840Z",
+      "updatedAt": "2026-10-29T14:40:17.840Z"
     },
     {
       "id": "s-despatx",
@@ -3214,7 +3400,7 @@
         {
           "objectId": "o-fawkes",
           "position": [
-            79,
+            81,
             140
           ],
           "walkTo": [
@@ -3249,6 +3435,71 @@
           ],
           "facing": "auto",
           "layer": "auto"
+        },
+        {
+          "objectId": "o-fx-retrat-1-despatx",
+          "position": [
+            81,
+            56
+          ],
+          "walkTo": [
+            81,
+            128
+          ],
+          "facing": "auto",
+          "layer": "back"
+        },
+        {
+          "objectId": "o-fx-retrat-2-despatx",
+          "position": [
+            140,
+            85
+          ],
+          "walkTo": [
+            140,
+            128
+          ],
+          "facing": "auto",
+          "layer": "back"
+        },
+        {
+          "objectId": "o-fx-retrat-3-despatx",
+          "position": [
+            226,
+            56
+          ],
+          "walkTo": [
+            226,
+            128
+          ],
+          "facing": "auto",
+          "layer": "back"
+        },
+        {
+          "objectId": "o-fx-retrat-4-despatx",
+          "position": [
+            168,
+            56
+          ],
+          "walkTo": [
+            168,
+            128
+          ],
+          "facing": "auto",
+          "layer": "back"
+        },
+        {
+          "objectId": "o-fx-instruments-despatx",
+          "position": [
+            60,
+            93
+          ],
+          "walkTo": [
+            95,
+            128
+          ],
+          "facing": "auto",
+          "layer": "back"
         }
       ],
       "characters": [
@@ -3273,8 +3524,8 @@
         "near": 63,
         "far": 31
       },
-      "createdAt": "2026-10-29T14:17:24.059Z",
-      "updatedAt": "2026-10-29T14:17:24.059Z"
+      "createdAt": "2026-10-29T14:40:17.840Z",
+      "updatedAt": "2026-10-29T14:40:17.840Z"
     },
     {
       "id": "s-astronomia",
@@ -3452,6 +3703,19 @@
           ],
           "facing": "auto",
           "layer": "auto"
+        },
+        {
+          "objectId": "o-fx-estels-astronomia",
+          "position": [
+            159,
+            79
+          ],
+          "walkTo": [
+            159,
+            152
+          ],
+          "facing": "auto",
+          "layer": "back"
         }
       ],
       "characters": [
@@ -3473,8 +3737,8 @@
         "near": 65,
         "far": 36
       },
-      "createdAt": "2026-10-29T14:17:24.059Z",
-      "updatedAt": "2026-10-29T14:17:24.059Z"
+      "createdAt": "2026-10-29T14:40:17.840Z",
+      "updatedAt": "2026-10-29T14:40:17.840Z"
     },
     {
       "id": "s-setena",
@@ -3705,6 +3969,32 @@
           ],
           "facing": "auto",
           "layer": "back"
+        },
+        {
+          "objectId": "o-fx-tapis-setena",
+          "position": [
+            77,
+            132
+          ],
+          "walkTo": [
+            87,
+            142
+          ],
+          "facing": "auto",
+          "layer": "back"
+        },
+        {
+          "objectId": "o-fx-llums-setena",
+          "position": [
+            152,
+            117
+          ],
+          "walkTo": [
+            152,
+            117
+          ],
+          "facing": "auto",
+          "layer": "back"
         }
       ],
       "characters": [
@@ -3713,15 +4003,6 @@
           "position": [
             171,
             121
-          ],
-          "walkTo": null,
-          "facing": "down"
-        },
-        {
-          "characterId": "c-llum-setena",
-          "position": [
-            1,
-            114
           ],
           "walkTo": null,
           "facing": "down"
@@ -3735,8 +4016,8 @@
         "near": 63,
         "far": 24
       },
-      "createdAt": "2026-10-29T14:17:24.059Z",
-      "updatedAt": "2026-10-29T14:17:24.059Z"
+      "createdAt": "2026-10-29T14:40:17.840Z",
+      "updatedAt": "2026-10-29T14:40:17.840Z"
     },
     {
       "id": "s-sala",
@@ -3972,6 +4253,19 @@
           ],
           "facing": "auto",
           "layer": "back"
+        },
+        {
+          "objectId": "o-fx-pols-sala",
+          "position": [
+            167,
+            91
+          ],
+          "walkTo": [
+            167,
+            112
+          ],
+          "facing": "auto",
+          "layer": "back"
         }
       ],
       "characters": [],
@@ -3986,8 +4280,8 @@
         "near": 63,
         "far": 23
       },
-      "createdAt": "2026-10-29T14:17:24.059Z",
-      "updatedAt": "2026-10-29T14:17:24.059Z"
+      "createdAt": "2026-10-29T14:40:17.840Z",
+      "updatedAt": "2026-10-29T14:40:17.840Z"
     },
     {
       "id": "s-jardins",
@@ -4275,7 +4569,47 @@
           "exit": null
         }
       ],
-      "objects": [],
+      "objects": [
+        {
+          "objectId": "o-fx-fum-cabana-jardins",
+          "position": [
+            53,
+            73
+          ],
+          "walkTo": [
+            84,
+            104
+          ],
+          "facing": "auto",
+          "layer": "back"
+        },
+        {
+          "objectId": "o-fx-mussol-jardins",
+          "position": [
+            160,
+            43
+          ],
+          "walkTo": [
+            160,
+            104
+          ],
+          "facing": "auto",
+          "layer": "back"
+        },
+        {
+          "objectId": "o-fx-llums-jardins",
+          "position": [
+            134,
+            106
+          ],
+          "walkTo": [
+            134,
+            106
+          ],
+          "facing": "auto",
+          "layer": "back"
+        }
+      ],
       "characters": [
         {
           "characterId": "c-draco",
@@ -4285,15 +4619,6 @@
           ],
           "walkTo": null,
           "facing": "left"
-        },
-        {
-          "characterId": "c-llum-jardins",
-          "position": [
-            1,
-            104
-          ],
-          "walkTo": null,
-          "facing": "down"
         }
       ],
       "music": "so-fora",
@@ -4304,8 +4629,8 @@
         "near": 64,
         "far": 9
       },
-      "createdAt": "2026-10-29T14:17:24.059Z",
-      "updatedAt": "2026-10-29T14:17:24.059Z"
+      "createdAt": "2026-10-29T14:40:17.840Z",
+      "updatedAt": "2026-10-29T14:40:17.840Z"
     },
     {
       "id": "s-cabana",
@@ -4572,11 +4897,11 @@
         {
           "objectId": "o-fang",
           "position": [
-            132,
+            135,
             150
           ],
           "walkTo": [
-            132,
+            135,
             150
           ],
           "facing": "auto",
@@ -4592,15 +4917,6 @@
           ],
           "walkTo": null,
           "facing": "left"
-        },
-        {
-          "characterId": "c-llum-cabana",
-          "position": [
-            1,
-            150
-          ],
-          "walkTo": null,
-          "facing": "down"
         }
       ],
       "music": "so-fora",
@@ -4611,8 +4927,8 @@
         "near": 63,
         "far": 41
       },
-      "createdAt": "2026-10-29T14:17:24.059Z",
-      "updatedAt": "2026-10-29T14:17:24.059Z"
+      "createdAt": "2026-10-29T14:40:17.840Z",
+      "updatedAt": "2026-10-29T14:40:17.840Z"
     },
     {
       "id": "s-hivernacle",
@@ -4814,6 +5130,19 @@
           ],
           "facing": "auto",
           "layer": "auto"
+        },
+        {
+          "objectId": "o-fx-tentacula-hivernacle",
+          "position": [
+            164,
+            116
+          ],
+          "walkTo": [
+            164,
+            125
+          ],
+          "facing": "auto",
+          "layer": "back"
         }
       ],
       "characters": [
@@ -4835,8 +5164,8 @@
         "near": 63,
         "far": 30
       },
-      "createdAt": "2026-10-29T14:17:24.059Z",
-      "updatedAt": "2026-10-29T14:17:24.059Z"
+      "createdAt": "2026-10-29T14:40:17.840Z",
+      "updatedAt": "2026-10-29T14:40:17.840Z"
     },
     {
       "id": "s-quidditch",
@@ -4990,11 +5319,24 @@
           "objectId": "o-snitch",
           "position": [
             198,
-            58
+            60
           ],
           "walkTo": [
             196,
             150
+          ],
+          "facing": "auto",
+          "layer": "back"
+        },
+        {
+          "objectId": "o-fx-teles-quidditch",
+          "position": [
+            160,
+            81
+          ],
+          "walkTo": [
+            160,
+            122
           ],
           "facing": "auto",
           "layer": "back"
@@ -5019,8 +5361,8 @@
         "near": 64,
         "far": 18
       },
-      "createdAt": "2026-10-29T14:17:24.059Z",
-      "updatedAt": "2026-10-29T14:17:24.059Z"
+      "createdAt": "2026-10-29T14:40:17.840Z",
+      "updatedAt": "2026-10-29T14:40:17.840Z"
     },
     {
       "id": "s-bosc",
@@ -5209,7 +5551,47 @@
           "exit": null
         }
       ],
-      "objects": [],
+      "objects": [
+        {
+          "objectId": "o-fx-cuques-bosc",
+          "position": [
+            162,
+            171
+          ],
+          "walkTo": [
+            162,
+            171
+          ],
+          "facing": "auto",
+          "layer": "back"
+        },
+        {
+          "objectId": "o-fx-unicorn-bosc",
+          "position": [
+            143,
+            133
+          ],
+          "walkTo": [
+            143,
+            133
+          ],
+          "facing": "auto",
+          "layer": "back"
+        },
+        {
+          "objectId": "o-fx-boira-bosc",
+          "position": [
+            160,
+            183
+          ],
+          "walkTo": [
+            160,
+            183
+          ],
+          "facing": "auto",
+          "layer": "back"
+        }
+      ],
       "characters": [
         {
           "characterId": "c-firenze",
@@ -5229,8 +5611,8 @@
         "near": 64,
         "far": 17
       },
-      "createdAt": "2026-10-29T14:17:24.059Z",
-      "updatedAt": "2026-10-29T14:17:24.059Z"
+      "createdAt": "2026-10-29T14:40:17.840Z",
+      "updatedAt": "2026-10-29T14:40:17.840Z"
     },
     {
       "id": "s-llac",
@@ -5474,6 +5856,32 @@
           ],
           "facing": "auto",
           "layer": "auto"
+        },
+        {
+          "objectId": "o-fx-reflex-llac",
+          "position": [
+            92,
+            147
+          ],
+          "walkTo": [
+            92,
+            150
+          ],
+          "facing": "auto",
+          "layer": "back"
+        },
+        {
+          "objectId": "o-fx-llums-llac",
+          "position": [
+            256,
+            61
+          ],
+          "walkTo": [
+            190,
+            127
+          ],
+          "facing": "auto",
+          "layer": "back"
         }
       ],
       "characters": [
@@ -5485,15 +5893,6 @@
           ],
           "walkTo": null,
           "facing": "right"
-        },
-        {
-          "characterId": "c-llum-llac",
-          "position": [
-            1,
-            125
-          ],
-          "walkTo": null,
-          "facing": "down"
         }
       ],
       "music": "so-fora",
@@ -5504,8 +5903,8 @@
         "near": 64,
         "far": 18
       },
-      "createdAt": "2026-10-29T14:17:24.059Z",
-      "updatedAt": "2026-10-29T14:17:24.059Z"
+      "createdAt": "2026-10-29T14:40:17.840Z",
+      "updatedAt": "2026-10-29T14:40:17.840Z"
     }
   ],
   "verbs": [
@@ -5588,8 +5987,8 @@
       ],
       "initialState": "o-varita-normal",
       "icon": "o-varita-icona.png",
-      "createdAt": "2026-10-29T14:17:24.059Z",
-      "updatedAt": "2026-10-29T14:17:24.059Z"
+      "createdAt": "2026-10-29T14:40:17.840Z",
+      "updatedAt": "2026-10-29T14:40:17.840Z"
     },
     {
       "id": "o-capa",
@@ -5605,8 +6004,8 @@
       ],
       "initialState": "o-capa-normal",
       "icon": "o-capa-icona.png",
-      "createdAt": "2026-10-29T14:17:24.059Z",
-      "updatedAt": "2026-10-29T14:17:24.059Z"
+      "createdAt": "2026-10-29T14:40:17.840Z",
+      "updatedAt": "2026-10-29T14:40:17.840Z"
     },
     {
       "id": "o-flauta",
@@ -5622,8 +6021,8 @@
       ],
       "initialState": "o-flauta-normal",
       "icon": "o-flauta-icona.png",
-      "createdAt": "2026-10-29T14:17:24.059Z",
-      "updatedAt": "2026-10-29T14:17:24.059Z"
+      "createdAt": "2026-10-29T14:40:17.840Z",
+      "updatedAt": "2026-10-29T14:40:17.840Z"
     },
     {
       "id": "o-nota",
@@ -5639,8 +6038,8 @@
       ],
       "initialState": "o-nota-normal",
       "icon": "o-nota-icona.png",
-      "createdAt": "2026-10-29T14:17:24.059Z",
-      "updatedAt": "2026-10-29T14:17:24.059Z"
+      "createdAt": "2026-10-29T14:40:17.840Z",
+      "updatedAt": "2026-10-29T14:40:17.840Z"
     },
     {
       "id": "o-orelleres",
@@ -5656,8 +6055,8 @@
       ],
       "initialState": "o-orelleres-normal",
       "icon": "o-orelleres-icona.png",
-      "createdAt": "2026-10-29T14:17:24.059Z",
-      "updatedAt": "2026-10-29T14:17:24.059Z"
+      "createdAt": "2026-10-29T14:40:17.840Z",
+      "updatedAt": "2026-10-29T14:40:17.840Z"
     },
     {
       "id": "o-bomba",
@@ -5673,8 +6072,8 @@
       ],
       "initialState": "o-bomba-normal",
       "icon": "o-bomba-icona.png",
-      "createdAt": "2026-10-29T14:17:24.059Z",
-      "updatedAt": "2026-10-29T14:17:24.059Z"
+      "createdAt": "2026-10-29T14:40:17.840Z",
+      "updatedAt": "2026-10-29T14:40:17.840Z"
     },
     {
       "id": "o-invitacio",
@@ -5690,8 +6089,8 @@
       ],
       "initialState": "o-invitacio-normal",
       "icon": "o-invitacio-icona.png",
-      "createdAt": "2026-10-29T14:17:24.059Z",
-      "updatedAt": "2026-10-29T14:17:24.059Z"
+      "createdAt": "2026-10-29T14:40:17.840Z",
+      "updatedAt": "2026-10-29T14:40:17.840Z"
     },
     {
       "id": "o-permis",
@@ -5707,8 +6106,8 @@
       ],
       "initialState": "o-permis-normal",
       "icon": "o-permis-icona.png",
-      "createdAt": "2026-10-29T14:17:24.059Z",
-      "updatedAt": "2026-10-29T14:17:24.059Z"
+      "createdAt": "2026-10-29T14:40:17.840Z",
+      "updatedAt": "2026-10-29T14:40:17.840Z"
     },
     {
       "id": "o-flasco-buit",
@@ -5724,8 +6123,8 @@
       ],
       "initialState": "o-flasco-buit-normal",
       "icon": "o-flasco-buit-icona.png",
-      "createdAt": "2026-10-29T14:17:24.059Z",
-      "updatedAt": "2026-10-29T14:17:24.059Z"
+      "createdAt": "2026-10-29T14:40:17.840Z",
+      "updatedAt": "2026-10-29T14:40:17.840Z"
     },
     {
       "id": "o-flasco-aigua",
@@ -5741,8 +6140,8 @@
       ],
       "initialState": "o-flasco-aigua-normal",
       "icon": "o-flasco-aigua-icona.png",
-      "createdAt": "2026-10-29T14:17:24.059Z",
-      "updatedAt": "2026-10-29T14:17:24.059Z"
+      "createdAt": "2026-10-29T14:40:17.840Z",
+      "updatedAt": "2026-10-29T14:40:17.840Z"
     },
     {
       "id": "o-pocio",
@@ -5758,8 +6157,8 @@
       ],
       "initialState": "o-pocio-normal",
       "icon": "o-pocio-icona.png",
-      "createdAt": "2026-10-29T14:17:24.059Z",
-      "updatedAt": "2026-10-29T14:17:24.059Z"
+      "createdAt": "2026-10-29T14:40:17.840Z",
+      "updatedAt": "2026-10-29T14:40:17.840Z"
     },
     {
       "id": "o-fulla",
@@ -5775,8 +6174,8 @@
       ],
       "initialState": "o-fulla-normal",
       "icon": "o-fulla-icona.png",
-      "createdAt": "2026-10-29T14:17:24.059Z",
-      "updatedAt": "2026-10-29T14:17:24.059Z"
+      "createdAt": "2026-10-29T14:40:17.840Z",
+      "updatedAt": "2026-10-29T14:40:17.840Z"
     },
     {
       "id": "o-pel",
@@ -5792,8 +6191,8 @@
       ],
       "initialState": "o-pel-normal",
       "icon": "o-pel-icona.png",
-      "createdAt": "2026-10-29T14:17:24.059Z",
-      "updatedAt": "2026-10-29T14:17:24.059Z"
+      "createdAt": "2026-10-29T14:40:17.840Z",
+      "updatedAt": "2026-10-29T14:40:17.840Z"
     },
     {
       "id": "o-ploma",
@@ -5809,8 +6208,8 @@
       ],
       "initialState": "o-ploma-normal",
       "icon": "o-ploma-icona.png",
-      "createdAt": "2026-10-29T14:17:24.059Z",
-      "updatedAt": "2026-10-29T14:17:24.059Z"
+      "createdAt": "2026-10-29T14:40:17.840Z",
+      "updatedAt": "2026-10-29T14:40:17.840Z"
     },
     {
       "id": "o-cadena",
@@ -5826,8 +6225,8 @@
       ],
       "initialState": "o-cadena-normal",
       "icon": "o-cadena-icona.png",
-      "createdAt": "2026-10-29T14:17:24.059Z",
-      "updatedAt": "2026-10-29T14:17:24.059Z"
+      "createdAt": "2026-10-29T14:40:17.840Z",
+      "updatedAt": "2026-10-29T14:40:17.840Z"
     },
     {
       "id": "o-pastis",
@@ -5843,8 +6242,8 @@
       ],
       "initialState": "o-pastis-normal",
       "icon": "o-pastis-icona.png",
-      "createdAt": "2026-10-29T14:17:24.059Z",
-      "updatedAt": "2026-10-29T14:17:24.059Z"
+      "createdAt": "2026-10-29T14:40:17.840Z",
+      "updatedAt": "2026-10-29T14:40:17.840Z"
     },
     {
       "id": "o-escombra",
@@ -5860,8 +6259,8 @@
       ],
       "initialState": "o-escombra-normal",
       "icon": "o-escombra-icona.png",
-      "createdAt": "2026-10-29T14:17:24.059Z",
-      "updatedAt": "2026-10-29T14:17:24.059Z"
+      "createdAt": "2026-10-29T14:40:17.840Z",
+      "updatedAt": "2026-10-29T14:40:17.840Z"
     },
     {
       "id": "o-paraigua",
@@ -5877,8 +6276,8 @@
       ],
       "initialState": "o-paraigua-normal",
       "icon": "o-paraigua-icona.png",
-      "createdAt": "2026-10-29T14:17:24.059Z",
-      "updatedAt": "2026-10-29T14:17:24.059Z"
+      "createdAt": "2026-10-29T14:40:17.840Z",
+      "updatedAt": "2026-10-29T14:40:17.840Z"
     },
     {
       "id": "o-llanterna",
@@ -5894,8 +6293,8 @@
       ],
       "initialState": "o-llanterna-normal",
       "icon": "o-llanterna-icona.png",
-      "createdAt": "2026-10-29T14:17:24.059Z",
-      "updatedAt": "2026-10-29T14:17:24.059Z"
+      "createdAt": "2026-10-29T14:40:17.840Z",
+      "updatedAt": "2026-10-29T14:40:17.840Z"
     },
     {
       "id": "o-recepta",
@@ -5911,8 +6310,8 @@
       ],
       "initialState": "o-recepta-normal",
       "icon": "o-recepta-icona.png",
-      "createdAt": "2026-10-29T14:17:24.059Z",
-      "updatedAt": "2026-10-29T14:17:24.059Z"
+      "createdAt": "2026-10-29T14:40:17.840Z",
+      "updatedAt": "2026-10-29T14:40:17.840Z"
     },
     {
       "id": "o-cromo",
@@ -5928,8 +6327,8 @@
       ],
       "initialState": "o-cromo-normal",
       "icon": "o-cromo-icona.png",
-      "createdAt": "2026-10-29T14:17:24.059Z",
-      "updatedAt": "2026-10-29T14:17:24.059Z"
+      "createdAt": "2026-10-29T14:40:17.840Z",
+      "updatedAt": "2026-10-29T14:40:17.840Z"
     },
     {
       "id": "o-bagul",
@@ -5950,8 +6349,8 @@
       ],
       "initialState": "o-bagul-tancat",
       "icon": null,
-      "createdAt": "2026-10-29T14:17:24.059Z",
-      "updatedAt": "2026-10-29T14:17:24.059Z"
+      "createdAt": "2026-10-29T14:40:17.840Z",
+      "updatedAt": "2026-10-29T14:40:17.840Z"
     },
     {
       "id": "o-mitjo",
@@ -5967,8 +6366,8 @@
       ],
       "initialState": "o-mitjo-normal",
       "icon": "o-mitjo-icona.png",
-      "createdAt": "2026-10-29T14:17:24.059Z",
-      "updatedAt": "2026-10-29T14:17:24.059Z"
+      "createdAt": "2026-10-29T14:40:17.840Z",
+      "updatedAt": "2026-10-29T14:40:17.840Z"
     },
     {
       "id": "o-bufanda",
@@ -5984,8 +6383,8 @@
       ],
       "initialState": "o-bufanda-normal",
       "icon": "o-bufanda-icona.png",
-      "createdAt": "2026-10-29T14:17:24.059Z",
-      "updatedAt": "2026-10-29T14:17:24.059Z"
+      "createdAt": "2026-10-29T14:40:17.840Z",
+      "updatedAt": "2026-10-29T14:40:17.840Z"
     },
     {
       "id": "o-escacs",
@@ -5996,13 +6395,24 @@
         {
           "id": "o-escacs-normal",
           "name": "Normal",
-          "image": "o-escacs-normal.png"
+          "image": "o-escacs-normal-0.png",
+          "frames": [
+            "o-escacs-normal-0.png",
+            "o-escacs-normal-1.png",
+            "o-escacs-normal-2.png",
+            "o-escacs-normal-3.png",
+            "o-escacs-normal-4.png",
+            "o-escacs-normal-5.png",
+            "o-escacs-normal-6.png",
+            "o-escacs-normal-7.png"
+          ],
+          "fps": 8
         }
       ],
       "initialState": "o-escacs-normal",
       "icon": null,
-      "createdAt": "2026-10-29T14:17:24.059Z",
-      "updatedAt": "2026-10-29T14:17:24.059Z"
+      "createdAt": "2026-10-29T14:40:17.840Z",
+      "updatedAt": "2026-10-29T14:40:17.840Z"
     },
     {
       "id": "o-quisquiller",
@@ -6018,8 +6428,8 @@
       ],
       "initialState": "o-quisquiller-normal",
       "icon": "o-quisquiller-icona.png",
-      "createdAt": "2026-10-29T14:17:24.059Z",
-      "updatedAt": "2026-10-29T14:17:24.059Z"
+      "createdAt": "2026-10-29T14:40:17.840Z",
+      "updatedAt": "2026-10-29T14:40:17.840Z"
     },
     {
       "id": "o-grassa",
@@ -6030,13 +6440,24 @@
         {
           "id": "o-grassa-normal",
           "name": "Normal",
-          "image": "o-grassa-normal.png"
+          "image": "o-grassa-normal-0.png",
+          "frames": [
+            "o-grassa-normal-0.png",
+            "o-grassa-normal-1.png",
+            "o-grassa-normal-2.png",
+            "o-grassa-normal-3.png",
+            "o-grassa-normal-4.png",
+            "o-grassa-normal-5.png",
+            "o-grassa-normal-6.png",
+            "o-grassa-normal-7.png"
+          ],
+          "fps": 8
         }
       ],
       "initialState": "o-grassa-normal",
       "icon": null,
-      "createdAt": "2026-10-29T14:17:24.059Z",
-      "updatedAt": "2026-10-29T14:17:24.059Z"
+      "createdAt": "2026-10-29T14:40:17.840Z",
+      "updatedAt": "2026-10-29T14:40:17.840Z"
     },
     {
       "id": "o-porta",
@@ -6057,8 +6478,8 @@
       ],
       "initialState": "o-porta-tancada",
       "icon": null,
-      "createdAt": "2026-10-29T14:17:24.059Z",
-      "updatedAt": "2026-10-29T14:17:24.059Z"
+      "createdAt": "2026-10-29T14:40:17.840Z",
+      "updatedAt": "2026-10-29T14:40:17.840Z"
     },
     {
       "id": "o-pera",
@@ -6069,7 +6490,18 @@
         {
           "id": "o-pera-quadre",
           "name": "Quadre",
-          "image": "o-pera-quadre.png"
+          "image": "o-pera-quadre-0.png",
+          "frames": [
+            "o-pera-quadre-0.png",
+            "o-pera-quadre-1.png",
+            "o-pera-quadre-2.png",
+            "o-pera-quadre-3.png",
+            "o-pera-quadre-4.png",
+            "o-pera-quadre-5.png",
+            "o-pera-quadre-6.png",
+            "o-pera-quadre-7.png"
+          ],
+          "fps": 8
         },
         {
           "id": "o-pera-obert",
@@ -6079,8 +6511,8 @@
       ],
       "initialState": "o-pera-quadre",
       "icon": null,
-      "createdAt": "2026-10-29T14:17:24.059Z",
-      "updatedAt": "2026-10-29T14:17:24.059Z"
+      "createdAt": "2026-10-29T14:40:17.840Z",
+      "updatedAt": "2026-10-29T14:40:17.840Z"
     },
     {
       "id": "o-filch",
@@ -6101,8 +6533,8 @@
       ],
       "initialState": "o-filch-hi",
       "icon": null,
-      "createdAt": "2026-10-29T14:17:24.059Z",
-      "updatedAt": "2026-10-29T14:17:24.059Z"
+      "createdAt": "2026-10-29T14:40:17.840Z",
+      "updatedAt": "2026-10-29T14:40:17.840Z"
     },
     {
       "id": "o-xiulet",
@@ -6118,8 +6550,8 @@
       ],
       "initialState": "o-xiulet-normal",
       "icon": "o-xiulet-icona.png",
-      "createdAt": "2026-10-29T14:17:24.059Z",
-      "updatedAt": "2026-10-29T14:17:24.059Z"
+      "createdAt": "2026-10-29T14:40:17.840Z",
+      "updatedAt": "2026-10-29T14:40:17.840Z"
     },
     {
       "id": "o-corda",
@@ -6135,8 +6567,8 @@
       ],
       "initialState": "o-corda-normal",
       "icon": null,
-      "createdAt": "2026-10-29T14:17:24.059Z",
-      "updatedAt": "2026-10-29T14:17:24.059Z"
+      "createdAt": "2026-10-29T14:40:17.840Z",
+      "updatedAt": "2026-10-29T14:40:17.840Z"
     },
     {
       "id": "o-llibre",
@@ -6152,8 +6584,8 @@
       ],
       "initialState": "o-llibre-normal",
       "icon": null,
-      "createdAt": "2026-10-29T14:17:24.059Z",
-      "updatedAt": "2026-10-29T14:17:24.059Z"
+      "createdAt": "2026-10-29T14:40:17.840Z",
+      "updatedAt": "2026-10-29T14:40:17.840Z"
     },
     {
       "id": "o-calder",
@@ -6169,23 +6601,56 @@
         {
           "id": "o-calder-aigua",
           "name": "Amb aigua",
-          "image": "o-calder-aigua.png"
+          "image": "o-calder-aigua-0.png",
+          "frames": [
+            "o-calder-aigua-0.png",
+            "o-calder-aigua-1.png",
+            "o-calder-aigua-2.png",
+            "o-calder-aigua-3.png",
+            "o-calder-aigua-4.png",
+            "o-calder-aigua-5.png",
+            "o-calder-aigua-6.png",
+            "o-calder-aigua-7.png"
+          ],
+          "fps": 6
         },
         {
           "id": "o-calder-ingredients",
           "name": "Amb ingredients",
-          "image": "o-calder-ingredients.png"
+          "image": "o-calder-ingredients-0.png",
+          "frames": [
+            "o-calder-ingredients-0.png",
+            "o-calder-ingredients-1.png",
+            "o-calder-ingredients-2.png",
+            "o-calder-ingredients-3.png",
+            "o-calder-ingredients-4.png",
+            "o-calder-ingredients-5.png",
+            "o-calder-ingredients-6.png",
+            "o-calder-ingredients-7.png"
+          ],
+          "fps": 7
         },
         {
           "id": "o-calder-llest",
           "name": "Poció feta",
-          "image": "o-calder-llest.png"
+          "image": "o-calder-llest-0.png",
+          "frames": [
+            "o-calder-llest-0.png",
+            "o-calder-llest-1.png",
+            "o-calder-llest-2.png",
+            "o-calder-llest-3.png",
+            "o-calder-llest-4.png",
+            "o-calder-llest-5.png",
+            "o-calder-llest-6.png",
+            "o-calder-llest-7.png"
+          ],
+          "fps": 8
         }
       ],
       "initialState": "o-calder-buit",
       "icon": null,
-      "createdAt": "2026-10-29T14:17:24.059Z",
-      "updatedAt": "2026-10-29T14:17:24.059Z"
+      "createdAt": "2026-10-29T14:40:17.840Z",
+      "updatedAt": "2026-10-29T14:40:17.840Z"
     },
     {
       "id": "o-trevor",
@@ -6196,13 +6661,22 @@
         {
           "id": "o-trevor-normal",
           "name": "Normal",
-          "image": "o-trevor-normal.png"
+          "image": "o-trevor-normal-0.png",
+          "frames": [
+            "o-trevor-normal-0.png",
+            "o-trevor-normal-1.png",
+            "o-trevor-normal-2.png",
+            "o-trevor-normal-3.png",
+            "o-trevor-normal-4.png",
+            "o-trevor-normal-5.png"
+          ],
+          "fps": 8
         }
       ],
       "initialState": "o-trevor-normal",
       "icon": null,
-      "createdAt": "2026-10-29T14:17:24.059Z",
-      "updatedAt": "2026-10-29T14:17:24.059Z"
+      "createdAt": "2026-10-29T14:40:17.840Z",
+      "updatedAt": "2026-10-29T14:40:17.840Z"
     },
     {
       "id": "o-granota",
@@ -6218,8 +6692,8 @@
       ],
       "initialState": "o-granota-normal",
       "icon": "o-granota-icona.png",
-      "createdAt": "2026-10-29T14:17:24.059Z",
-      "updatedAt": "2026-10-29T14:17:24.059Z"
+      "createdAt": "2026-10-29T14:40:17.840Z",
+      "updatedAt": "2026-10-29T14:40:17.840Z"
     },
     {
       "id": "o-gargola",
@@ -6230,7 +6704,14 @@
         {
           "id": "o-gargola-tancada",
           "name": "Tancada",
-          "image": "o-gargola-tancada.png"
+          "image": "o-gargola-tancada-0.png",
+          "frames": [
+            "o-gargola-tancada-0.png",
+            "o-gargola-tancada-1.png",
+            "o-gargola-tancada-2.png",
+            "o-gargola-tancada-3.png"
+          ],
+          "fps": 8
         },
         {
           "id": "o-gargola-oberta",
@@ -6240,8 +6721,8 @@
       ],
       "initialState": "o-gargola-tancada",
       "icon": null,
-      "createdAt": "2026-10-29T14:17:24.059Z",
-      "updatedAt": "2026-10-29T14:17:24.059Z"
+      "createdAt": "2026-10-29T14:40:17.840Z",
+      "updatedAt": "2026-10-29T14:40:17.840Z"
     },
     {
       "id": "o-escriptori",
@@ -6257,8 +6738,8 @@
       ],
       "initialState": "o-escriptori-normal",
       "icon": null,
-      "createdAt": "2026-10-29T14:17:24.059Z",
-      "updatedAt": "2026-10-29T14:17:24.059Z"
+      "createdAt": "2026-10-29T14:40:17.840Z",
+      "updatedAt": "2026-10-29T14:40:17.840Z"
     },
     {
       "id": "o-fawkes",
@@ -6269,18 +6750,40 @@
         {
           "id": "o-fawkes-quiet",
           "name": "Quiet",
-          "image": "o-fawkes-quiet.png"
+          "image": "o-fawkes-quiet-0.png",
+          "frames": [
+            "o-fawkes-quiet-0.png",
+            "o-fawkes-quiet-1.png",
+            "o-fawkes-quiet-2.png",
+            "o-fawkes-quiet-3.png",
+            "o-fawkes-quiet-4.png",
+            "o-fawkes-quiet-5.png",
+            "o-fawkes-quiet-6.png",
+            "o-fawkes-quiet-7.png"
+          ],
+          "fps": 8
         },
         {
           "id": "o-fawkes-canta",
           "name": "Canta",
-          "image": "o-fawkes-canta.png"
+          "image": "o-fawkes-canta-0.png",
+          "frames": [
+            "o-fawkes-canta-0.png",
+            "o-fawkes-canta-1.png",
+            "o-fawkes-canta-2.png",
+            "o-fawkes-canta-3.png",
+            "o-fawkes-canta-4.png",
+            "o-fawkes-canta-5.png",
+            "o-fawkes-canta-6.png",
+            "o-fawkes-canta-7.png"
+          ],
+          "fps": 8
         }
       ],
       "initialState": "o-fawkes-quiet",
       "icon": null,
-      "createdAt": "2026-10-29T14:17:24.059Z",
-      "updatedAt": "2026-10-29T14:17:24.059Z"
+      "createdAt": "2026-10-29T14:40:17.840Z",
+      "updatedAt": "2026-10-29T14:40:17.840Z"
     },
     {
       "id": "o-prestatge",
@@ -6301,8 +6804,8 @@
       ],
       "initialState": "o-prestatge-buit",
       "icon": null,
-      "createdAt": "2026-10-29T14:17:24.059Z",
-      "updatedAt": "2026-10-29T14:17:24.059Z"
+      "createdAt": "2026-10-29T14:40:17.840Z",
+      "updatedAt": "2026-10-29T14:40:17.840Z"
     },
     {
       "id": "o-pensadora",
@@ -6313,13 +6816,24 @@
         {
           "id": "o-pensadora-normal",
           "name": "Normal",
-          "image": "o-pensadora-normal.png"
+          "image": "o-pensadora-normal-0.png",
+          "frames": [
+            "o-pensadora-normal-0.png",
+            "o-pensadora-normal-1.png",
+            "o-pensadora-normal-2.png",
+            "o-pensadora-normal-3.png",
+            "o-pensadora-normal-4.png",
+            "o-pensadora-normal-5.png",
+            "o-pensadora-normal-6.png",
+            "o-pensadora-normal-7.png"
+          ],
+          "fps": 8
         }
       ],
       "initialState": "o-pensadora-normal",
       "icon": null,
-      "createdAt": "2026-10-29T14:17:24.059Z",
-      "updatedAt": "2026-10-29T14:17:24.059Z"
+      "createdAt": "2026-10-29T14:40:17.840Z",
+      "updatedAt": "2026-10-29T14:40:17.840Z"
     },
     {
       "id": "o-telescopi",
@@ -6335,8 +6849,8 @@
       ],
       "initialState": "o-telescopi-normal",
       "icon": null,
-      "createdAt": "2026-10-29T14:17:24.059Z",
-      "updatedAt": "2026-10-29T14:17:24.059Z"
+      "createdAt": "2026-10-29T14:40:17.840Z",
+      "updatedAt": "2026-10-29T14:40:17.840Z"
     },
     {
       "id": "o-portasala",
@@ -6357,8 +6871,8 @@
       ],
       "initialState": "o-portasala-amagada",
       "icon": null,
-      "createdAt": "2026-10-29T14:17:24.059Z",
-      "updatedAt": "2026-10-29T14:17:24.059Z"
+      "createdAt": "2026-10-29T14:40:17.840Z",
+      "updatedAt": "2026-10-29T14:40:17.840Z"
     },
     {
       "id": "o-barret",
@@ -6369,13 +6883,22 @@
         {
           "id": "o-barret-normal",
           "name": "Normal",
-          "image": "o-barret-normal.png"
+          "image": "o-barret-normal-0.png",
+          "frames": [
+            "o-barret-normal-0.png",
+            "o-barret-normal-1.png",
+            "o-barret-normal-2.png",
+            "o-barret-normal-3.png",
+            "o-barret-normal-4.png",
+            "o-barret-normal-5.png"
+          ],
+          "fps": 8
         }
       ],
       "initialState": "o-barret-normal",
       "icon": null,
-      "createdAt": "2026-10-29T14:17:24.059Z",
-      "updatedAt": "2026-10-29T14:17:24.059Z"
+      "createdAt": "2026-10-29T14:40:17.840Z",
+      "updatedAt": "2026-10-29T14:40:17.840Z"
     },
     {
       "id": "o-fems",
@@ -6391,8 +6914,8 @@
       ],
       "initialState": "o-fems-normal",
       "icon": "o-fems-icona.png",
-      "createdAt": "2026-10-29T14:17:24.059Z",
-      "updatedAt": "2026-10-29T14:17:24.059Z"
+      "createdAt": "2026-10-29T14:40:17.840Z",
+      "updatedAt": "2026-10-29T14:40:17.840Z"
     },
     {
       "id": "o-galetes",
@@ -6408,8 +6931,8 @@
       ],
       "initialState": "o-galetes-normal",
       "icon": "o-galetes-icona.png",
-      "createdAt": "2026-10-29T14:17:24.059Z",
-      "updatedAt": "2026-10-29T14:17:24.059Z"
+      "createdAt": "2026-10-29T14:40:17.840Z",
+      "updatedAt": "2026-10-29T14:40:17.840Z"
     },
     {
       "id": "o-fang",
@@ -6420,13 +6943,20 @@
         {
           "id": "o-fang-normal",
           "name": "Normal",
-          "image": "o-fang-normal.png"
+          "image": "o-fang-normal-0.png",
+          "frames": [
+            "o-fang-normal-0.png",
+            "o-fang-normal-1.png",
+            "o-fang-normal-2.png",
+            "o-fang-normal-3.png"
+          ],
+          "fps": 8
         }
       ],
       "initialState": "o-fang-normal",
       "icon": null,
-      "createdAt": "2026-10-29T14:17:24.059Z",
-      "updatedAt": "2026-10-29T14:17:24.059Z"
+      "createdAt": "2026-10-29T14:40:17.840Z",
+      "updatedAt": "2026-10-29T14:40:17.840Z"
     },
     {
       "id": "o-mandragora",
@@ -6437,7 +6967,18 @@
         {
           "id": "o-mandragora-plantades",
           "name": "Plantades",
-          "image": "o-mandragora-plantades.png"
+          "image": "o-mandragora-plantades-0.png",
+          "frames": [
+            "o-mandragora-plantades-0.png",
+            "o-mandragora-plantades-1.png",
+            "o-mandragora-plantades-2.png",
+            "o-mandragora-plantades-3.png",
+            "o-mandragora-plantades-4.png",
+            "o-mandragora-plantades-5.png",
+            "o-mandragora-plantades-6.png",
+            "o-mandragora-plantades-7.png"
+          ],
+          "fps": 8
         },
         {
           "id": "o-mandragora-arrencada",
@@ -6447,8 +6988,8 @@
       ],
       "initialState": "o-mandragora-plantades",
       "icon": null,
-      "createdAt": "2026-10-29T14:17:24.059Z",
-      "updatedAt": "2026-10-29T14:17:24.059Z"
+      "createdAt": "2026-10-29T14:40:17.840Z",
+      "updatedAt": "2026-10-29T14:40:17.840Z"
     },
     {
       "id": "o-snitch",
@@ -6459,13 +7000,24 @@
         {
           "id": "o-snitch-normal",
           "name": "Normal",
-          "image": "o-snitch-normal.png"
+          "image": "o-snitch-normal-0.png",
+          "frames": [
+            "o-snitch-normal-0.png",
+            "o-snitch-normal-1.png",
+            "o-snitch-normal-2.png",
+            "o-snitch-normal-3.png",
+            "o-snitch-normal-4.png",
+            "o-snitch-normal-5.png",
+            "o-snitch-normal-6.png",
+            "o-snitch-normal-7.png"
+          ],
+          "fps": 8
         }
       ],
       "initialState": "o-snitch-normal",
       "icon": null,
-      "createdAt": "2026-10-29T14:17:24.059Z",
-      "updatedAt": "2026-10-29T14:17:24.059Z"
+      "createdAt": "2026-10-29T14:40:17.840Z",
+      "updatedAt": "2026-10-29T14:40:17.840Z"
     },
     {
       "id": "o-tentacle",
@@ -6476,13 +7028,1209 @@
         {
           "id": "o-tentacle-normal",
           "name": "Normal",
-          "image": "o-tentacle-normal.png"
+          "image": "o-tentacle-normal-0.png",
+          "frames": [
+            "o-tentacle-normal-0.png",
+            "o-tentacle-normal-1.png",
+            "o-tentacle-normal-2.png",
+            "o-tentacle-normal-3.png",
+            "o-tentacle-normal-4.png",
+            "o-tentacle-normal-5.png",
+            "o-tentacle-normal-6.png",
+            "o-tentacle-normal-7.png",
+            "o-tentacle-normal-8.png",
+            "o-tentacle-normal-9.png"
+          ],
+          "fps": 8
         }
       ],
       "initialState": "o-tentacle-normal",
       "icon": null,
-      "createdAt": "2026-10-29T14:17:24.059Z",
-      "updatedAt": "2026-10-29T14:17:24.059Z"
+      "createdAt": "2026-10-29T14:40:17.840Z",
+      "updatedAt": "2026-10-29T14:40:17.840Z"
+    },
+    {
+      "id": "o-fx-recordadora-dormitori",
+      "name": "Recordadora",
+      "description": "",
+      "pickable": false,
+      "decor": true,
+      "states": [
+        {
+          "id": "o-fx-recordadora-dormitori-anim",
+          "name": "Animació",
+          "image": "o-fx-recordadora-dormitori-anim-0.png",
+          "frames": [
+            "o-fx-recordadora-dormitori-anim-0.png",
+            "o-fx-recordadora-dormitori-anim-1.png",
+            "o-fx-recordadora-dormitori-anim-2.png",
+            "o-fx-recordadora-dormitori-anim-3.png",
+            "o-fx-recordadora-dormitori-anim-4.png",
+            "o-fx-recordadora-dormitori-anim-5.png",
+            "o-fx-recordadora-dormitori-anim-6.png",
+            "o-fx-recordadora-dormitori-anim-7.png"
+          ],
+          "fps": 4
+        }
+      ],
+      "initialState": "o-fx-recordadora-dormitori-anim",
+      "icon": null,
+      "createdAt": "2026-10-29T14:40:17.840Z",
+      "updatedAt": "2026-10-29T14:40:17.840Z"
+    },
+    {
+      "id": "o-fx-llums-comuna",
+      "name": "llums",
+      "description": "",
+      "pickable": false,
+      "decor": true,
+      "states": [
+        {
+          "id": "o-fx-llums-comuna-anim",
+          "name": "Animació",
+          "image": "o-fx-llums-comuna-anim-0.png",
+          "frames": [
+            "o-fx-llums-comuna-anim-0.png",
+            "o-fx-llums-comuna-anim-1.png",
+            "o-fx-llums-comuna-anim-2.png",
+            "o-fx-llums-comuna-anim-3.png",
+            "o-fx-llums-comuna-anim-4.png",
+            "o-fx-llums-comuna-anim-5.png"
+          ],
+          "fps": 7
+        }
+      ],
+      "initialState": "o-fx-llums-comuna-anim",
+      "icon": null,
+      "createdAt": "2026-10-29T14:40:17.840Z",
+      "updatedAt": "2026-10-29T14:40:17.840Z"
+    },
+    {
+      "id": "o-fx-retrat-cavaller-escala",
+      "name": "retrat",
+      "description": "",
+      "pickable": false,
+      "decor": true,
+      "states": [
+        {
+          "id": "o-fx-retrat-cavaller-escala-anim",
+          "name": "Animació",
+          "image": "o-fx-retrat-cavaller-escala-anim-0.png",
+          "frames": [
+            "o-fx-retrat-cavaller-escala-anim-0.png",
+            "o-fx-retrat-cavaller-escala-anim-1.png",
+            "o-fx-retrat-cavaller-escala-anim-2.png",
+            "o-fx-retrat-cavaller-escala-anim-3.png",
+            "o-fx-retrat-cavaller-escala-anim-4.png",
+            "o-fx-retrat-cavaller-escala-anim-5.png",
+            "o-fx-retrat-cavaller-escala-anim-6.png",
+            "o-fx-retrat-cavaller-escala-anim-7.png"
+          ],
+          "fps": 4
+        }
+      ],
+      "initialState": "o-fx-retrat-cavaller-escala-anim",
+      "icon": null,
+      "createdAt": "2026-10-29T14:40:17.840Z",
+      "updatedAt": "2026-10-29T14:40:17.840Z"
+    },
+    {
+      "id": "o-fx-retrat-bruixa-escala",
+      "name": "retrat",
+      "description": "",
+      "pickable": false,
+      "decor": true,
+      "states": [
+        {
+          "id": "o-fx-retrat-bruixa-escala-anim",
+          "name": "Animació",
+          "image": "o-fx-retrat-bruixa-escala-anim-0.png",
+          "frames": [
+            "o-fx-retrat-bruixa-escala-anim-0.png",
+            "o-fx-retrat-bruixa-escala-anim-1.png",
+            "o-fx-retrat-bruixa-escala-anim-2.png",
+            "o-fx-retrat-bruixa-escala-anim-3.png",
+            "o-fx-retrat-bruixa-escala-anim-4.png",
+            "o-fx-retrat-bruixa-escala-anim-5.png",
+            "o-fx-retrat-bruixa-escala-anim-6.png",
+            "o-fx-retrat-bruixa-escala-anim-7.png"
+          ],
+          "fps": 5
+        }
+      ],
+      "initialState": "o-fx-retrat-bruixa-escala-anim",
+      "icon": null,
+      "createdAt": "2026-10-29T14:40:17.840Z",
+      "updatedAt": "2026-10-29T14:40:17.840Z"
+    },
+    {
+      "id": "o-fx-escala-mobil-escala",
+      "name": "escala",
+      "description": "",
+      "pickable": false,
+      "decor": true,
+      "states": [
+        {
+          "id": "o-fx-escala-mobil-escala-anim",
+          "name": "Animació",
+          "image": "o-fx-escala-mobil-escala-anim-0.png",
+          "frames": [
+            "o-fx-escala-mobil-escala-anim-0.png",
+            "o-fx-escala-mobil-escala-anim-1.png",
+            "o-fx-escala-mobil-escala-anim-2.png",
+            "o-fx-escala-mobil-escala-anim-3.png",
+            "o-fx-escala-mobil-escala-anim-4.png",
+            "o-fx-escala-mobil-escala-anim-5.png",
+            "o-fx-escala-mobil-escala-anim-6.png",
+            "o-fx-escala-mobil-escala-anim-7.png",
+            "o-fx-escala-mobil-escala-anim-8.png",
+            "o-fx-escala-mobil-escala-anim-9.png",
+            "o-fx-escala-mobil-escala-anim-10.png",
+            "o-fx-escala-mobil-escala-anim-11.png",
+            "o-fx-escala-mobil-escala-anim-12.png",
+            "o-fx-escala-mobil-escala-anim-13.png",
+            "o-fx-escala-mobil-escala-anim-14.png",
+            "o-fx-escala-mobil-escala-anim-15.png"
+          ],
+          "fps": 4
+        }
+      ],
+      "initialState": "o-fx-escala-mobil-escala-anim",
+      "icon": null,
+      "createdAt": "2026-10-29T14:40:17.840Z",
+      "updatedAt": "2026-10-29T14:40:17.840Z"
+    },
+    {
+      "id": "o-fx-llums-escala",
+      "name": "llums",
+      "description": "",
+      "pickable": false,
+      "decor": true,
+      "states": [
+        {
+          "id": "o-fx-llums-escala-anim",
+          "name": "Animació",
+          "image": "o-fx-llums-escala-anim-0.png",
+          "frames": [
+            "o-fx-llums-escala-anim-0.png",
+            "o-fx-llums-escala-anim-1.png",
+            "o-fx-llums-escala-anim-2.png",
+            "o-fx-llums-escala-anim-3.png",
+            "o-fx-llums-escala-anim-4.png",
+            "o-fx-llums-escala-anim-5.png"
+          ],
+          "fps": 7
+        }
+      ],
+      "initialState": "o-fx-llums-escala-anim",
+      "icon": null,
+      "createdAt": "2026-10-29T14:40:17.840Z",
+      "updatedAt": "2026-10-29T14:40:17.840Z"
+    },
+    {
+      "id": "o-fx-rellotges-vestibul",
+      "name": "rellotges",
+      "description": "",
+      "pickable": false,
+      "decor": true,
+      "states": [
+        {
+          "id": "o-fx-rellotges-vestibul-anim",
+          "name": "Animació",
+          "image": "o-fx-rellotges-vestibul-anim-0.png",
+          "frames": [
+            "o-fx-rellotges-vestibul-anim-0.png",
+            "o-fx-rellotges-vestibul-anim-1.png",
+            "o-fx-rellotges-vestibul-anim-2.png",
+            "o-fx-rellotges-vestibul-anim-3.png",
+            "o-fx-rellotges-vestibul-anim-4.png",
+            "o-fx-rellotges-vestibul-anim-5.png",
+            "o-fx-rellotges-vestibul-anim-6.png",
+            "o-fx-rellotges-vestibul-anim-7.png"
+          ],
+          "fps": 8
+        }
+      ],
+      "initialState": "o-fx-rellotges-vestibul-anim",
+      "icon": null,
+      "createdAt": "2026-10-29T14:40:17.840Z",
+      "updatedAt": "2026-10-29T14:40:17.840Z"
+    },
+    {
+      "id": "o-fx-llums-vestibul",
+      "name": "llums",
+      "description": "",
+      "pickable": false,
+      "decor": true,
+      "states": [
+        {
+          "id": "o-fx-llums-vestibul-anim",
+          "name": "Animació",
+          "image": "o-fx-llums-vestibul-anim-0.png",
+          "frames": [
+            "o-fx-llums-vestibul-anim-0.png",
+            "o-fx-llums-vestibul-anim-1.png",
+            "o-fx-llums-vestibul-anim-2.png",
+            "o-fx-llums-vestibul-anim-3.png",
+            "o-fx-llums-vestibul-anim-4.png",
+            "o-fx-llums-vestibul-anim-5.png"
+          ],
+          "fps": 7
+        }
+      ],
+      "initialState": "o-fx-llums-vestibul-anim",
+      "icon": null,
+      "createdAt": "2026-10-29T14:40:17.840Z",
+      "updatedAt": "2026-10-29T14:40:17.840Z"
+    },
+    {
+      "id": "o-fx-nuvols-gransalo",
+      "name": "núvols",
+      "description": "",
+      "pickable": false,
+      "decor": true,
+      "states": [
+        {
+          "id": "o-fx-nuvols-gransalo-anim",
+          "name": "Animació",
+          "image": "o-fx-nuvols-gransalo-anim-0.png",
+          "frames": [
+            "o-fx-nuvols-gransalo-anim-0.png",
+            "o-fx-nuvols-gransalo-anim-1.png",
+            "o-fx-nuvols-gransalo-anim-2.png",
+            "o-fx-nuvols-gransalo-anim-3.png",
+            "o-fx-nuvols-gransalo-anim-4.png",
+            "o-fx-nuvols-gransalo-anim-5.png",
+            "o-fx-nuvols-gransalo-anim-6.png",
+            "o-fx-nuvols-gransalo-anim-7.png",
+            "o-fx-nuvols-gransalo-anim-8.png",
+            "o-fx-nuvols-gransalo-anim-9.png",
+            "o-fx-nuvols-gransalo-anim-10.png",
+            "o-fx-nuvols-gransalo-anim-11.png"
+          ],
+          "fps": 3
+        }
+      ],
+      "initialState": "o-fx-nuvols-gransalo-anim",
+      "icon": null,
+      "createdAt": "2026-10-29T14:40:17.840Z",
+      "updatedAt": "2026-10-29T14:40:17.840Z"
+    },
+    {
+      "id": "o-fx-espelmes-gransalo",
+      "name": "espelmes",
+      "description": "",
+      "pickable": false,
+      "decor": true,
+      "states": [
+        {
+          "id": "o-fx-espelmes-gransalo-anim",
+          "name": "Animació",
+          "image": "o-fx-espelmes-gransalo-anim-0.png",
+          "frames": [
+            "o-fx-espelmes-gransalo-anim-0.png",
+            "o-fx-espelmes-gransalo-anim-1.png",
+            "o-fx-espelmes-gransalo-anim-2.png",
+            "o-fx-espelmes-gransalo-anim-3.png",
+            "o-fx-espelmes-gransalo-anim-4.png",
+            "o-fx-espelmes-gransalo-anim-5.png",
+            "o-fx-espelmes-gransalo-anim-6.png",
+            "o-fx-espelmes-gransalo-anim-7.png"
+          ],
+          "fps": 6
+        }
+      ],
+      "initialState": "o-fx-espelmes-gransalo-anim",
+      "icon": null,
+      "createdAt": "2026-10-29T14:40:17.840Z",
+      "updatedAt": "2026-10-29T14:40:17.840Z"
+    },
+    {
+      "id": "o-fx-carbasses-gransalo",
+      "name": "carbasses",
+      "description": "",
+      "pickable": false,
+      "decor": true,
+      "states": [
+        {
+          "id": "o-fx-carbasses-gransalo-anim",
+          "name": "Animació",
+          "image": "o-fx-carbasses-gransalo-anim-0.png",
+          "frames": [
+            "o-fx-carbasses-gransalo-anim-0.png",
+            "o-fx-carbasses-gransalo-anim-1.png",
+            "o-fx-carbasses-gransalo-anim-2.png",
+            "o-fx-carbasses-gransalo-anim-3.png",
+            "o-fx-carbasses-gransalo-anim-4.png",
+            "o-fx-carbasses-gransalo-anim-5.png",
+            "o-fx-carbasses-gransalo-anim-6.png",
+            "o-fx-carbasses-gransalo-anim-7.png"
+          ],
+          "fps": 5
+        }
+      ],
+      "initialState": "o-fx-carbasses-gransalo-anim",
+      "icon": null,
+      "createdAt": "2026-10-29T14:40:17.840Z",
+      "updatedAt": "2026-10-29T14:40:17.840Z"
+    },
+    {
+      "id": "o-fx-espelmes-biblioteca",
+      "name": "espelmes",
+      "description": "",
+      "pickable": false,
+      "decor": true,
+      "states": [
+        {
+          "id": "o-fx-espelmes-biblioteca-anim",
+          "name": "Animació",
+          "image": "o-fx-espelmes-biblioteca-anim-0.png",
+          "frames": [
+            "o-fx-espelmes-biblioteca-anim-0.png",
+            "o-fx-espelmes-biblioteca-anim-1.png",
+            "o-fx-espelmes-biblioteca-anim-2.png",
+            "o-fx-espelmes-biblioteca-anim-3.png",
+            "o-fx-espelmes-biblioteca-anim-4.png",
+            "o-fx-espelmes-biblioteca-anim-5.png",
+            "o-fx-espelmes-biblioteca-anim-6.png",
+            "o-fx-espelmes-biblioteca-anim-7.png"
+          ],
+          "fps": 6
+        }
+      ],
+      "initialState": "o-fx-espelmes-biblioteca-anim",
+      "icon": null,
+      "createdAt": "2026-10-29T14:40:17.840Z",
+      "updatedAt": "2026-10-29T14:40:17.840Z"
+    },
+    {
+      "id": "o-fx-llibre-volador-biblioteca",
+      "name": "llibre",
+      "description": "",
+      "pickable": false,
+      "decor": true,
+      "states": [
+        {
+          "id": "o-fx-llibre-volador-biblioteca-anim",
+          "name": "Animació",
+          "image": "o-fx-llibre-volador-biblioteca-anim-0.png",
+          "frames": [
+            "o-fx-llibre-volador-biblioteca-anim-0.png",
+            "o-fx-llibre-volador-biblioteca-anim-1.png",
+            "o-fx-llibre-volador-biblioteca-anim-2.png",
+            "o-fx-llibre-volador-biblioteca-anim-3.png",
+            "o-fx-llibre-volador-biblioteca-anim-4.png",
+            "o-fx-llibre-volador-biblioteca-anim-5.png",
+            "o-fx-llibre-volador-biblioteca-anim-6.png",
+            "o-fx-llibre-volador-biblioteca-anim-7.png",
+            "o-fx-llibre-volador-biblioteca-anim-8.png",
+            "o-fx-llibre-volador-biblioteca-anim-9.png",
+            "o-fx-llibre-volador-biblioteca-anim-10.png",
+            "o-fx-llibre-volador-biblioteca-anim-11.png",
+            "o-fx-llibre-volador-biblioteca-anim-12.png",
+            "o-fx-llibre-volador-biblioteca-anim-13.png",
+            "o-fx-llibre-volador-biblioteca-anim-14.png",
+            "o-fx-llibre-volador-biblioteca-anim-15.png"
+          ],
+          "fps": 8
+        }
+      ],
+      "initialState": "o-fx-llibre-volador-biblioteca-anim",
+      "icon": null,
+      "createdAt": "2026-10-29T14:40:17.840Z",
+      "updatedAt": "2026-10-29T14:40:17.840Z"
+    },
+    {
+      "id": "o-fx-pots-masmorra",
+      "name": "pots",
+      "description": "",
+      "pickable": false,
+      "decor": true,
+      "states": [
+        {
+          "id": "o-fx-pots-masmorra-anim",
+          "name": "Animació",
+          "image": "o-fx-pots-masmorra-anim-0.png",
+          "frames": [
+            "o-fx-pots-masmorra-anim-0.png",
+            "o-fx-pots-masmorra-anim-1.png",
+            "o-fx-pots-masmorra-anim-2.png",
+            "o-fx-pots-masmorra-anim-3.png",
+            "o-fx-pots-masmorra-anim-4.png",
+            "o-fx-pots-masmorra-anim-5.png",
+            "o-fx-pots-masmorra-anim-6.png",
+            "o-fx-pots-masmorra-anim-7.png",
+            "o-fx-pots-masmorra-anim-8.png",
+            "o-fx-pots-masmorra-anim-9.png",
+            "o-fx-pots-masmorra-anim-10.png",
+            "o-fx-pots-masmorra-anim-11.png"
+          ],
+          "fps": 3
+        }
+      ],
+      "initialState": "o-fx-pots-masmorra-anim",
+      "icon": null,
+      "createdAt": "2026-10-29T14:40:17.840Z",
+      "updatedAt": "2026-10-29T14:40:17.840Z"
+    },
+    {
+      "id": "o-fx-llums-masmorra",
+      "name": "llums",
+      "description": "",
+      "pickable": false,
+      "decor": true,
+      "states": [
+        {
+          "id": "o-fx-llums-masmorra-anim",
+          "name": "Animació",
+          "image": "o-fx-llums-masmorra-anim-0.png",
+          "frames": [
+            "o-fx-llums-masmorra-anim-0.png",
+            "o-fx-llums-masmorra-anim-1.png",
+            "o-fx-llums-masmorra-anim-2.png",
+            "o-fx-llums-masmorra-anim-3.png",
+            "o-fx-llums-masmorra-anim-4.png",
+            "o-fx-llums-masmorra-anim-5.png"
+          ],
+          "fps": 7
+        }
+      ],
+      "initialState": "o-fx-llums-masmorra-anim",
+      "icon": null,
+      "createdAt": "2026-10-29T14:40:17.840Z",
+      "updatedAt": "2026-10-29T14:40:17.840Z"
+    },
+    {
+      "id": "o-fx-gotes-lavabo",
+      "name": "gotes",
+      "description": "",
+      "pickable": false,
+      "decor": true,
+      "states": [
+        {
+          "id": "o-fx-gotes-lavabo-anim",
+          "name": "Animació",
+          "image": "o-fx-gotes-lavabo-anim-0.png",
+          "frames": [
+            "o-fx-gotes-lavabo-anim-0.png",
+            "o-fx-gotes-lavabo-anim-1.png",
+            "o-fx-gotes-lavabo-anim-2.png",
+            "o-fx-gotes-lavabo-anim-3.png",
+            "o-fx-gotes-lavabo-anim-4.png",
+            "o-fx-gotes-lavabo-anim-5.png",
+            "o-fx-gotes-lavabo-anim-6.png",
+            "o-fx-gotes-lavabo-anim-7.png",
+            "o-fx-gotes-lavabo-anim-8.png",
+            "o-fx-gotes-lavabo-anim-9.png"
+          ],
+          "fps": 8
+        }
+      ],
+      "initialState": "o-fx-gotes-lavabo-anim",
+      "icon": null,
+      "createdAt": "2026-10-29T14:40:17.840Z",
+      "updatedAt": "2026-10-29T14:40:17.840Z"
+    },
+    {
+      "id": "o-fx-vapor-cuines",
+      "name": "vapor",
+      "description": "",
+      "pickable": false,
+      "decor": true,
+      "states": [
+        {
+          "id": "o-fx-vapor-cuines-anim",
+          "name": "Animació",
+          "image": "o-fx-vapor-cuines-anim-0.png",
+          "frames": [
+            "o-fx-vapor-cuines-anim-0.png",
+            "o-fx-vapor-cuines-anim-1.png",
+            "o-fx-vapor-cuines-anim-2.png",
+            "o-fx-vapor-cuines-anim-3.png",
+            "o-fx-vapor-cuines-anim-4.png",
+            "o-fx-vapor-cuines-anim-5.png",
+            "o-fx-vapor-cuines-anim-6.png",
+            "o-fx-vapor-cuines-anim-7.png",
+            "o-fx-vapor-cuines-anim-8.png",
+            "o-fx-vapor-cuines-anim-9.png"
+          ],
+          "fps": 6
+        }
+      ],
+      "initialState": "o-fx-vapor-cuines-anim",
+      "icon": null,
+      "createdAt": "2026-10-29T14:40:17.840Z",
+      "updatedAt": "2026-10-29T14:40:17.840Z"
+    },
+    {
+      "id": "o-fx-llums-cuines",
+      "name": "llums",
+      "description": "",
+      "pickable": false,
+      "decor": true,
+      "states": [
+        {
+          "id": "o-fx-llums-cuines-anim",
+          "name": "Animació",
+          "image": "o-fx-llums-cuines-anim-0.png",
+          "frames": [
+            "o-fx-llums-cuines-anim-0.png",
+            "o-fx-llums-cuines-anim-1.png",
+            "o-fx-llums-cuines-anim-2.png",
+            "o-fx-llums-cuines-anim-3.png",
+            "o-fx-llums-cuines-anim-4.png",
+            "o-fx-llums-cuines-anim-5.png"
+          ],
+          "fps": 7
+        }
+      ],
+      "initialState": "o-fx-llums-cuines-anim",
+      "icon": null,
+      "createdAt": "2026-10-29T14:40:17.840Z",
+      "updatedAt": "2026-10-29T14:40:17.840Z"
+    },
+    {
+      "id": "o-fx-armadura-gargola",
+      "name": "armadura",
+      "description": "",
+      "pickable": false,
+      "decor": true,
+      "states": [
+        {
+          "id": "o-fx-armadura-gargola-anim",
+          "name": "Animació",
+          "image": "o-fx-armadura-gargola-anim-0.png",
+          "frames": [
+            "o-fx-armadura-gargola-anim-0.png",
+            "o-fx-armadura-gargola-anim-1.png",
+            "o-fx-armadura-gargola-anim-2.png",
+            "o-fx-armadura-gargola-anim-3.png",
+            "o-fx-armadura-gargola-anim-4.png",
+            "o-fx-armadura-gargola-anim-5.png",
+            "o-fx-armadura-gargola-anim-6.png",
+            "o-fx-armadura-gargola-anim-7.png",
+            "o-fx-armadura-gargola-anim-8.png",
+            "o-fx-armadura-gargola-anim-9.png",
+            "o-fx-armadura-gargola-anim-10.png",
+            "o-fx-armadura-gargola-anim-11.png"
+          ],
+          "fps": 3
+        }
+      ],
+      "initialState": "o-fx-armadura-gargola-anim",
+      "icon": null,
+      "createdAt": "2026-10-29T14:40:17.840Z",
+      "updatedAt": "2026-10-29T14:40:17.840Z"
+    },
+    {
+      "id": "o-fx-llums-gargola",
+      "name": "llums",
+      "description": "",
+      "pickable": false,
+      "decor": true,
+      "states": [
+        {
+          "id": "o-fx-llums-gargola-anim",
+          "name": "Animació",
+          "image": "o-fx-llums-gargola-anim-0.png",
+          "frames": [
+            "o-fx-llums-gargola-anim-0.png",
+            "o-fx-llums-gargola-anim-1.png",
+            "o-fx-llums-gargola-anim-2.png",
+            "o-fx-llums-gargola-anim-3.png",
+            "o-fx-llums-gargola-anim-4.png",
+            "o-fx-llums-gargola-anim-5.png"
+          ],
+          "fps": 7
+        }
+      ],
+      "initialState": "o-fx-llums-gargola-anim",
+      "icon": null,
+      "createdAt": "2026-10-29T14:40:17.840Z",
+      "updatedAt": "2026-10-29T14:40:17.840Z"
+    },
+    {
+      "id": "o-fx-retrat-1-despatx",
+      "name": "retrat",
+      "description": "",
+      "pickable": false,
+      "decor": true,
+      "states": [
+        {
+          "id": "o-fx-retrat-1-despatx-anim",
+          "name": "Animació",
+          "image": "o-fx-retrat-1-despatx-anim-0.png",
+          "frames": [
+            "o-fx-retrat-1-despatx-anim-0.png",
+            "o-fx-retrat-1-despatx-anim-1.png",
+            "o-fx-retrat-1-despatx-anim-2.png",
+            "o-fx-retrat-1-despatx-anim-3.png",
+            "o-fx-retrat-1-despatx-anim-4.png",
+            "o-fx-retrat-1-despatx-anim-5.png",
+            "o-fx-retrat-1-despatx-anim-6.png",
+            "o-fx-retrat-1-despatx-anim-7.png"
+          ],
+          "fps": 3
+        }
+      ],
+      "initialState": "o-fx-retrat-1-despatx-anim",
+      "icon": null,
+      "createdAt": "2026-10-29T14:40:17.840Z",
+      "updatedAt": "2026-10-29T14:40:17.840Z"
+    },
+    {
+      "id": "o-fx-retrat-2-despatx",
+      "name": "retrat",
+      "description": "",
+      "pickable": false,
+      "decor": true,
+      "states": [
+        {
+          "id": "o-fx-retrat-2-despatx-anim",
+          "name": "Animació",
+          "image": "o-fx-retrat-2-despatx-anim-0.png",
+          "frames": [
+            "o-fx-retrat-2-despatx-anim-0.png",
+            "o-fx-retrat-2-despatx-anim-1.png",
+            "o-fx-retrat-2-despatx-anim-2.png",
+            "o-fx-retrat-2-despatx-anim-3.png",
+            "o-fx-retrat-2-despatx-anim-4.png",
+            "o-fx-retrat-2-despatx-anim-5.png",
+            "o-fx-retrat-2-despatx-anim-6.png",
+            "o-fx-retrat-2-despatx-anim-7.png"
+          ],
+          "fps": 3
+        }
+      ],
+      "initialState": "o-fx-retrat-2-despatx-anim",
+      "icon": null,
+      "createdAt": "2026-10-29T14:40:17.840Z",
+      "updatedAt": "2026-10-29T14:40:17.840Z"
+    },
+    {
+      "id": "o-fx-retrat-3-despatx",
+      "name": "retrat",
+      "description": "",
+      "pickable": false,
+      "decor": true,
+      "states": [
+        {
+          "id": "o-fx-retrat-3-despatx-anim",
+          "name": "Animació",
+          "image": "o-fx-retrat-3-despatx-anim-0.png",
+          "frames": [
+            "o-fx-retrat-3-despatx-anim-0.png",
+            "o-fx-retrat-3-despatx-anim-1.png",
+            "o-fx-retrat-3-despatx-anim-2.png",
+            "o-fx-retrat-3-despatx-anim-3.png",
+            "o-fx-retrat-3-despatx-anim-4.png",
+            "o-fx-retrat-3-despatx-anim-5.png",
+            "o-fx-retrat-3-despatx-anim-6.png",
+            "o-fx-retrat-3-despatx-anim-7.png"
+          ],
+          "fps": 3
+        }
+      ],
+      "initialState": "o-fx-retrat-3-despatx-anim",
+      "icon": null,
+      "createdAt": "2026-10-29T14:40:17.840Z",
+      "updatedAt": "2026-10-29T14:40:17.840Z"
+    },
+    {
+      "id": "o-fx-retrat-4-despatx",
+      "name": "retrat",
+      "description": "",
+      "pickable": false,
+      "decor": true,
+      "states": [
+        {
+          "id": "o-fx-retrat-4-despatx-anim",
+          "name": "Animació",
+          "image": "o-fx-retrat-4-despatx-anim-0.png",
+          "frames": [
+            "o-fx-retrat-4-despatx-anim-0.png",
+            "o-fx-retrat-4-despatx-anim-1.png",
+            "o-fx-retrat-4-despatx-anim-2.png",
+            "o-fx-retrat-4-despatx-anim-3.png",
+            "o-fx-retrat-4-despatx-anim-4.png",
+            "o-fx-retrat-4-despatx-anim-5.png",
+            "o-fx-retrat-4-despatx-anim-6.png",
+            "o-fx-retrat-4-despatx-anim-7.png",
+            "o-fx-retrat-4-despatx-anim-8.png",
+            "o-fx-retrat-4-despatx-anim-9.png"
+          ],
+          "fps": 5
+        }
+      ],
+      "initialState": "o-fx-retrat-4-despatx-anim",
+      "icon": null,
+      "createdAt": "2026-10-29T14:40:17.840Z",
+      "updatedAt": "2026-10-29T14:40:17.840Z"
+    },
+    {
+      "id": "o-fx-instruments-despatx",
+      "name": "instruments",
+      "description": "",
+      "pickable": false,
+      "decor": true,
+      "states": [
+        {
+          "id": "o-fx-instruments-despatx-anim",
+          "name": "Animació",
+          "image": "o-fx-instruments-despatx-anim-0.png",
+          "frames": [
+            "o-fx-instruments-despatx-anim-0.png",
+            "o-fx-instruments-despatx-anim-1.png",
+            "o-fx-instruments-despatx-anim-2.png",
+            "o-fx-instruments-despatx-anim-3.png",
+            "o-fx-instruments-despatx-anim-4.png",
+            "o-fx-instruments-despatx-anim-5.png",
+            "o-fx-instruments-despatx-anim-6.png",
+            "o-fx-instruments-despatx-anim-7.png"
+          ],
+          "fps": 6
+        }
+      ],
+      "initialState": "o-fx-instruments-despatx-anim",
+      "icon": null,
+      "createdAt": "2026-10-29T14:40:17.840Z",
+      "updatedAt": "2026-10-29T14:40:17.840Z"
+    },
+    {
+      "id": "o-fx-estels-astronomia",
+      "name": "estels",
+      "description": "",
+      "pickable": false,
+      "decor": true,
+      "states": [
+        {
+          "id": "o-fx-estels-astronomia-anim",
+          "name": "Animació",
+          "image": "o-fx-estels-astronomia-anim-0.png",
+          "frames": [
+            "o-fx-estels-astronomia-anim-0.png",
+            "o-fx-estels-astronomia-anim-1.png",
+            "o-fx-estels-astronomia-anim-2.png",
+            "o-fx-estels-astronomia-anim-3.png",
+            "o-fx-estels-astronomia-anim-4.png",
+            "o-fx-estels-astronomia-anim-5.png",
+            "o-fx-estels-astronomia-anim-6.png",
+            "o-fx-estels-astronomia-anim-7.png",
+            "o-fx-estels-astronomia-anim-8.png",
+            "o-fx-estels-astronomia-anim-9.png",
+            "o-fx-estels-astronomia-anim-10.png",
+            "o-fx-estels-astronomia-anim-11.png",
+            "o-fx-estels-astronomia-anim-12.png",
+            "o-fx-estels-astronomia-anim-13.png",
+            "o-fx-estels-astronomia-anim-14.png",
+            "o-fx-estels-astronomia-anim-15.png"
+          ],
+          "fps": 6
+        }
+      ],
+      "initialState": "o-fx-estels-astronomia-anim",
+      "icon": null,
+      "createdAt": "2026-10-29T14:40:17.840Z",
+      "updatedAt": "2026-10-29T14:40:17.840Z"
+    },
+    {
+      "id": "o-fx-tapis-setena",
+      "name": "tapís",
+      "description": "",
+      "pickable": false,
+      "decor": true,
+      "states": [
+        {
+          "id": "o-fx-tapis-setena-anim",
+          "name": "Animació",
+          "image": "o-fx-tapis-setena-anim-0.png",
+          "frames": [
+            "o-fx-tapis-setena-anim-0.png",
+            "o-fx-tapis-setena-anim-1.png",
+            "o-fx-tapis-setena-anim-2.png",
+            "o-fx-tapis-setena-anim-3.png",
+            "o-fx-tapis-setena-anim-4.png",
+            "o-fx-tapis-setena-anim-5.png",
+            "o-fx-tapis-setena-anim-6.png",
+            "o-fx-tapis-setena-anim-7.png"
+          ],
+          "fps": 4
+        }
+      ],
+      "initialState": "o-fx-tapis-setena-anim",
+      "icon": null,
+      "createdAt": "2026-10-29T14:40:17.840Z",
+      "updatedAt": "2026-10-29T14:40:17.840Z"
+    },
+    {
+      "id": "o-fx-llums-setena",
+      "name": "llums",
+      "description": "",
+      "pickable": false,
+      "decor": true,
+      "states": [
+        {
+          "id": "o-fx-llums-setena-anim",
+          "name": "Animació",
+          "image": "o-fx-llums-setena-anim-0.png",
+          "frames": [
+            "o-fx-llums-setena-anim-0.png",
+            "o-fx-llums-setena-anim-1.png",
+            "o-fx-llums-setena-anim-2.png",
+            "o-fx-llums-setena-anim-3.png",
+            "o-fx-llums-setena-anim-4.png",
+            "o-fx-llums-setena-anim-5.png"
+          ],
+          "fps": 7
+        }
+      ],
+      "initialState": "o-fx-llums-setena-anim",
+      "icon": null,
+      "createdAt": "2026-10-29T14:40:17.840Z",
+      "updatedAt": "2026-10-29T14:40:17.840Z"
+    },
+    {
+      "id": "o-fx-pols-sala",
+      "name": "pols",
+      "description": "",
+      "pickable": false,
+      "decor": true,
+      "states": [
+        {
+          "id": "o-fx-pols-sala-anim",
+          "name": "Animació",
+          "image": "o-fx-pols-sala-anim-0.png",
+          "frames": [
+            "o-fx-pols-sala-anim-0.png",
+            "o-fx-pols-sala-anim-1.png",
+            "o-fx-pols-sala-anim-2.png",
+            "o-fx-pols-sala-anim-3.png",
+            "o-fx-pols-sala-anim-4.png",
+            "o-fx-pols-sala-anim-5.png",
+            "o-fx-pols-sala-anim-6.png",
+            "o-fx-pols-sala-anim-7.png",
+            "o-fx-pols-sala-anim-8.png",
+            "o-fx-pols-sala-anim-9.png",
+            "o-fx-pols-sala-anim-10.png",
+            "o-fx-pols-sala-anim-11.png"
+          ],
+          "fps": 4
+        }
+      ],
+      "initialState": "o-fx-pols-sala-anim",
+      "icon": null,
+      "createdAt": "2026-10-29T14:40:17.840Z",
+      "updatedAt": "2026-10-29T14:40:17.840Z"
+    },
+    {
+      "id": "o-fx-fum-cabana-jardins",
+      "name": "fum",
+      "description": "",
+      "pickable": false,
+      "decor": true,
+      "states": [
+        {
+          "id": "o-fx-fum-cabana-jardins-anim",
+          "name": "Animació",
+          "image": "o-fx-fum-cabana-jardins-anim-0.png",
+          "frames": [
+            "o-fx-fum-cabana-jardins-anim-0.png",
+            "o-fx-fum-cabana-jardins-anim-1.png",
+            "o-fx-fum-cabana-jardins-anim-2.png",
+            "o-fx-fum-cabana-jardins-anim-3.png",
+            "o-fx-fum-cabana-jardins-anim-4.png",
+            "o-fx-fum-cabana-jardins-anim-5.png",
+            "o-fx-fum-cabana-jardins-anim-6.png",
+            "o-fx-fum-cabana-jardins-anim-7.png",
+            "o-fx-fum-cabana-jardins-anim-8.png",
+            "o-fx-fum-cabana-jardins-anim-9.png"
+          ],
+          "fps": 5
+        }
+      ],
+      "initialState": "o-fx-fum-cabana-jardins-anim",
+      "icon": null,
+      "createdAt": "2026-10-29T14:40:17.840Z",
+      "updatedAt": "2026-10-29T14:40:17.840Z"
+    },
+    {
+      "id": "o-fx-mussol-jardins",
+      "name": "mussol",
+      "description": "",
+      "pickable": false,
+      "decor": true,
+      "states": [
+        {
+          "id": "o-fx-mussol-jardins-anim",
+          "name": "Animació",
+          "image": "o-fx-mussol-jardins-anim-0.png",
+          "frames": [
+            "o-fx-mussol-jardins-anim-0.png",
+            "o-fx-mussol-jardins-anim-1.png",
+            "o-fx-mussol-jardins-anim-2.png",
+            "o-fx-mussol-jardins-anim-3.png",
+            "o-fx-mussol-jardins-anim-4.png",
+            "o-fx-mussol-jardins-anim-5.png",
+            "o-fx-mussol-jardins-anim-6.png",
+            "o-fx-mussol-jardins-anim-7.png",
+            "o-fx-mussol-jardins-anim-8.png",
+            "o-fx-mussol-jardins-anim-9.png",
+            "o-fx-mussol-jardins-anim-10.png",
+            "o-fx-mussol-jardins-anim-11.png",
+            "o-fx-mussol-jardins-anim-12.png",
+            "o-fx-mussol-jardins-anim-13.png",
+            "o-fx-mussol-jardins-anim-14.png",
+            "o-fx-mussol-jardins-anim-15.png",
+            "o-fx-mussol-jardins-anim-16.png",
+            "o-fx-mussol-jardins-anim-17.png",
+            "o-fx-mussol-jardins-anim-18.png",
+            "o-fx-mussol-jardins-anim-19.png",
+            "o-fx-mussol-jardins-anim-20.png",
+            "o-fx-mussol-jardins-anim-21.png",
+            "o-fx-mussol-jardins-anim-22.png",
+            "o-fx-mussol-jardins-anim-23.png"
+          ],
+          "fps": 8
+        }
+      ],
+      "initialState": "o-fx-mussol-jardins-anim",
+      "icon": null,
+      "createdAt": "2026-10-29T14:40:17.840Z",
+      "updatedAt": "2026-10-29T14:40:17.840Z"
+    },
+    {
+      "id": "o-fx-llums-jardins",
+      "name": "llums",
+      "description": "",
+      "pickable": false,
+      "decor": true,
+      "states": [
+        {
+          "id": "o-fx-llums-jardins-anim",
+          "name": "Animació",
+          "image": "o-fx-llums-jardins-anim-0.png",
+          "frames": [
+            "o-fx-llums-jardins-anim-0.png",
+            "o-fx-llums-jardins-anim-1.png",
+            "o-fx-llums-jardins-anim-2.png",
+            "o-fx-llums-jardins-anim-3.png",
+            "o-fx-llums-jardins-anim-4.png",
+            "o-fx-llums-jardins-anim-5.png"
+          ],
+          "fps": 7
+        }
+      ],
+      "initialState": "o-fx-llums-jardins-anim",
+      "icon": null,
+      "createdAt": "2026-10-29T14:40:17.840Z",
+      "updatedAt": "2026-10-29T14:40:17.840Z"
+    },
+    {
+      "id": "o-fx-tentacula-hivernacle",
+      "name": "tentàcula",
+      "description": "",
+      "pickable": false,
+      "decor": true,
+      "states": [
+        {
+          "id": "o-fx-tentacula-hivernacle-anim",
+          "name": "Animació",
+          "image": "o-fx-tentacula-hivernacle-anim-0.png",
+          "frames": [
+            "o-fx-tentacula-hivernacle-anim-0.png",
+            "o-fx-tentacula-hivernacle-anim-1.png",
+            "o-fx-tentacula-hivernacle-anim-2.png",
+            "o-fx-tentacula-hivernacle-anim-3.png",
+            "o-fx-tentacula-hivernacle-anim-4.png",
+            "o-fx-tentacula-hivernacle-anim-5.png",
+            "o-fx-tentacula-hivernacle-anim-6.png",
+            "o-fx-tentacula-hivernacle-anim-7.png",
+            "o-fx-tentacula-hivernacle-anim-8.png",
+            "o-fx-tentacula-hivernacle-anim-9.png"
+          ],
+          "fps": 5
+        }
+      ],
+      "initialState": "o-fx-tentacula-hivernacle-anim",
+      "icon": null,
+      "createdAt": "2026-10-29T14:40:17.840Z",
+      "updatedAt": "2026-10-29T14:40:17.840Z"
+    },
+    {
+      "id": "o-fx-teles-quidditch",
+      "name": "teles",
+      "description": "",
+      "pickable": false,
+      "decor": true,
+      "states": [
+        {
+          "id": "o-fx-teles-quidditch-anim",
+          "name": "Animació",
+          "image": "o-fx-teles-quidditch-anim-0.png",
+          "frames": [
+            "o-fx-teles-quidditch-anim-0.png",
+            "o-fx-teles-quidditch-anim-1.png",
+            "o-fx-teles-quidditch-anim-2.png",
+            "o-fx-teles-quidditch-anim-3.png",
+            "o-fx-teles-quidditch-anim-4.png",
+            "o-fx-teles-quidditch-anim-5.png",
+            "o-fx-teles-quidditch-anim-6.png",
+            "o-fx-teles-quidditch-anim-7.png"
+          ],
+          "fps": 5
+        }
+      ],
+      "initialState": "o-fx-teles-quidditch-anim",
+      "icon": null,
+      "createdAt": "2026-10-29T14:40:17.840Z",
+      "updatedAt": "2026-10-29T14:40:17.840Z"
+    },
+    {
+      "id": "o-fx-cuques-bosc",
+      "name": "cuques de llum",
+      "description": "",
+      "pickable": false,
+      "decor": true,
+      "states": [
+        {
+          "id": "o-fx-cuques-bosc-anim",
+          "name": "Animació",
+          "image": "o-fx-cuques-bosc-anim-0.png",
+          "frames": [
+            "o-fx-cuques-bosc-anim-0.png",
+            "o-fx-cuques-bosc-anim-1.png",
+            "o-fx-cuques-bosc-anim-2.png",
+            "o-fx-cuques-bosc-anim-3.png",
+            "o-fx-cuques-bosc-anim-4.png",
+            "o-fx-cuques-bosc-anim-5.png",
+            "o-fx-cuques-bosc-anim-6.png",
+            "o-fx-cuques-bosc-anim-7.png"
+          ],
+          "fps": 6
+        }
+      ],
+      "initialState": "o-fx-cuques-bosc-anim",
+      "icon": null,
+      "createdAt": "2026-10-29T14:40:17.840Z",
+      "updatedAt": "2026-10-29T14:40:17.840Z"
+    },
+    {
+      "id": "o-fx-unicorn-bosc",
+      "name": "llum de l'unicorn",
+      "description": "",
+      "pickable": false,
+      "decor": true,
+      "states": [
+        {
+          "id": "o-fx-unicorn-bosc-anim",
+          "name": "Animació",
+          "image": "o-fx-unicorn-bosc-anim-0.png",
+          "frames": [
+            "o-fx-unicorn-bosc-anim-0.png",
+            "o-fx-unicorn-bosc-anim-1.png",
+            "o-fx-unicorn-bosc-anim-2.png",
+            "o-fx-unicorn-bosc-anim-3.png",
+            "o-fx-unicorn-bosc-anim-4.png",
+            "o-fx-unicorn-bosc-anim-5.png",
+            "o-fx-unicorn-bosc-anim-6.png",
+            "o-fx-unicorn-bosc-anim-7.png"
+          ],
+          "fps": 3
+        }
+      ],
+      "initialState": "o-fx-unicorn-bosc-anim",
+      "icon": null,
+      "createdAt": "2026-10-29T14:40:17.840Z",
+      "updatedAt": "2026-10-29T14:40:17.840Z"
+    },
+    {
+      "id": "o-fx-boira-bosc",
+      "name": "boira",
+      "description": "",
+      "pickable": false,
+      "decor": true,
+      "states": [
+        {
+          "id": "o-fx-boira-bosc-anim",
+          "name": "Animació",
+          "image": "o-fx-boira-bosc-anim-0.png",
+          "frames": [
+            "o-fx-boira-bosc-anim-0.png",
+            "o-fx-boira-bosc-anim-1.png",
+            "o-fx-boira-bosc-anim-2.png",
+            "o-fx-boira-bosc-anim-3.png",
+            "o-fx-boira-bosc-anim-4.png",
+            "o-fx-boira-bosc-anim-5.png",
+            "o-fx-boira-bosc-anim-6.png",
+            "o-fx-boira-bosc-anim-7.png",
+            "o-fx-boira-bosc-anim-8.png",
+            "o-fx-boira-bosc-anim-9.png",
+            "o-fx-boira-bosc-anim-10.png",
+            "o-fx-boira-bosc-anim-11.png"
+          ],
+          "fps": 3
+        }
+      ],
+      "initialState": "o-fx-boira-bosc-anim",
+      "icon": null,
+      "createdAt": "2026-10-29T14:40:17.840Z",
+      "updatedAt": "2026-10-29T14:40:17.840Z"
+    },
+    {
+      "id": "o-fx-reflex-llac",
+      "name": "reflex",
+      "description": "",
+      "pickable": false,
+      "decor": true,
+      "states": [
+        {
+          "id": "o-fx-reflex-llac-anim",
+          "name": "Animació",
+          "image": "o-fx-reflex-llac-anim-0.png",
+          "frames": [
+            "o-fx-reflex-llac-anim-0.png",
+            "o-fx-reflex-llac-anim-1.png",
+            "o-fx-reflex-llac-anim-2.png",
+            "o-fx-reflex-llac-anim-3.png",
+            "o-fx-reflex-llac-anim-4.png",
+            "o-fx-reflex-llac-anim-5.png",
+            "o-fx-reflex-llac-anim-6.png",
+            "o-fx-reflex-llac-anim-7.png"
+          ],
+          "fps": 6
+        }
+      ],
+      "initialState": "o-fx-reflex-llac-anim",
+      "icon": null,
+      "createdAt": "2026-10-29T14:40:17.840Z",
+      "updatedAt": "2026-10-29T14:40:17.840Z"
+    },
+    {
+      "id": "o-fx-llums-llac",
+      "name": "llums",
+      "description": "",
+      "pickable": false,
+      "decor": true,
+      "states": [
+        {
+          "id": "o-fx-llums-llac-anim",
+          "name": "Animació",
+          "image": "o-fx-llums-llac-anim-0.png",
+          "frames": [
+            "o-fx-llums-llac-anim-0.png",
+            "o-fx-llums-llac-anim-1.png",
+            "o-fx-llums-llac-anim-2.png",
+            "o-fx-llums-llac-anim-3.png",
+            "o-fx-llums-llac-anim-4.png",
+            "o-fx-llums-llac-anim-5.png"
+          ],
+          "fps": 7
+        }
+      ],
+      "initialState": "o-fx-llums-llac-anim",
+      "icon": null,
+      "createdAt": "2026-10-29T14:40:17.840Z",
+      "updatedAt": "2026-10-29T14:40:17.840Z"
     }
   ],
   "variables": [
@@ -12351,8 +14099,8 @@
           "fps": 4
         }
       },
-      "createdAt": "2026-10-29T14:17:24.059Z",
-      "updatedAt": "2026-10-29T14:17:24.059Z"
+      "createdAt": "2026-10-29T14:40:17.840Z",
+      "updatedAt": "2026-10-29T14:40:17.840Z"
     },
     {
       "id": "c-ron",
@@ -12429,8 +14177,8 @@
           "fps": 4
         }
       },
-      "createdAt": "2026-10-29T14:17:24.059Z",
-      "updatedAt": "2026-10-29T14:17:24.059Z"
+      "createdAt": "2026-10-29T14:40:17.840Z",
+      "updatedAt": "2026-10-29T14:40:17.840Z"
     },
     {
       "id": "c-hermione",
@@ -12507,8 +14255,8 @@
           "fps": 4
         }
       },
-      "createdAt": "2026-10-29T14:17:24.059Z",
-      "updatedAt": "2026-10-29T14:17:24.059Z"
+      "createdAt": "2026-10-29T14:40:17.840Z",
+      "updatedAt": "2026-10-29T14:40:17.840Z"
     },
     {
       "id": "c-neville",
@@ -12585,8 +14333,8 @@
           "fps": 4
         }
       },
-      "createdAt": "2026-10-29T14:17:24.059Z",
-      "updatedAt": "2026-10-29T14:17:24.059Z"
+      "createdAt": "2026-10-29T14:40:17.840Z",
+      "updatedAt": "2026-10-29T14:40:17.840Z"
     },
     {
       "id": "c-mcgonagall",
@@ -12663,8 +14411,8 @@
           "fps": 4
         }
       },
-      "createdAt": "2026-10-29T14:17:24.059Z",
-      "updatedAt": "2026-10-29T14:17:24.059Z"
+      "createdAt": "2026-10-29T14:40:17.840Z",
+      "updatedAt": "2026-10-29T14:40:17.840Z"
     },
     {
       "id": "c-dumbledore",
@@ -12741,8 +14489,8 @@
           "fps": 4
         }
       },
-      "createdAt": "2026-10-29T14:17:24.059Z",
-      "updatedAt": "2026-10-29T14:17:24.059Z"
+      "createdAt": "2026-10-29T14:40:17.840Z",
+      "updatedAt": "2026-10-29T14:40:17.840Z"
     },
     {
       "id": "c-snape",
@@ -12819,8 +14567,8 @@
           "fps": 4
         }
       },
-      "createdAt": "2026-10-29T14:17:24.059Z",
-      "updatedAt": "2026-10-29T14:17:24.059Z"
+      "createdAt": "2026-10-29T14:40:17.840Z",
+      "updatedAt": "2026-10-29T14:40:17.840Z"
     },
     {
       "id": "c-hagrid",
@@ -12897,8 +14645,8 @@
           "fps": 4
         }
       },
-      "createdAt": "2026-10-29T14:17:24.059Z",
-      "updatedAt": "2026-10-29T14:17:24.059Z"
+      "createdAt": "2026-10-29T14:40:17.840Z",
+      "updatedAt": "2026-10-29T14:40:17.840Z"
     },
     {
       "id": "c-pince",
@@ -12975,8 +14723,8 @@
           "fps": 4
         }
       },
-      "createdAt": "2026-10-29T14:17:24.059Z",
-      "updatedAt": "2026-10-29T14:17:24.059Z"
+      "createdAt": "2026-10-29T14:40:17.840Z",
+      "updatedAt": "2026-10-29T14:40:17.840Z"
     },
     {
       "id": "c-filch",
@@ -13053,8 +14801,8 @@
           "fps": 4
         }
       },
-      "createdAt": "2026-10-29T14:17:24.059Z",
-      "updatedAt": "2026-10-29T14:17:24.059Z"
+      "createdAt": "2026-10-29T14:40:17.840Z",
+      "updatedAt": "2026-10-29T14:40:17.840Z"
     },
     {
       "id": "c-peeves",
@@ -13067,9 +14815,12 @@
       "animations": {
         "idle-side": {
           "frames": [
-            0
+            0,
+            0,
+            16,
+            16
           ],
-          "fps": 4
+          "fps": 3
         },
         "walk-side": {
           "frames": [
@@ -13082,9 +14833,12 @@
         },
         "idle-down": {
           "frames": [
-            4
+            4,
+            4,
+            20,
+            20
           ],
-          "fps": 4
+          "fps": 3
         },
         "walk-down": {
           "frames": [
@@ -13097,9 +14851,12 @@
         },
         "idle-up": {
           "frames": [
-            8
+            8,
+            8,
+            24,
+            24
           ],
-          "fps": 4
+          "fps": 3
         },
         "walk-up": {
           "frames": [
@@ -13113,26 +14870,31 @@
         "talk-side": {
           "frames": [
             0,
-            12
+            12,
+            16,
+            28
           ],
           "fps": 6
         },
         "talk-down": {
           "frames": [
             4,
-            13
+            13,
+            20,
+            29
           ],
           "fps": 6
         },
         "talk-up": {
           "frames": [
-            8
+            8,
+            24
           ],
           "fps": 4
         }
       },
-      "createdAt": "2026-10-29T14:17:24.059Z",
-      "updatedAt": "2026-10-29T14:17:24.059Z"
+      "createdAt": "2026-10-29T14:40:17.840Z",
+      "updatedAt": "2026-10-29T14:40:17.840Z"
     },
     {
       "id": "c-nick",
@@ -13145,9 +14907,12 @@
       "animations": {
         "idle-side": {
           "frames": [
-            0
+            0,
+            0,
+            16,
+            16
           ],
-          "fps": 4
+          "fps": 3
         },
         "walk-side": {
           "frames": [
@@ -13160,9 +14925,12 @@
         },
         "idle-down": {
           "frames": [
-            4
+            4,
+            4,
+            20,
+            20
           ],
-          "fps": 4
+          "fps": 3
         },
         "walk-down": {
           "frames": [
@@ -13175,9 +14943,12 @@
         },
         "idle-up": {
           "frames": [
-            8
+            8,
+            8,
+            24,
+            24
           ],
-          "fps": 4
+          "fps": 3
         },
         "walk-up": {
           "frames": [
@@ -13191,26 +14962,31 @@
         "talk-side": {
           "frames": [
             0,
-            12
+            12,
+            16,
+            28
           ],
           "fps": 6
         },
         "talk-down": {
           "frames": [
             4,
-            13
+            13,
+            20,
+            29
           ],
           "fps": 6
         },
         "talk-up": {
           "frames": [
-            8
+            8,
+            24
           ],
           "fps": 4
         }
       },
-      "createdAt": "2026-10-29T14:17:24.059Z",
-      "updatedAt": "2026-10-29T14:17:24.059Z"
+      "createdAt": "2026-10-29T14:40:17.840Z",
+      "updatedAt": "2026-10-29T14:40:17.840Z"
     },
     {
       "id": "c-myrtle",
@@ -13223,9 +14999,12 @@
       "animations": {
         "idle-side": {
           "frames": [
-            0
+            0,
+            0,
+            16,
+            16
           ],
-          "fps": 4
+          "fps": 3
         },
         "walk-side": {
           "frames": [
@@ -13238,9 +15017,12 @@
         },
         "idle-down": {
           "frames": [
-            4
+            4,
+            4,
+            20,
+            20
           ],
-          "fps": 4
+          "fps": 3
         },
         "walk-down": {
           "frames": [
@@ -13253,9 +15035,12 @@
         },
         "idle-up": {
           "frames": [
-            8
+            8,
+            8,
+            24,
+            24
           ],
-          "fps": 4
+          "fps": 3
         },
         "walk-up": {
           "frames": [
@@ -13269,26 +15054,31 @@
         "talk-side": {
           "frames": [
             0,
-            12
+            12,
+            16,
+            28
           ],
           "fps": 6
         },
         "talk-down": {
           "frames": [
             4,
-            13
+            13,
+            20,
+            29
           ],
           "fps": 6
         },
         "talk-up": {
           "frames": [
-            8
+            8,
+            24
           ],
           "fps": 4
         }
       },
-      "createdAt": "2026-10-29T14:17:24.059Z",
-      "updatedAt": "2026-10-29T14:17:24.059Z"
+      "createdAt": "2026-10-29T14:40:17.840Z",
+      "updatedAt": "2026-10-29T14:40:17.840Z"
     },
     {
       "id": "c-baro",
@@ -13301,9 +15091,12 @@
       "animations": {
         "idle-side": {
           "frames": [
-            0
+            0,
+            0,
+            16,
+            16
           ],
-          "fps": 4
+          "fps": 3
         },
         "walk-side": {
           "frames": [
@@ -13316,9 +15109,12 @@
         },
         "idle-down": {
           "frames": [
-            4
+            4,
+            4,
+            20,
+            20
           ],
-          "fps": 4
+          "fps": 3
         },
         "walk-down": {
           "frames": [
@@ -13331,9 +15127,12 @@
         },
         "idle-up": {
           "frames": [
-            8
+            8,
+            8,
+            24,
+            24
           ],
-          "fps": 4
+          "fps": 3
         },
         "walk-up": {
           "frames": [
@@ -13347,26 +15146,31 @@
         "talk-side": {
           "frames": [
             0,
-            12
+            12,
+            16,
+            28
           ],
           "fps": 6
         },
         "talk-down": {
           "frames": [
             4,
-            13
+            13,
+            20,
+            29
           ],
           "fps": 6
         },
         "talk-up": {
           "frames": [
-            8
+            8,
+            24
           ],
           "fps": 4
         }
       },
-      "createdAt": "2026-10-29T14:17:24.059Z",
-      "updatedAt": "2026-10-29T14:17:24.059Z"
+      "createdAt": "2026-10-29T14:40:17.840Z",
+      "updatedAt": "2026-10-29T14:40:17.840Z"
     },
     {
       "id": "c-dobby",
@@ -13443,8 +15247,8 @@
           "fps": 4
         }
       },
-      "createdAt": "2026-10-29T14:17:24.059Z",
-      "updatedAt": "2026-10-29T14:17:24.059Z"
+      "createdAt": "2026-10-29T14:40:17.840Z",
+      "updatedAt": "2026-10-29T14:40:17.840Z"
     },
     {
       "id": "c-draco",
@@ -13521,8 +15325,8 @@
           "fps": 4
         }
       },
-      "createdAt": "2026-10-29T14:17:24.059Z",
-      "updatedAt": "2026-10-29T14:17:24.059Z"
+      "createdAt": "2026-10-29T14:40:17.840Z",
+      "updatedAt": "2026-10-29T14:40:17.840Z"
     },
     {
       "id": "c-sprout",
@@ -13599,8 +15403,8 @@
           "fps": 4
         }
       },
-      "createdAt": "2026-10-29T14:17:24.059Z",
-      "updatedAt": "2026-10-29T14:17:24.059Z"
+      "createdAt": "2026-10-29T14:40:17.840Z",
+      "updatedAt": "2026-10-29T14:40:17.840Z"
     },
     {
       "id": "c-hooch",
@@ -13677,8 +15481,8 @@
           "fps": 4
         }
       },
-      "createdAt": "2026-10-29T14:17:24.059Z",
-      "updatedAt": "2026-10-29T14:17:24.059Z"
+      "createdAt": "2026-10-29T14:40:17.840Z",
+      "updatedAt": "2026-10-29T14:40:17.840Z"
     },
     {
       "id": "c-firenze",
@@ -13755,8 +15559,8 @@
           "fps": 4
         }
       },
-      "createdAt": "2026-10-29T14:17:24.059Z",
-      "updatedAt": "2026-10-29T14:17:24.059Z"
+      "createdAt": "2026-10-29T14:40:17.840Z",
+      "updatedAt": "2026-10-29T14:40:17.840Z"
     },
     {
       "id": "c-luna",
@@ -13833,1352 +15637,8 @@
           "fps": 4
         }
       },
-      "createdAt": "2026-10-29T14:17:24.059Z",
-      "updatedAt": "2026-10-29T14:17:24.059Z"
-    },
-    {
-      "id": "c-llum-comuna",
-      "name": "llum",
-      "description": "La llum tremola i fa ballar les ombres.",
-      "color": "#feae34",
-      "sheet": "c-llum-comuna.png",
-      "frameWidth": 661,
-      "frameHeight": 51,
-      "animations": {
-        "idle-side": {
-          "frames": [
-            0,
-            1,
-            2,
-            3,
-            4,
-            5
-          ],
-          "fps": 7
-        },
-        "idle-down": {
-          "frames": [
-            0,
-            1,
-            2,
-            3,
-            4,
-            5
-          ],
-          "fps": 7
-        },
-        "idle-up": {
-          "frames": [
-            0,
-            1,
-            2,
-            3,
-            4,
-            5
-          ],
-          "fps": 7
-        },
-        "walk-side": {
-          "frames": [
-            0,
-            1,
-            2,
-            3,
-            4,
-            5
-          ],
-          "fps": 7
-        },
-        "walk-down": {
-          "frames": [
-            0,
-            1,
-            2,
-            3,
-            4,
-            5
-          ],
-          "fps": 7
-        },
-        "walk-up": {
-          "frames": [
-            0,
-            1,
-            2,
-            3,
-            4,
-            5
-          ],
-          "fps": 7
-        },
-        "talk-side": {
-          "frames": [
-            0,
-            1,
-            2,
-            3,
-            4,
-            5
-          ],
-          "fps": 7
-        },
-        "talk-down": {
-          "frames": [
-            0,
-            1,
-            2,
-            3,
-            4,
-            5
-          ],
-          "fps": 7
-        },
-        "talk-up": {
-          "frames": [
-            0,
-            1,
-            2,
-            3,
-            4,
-            5
-          ],
-          "fps": 7
-        }
-      },
-      "createdAt": "2026-10-29T14:17:24.059Z",
-      "updatedAt": "2026-10-29T14:17:24.059Z"
-    },
-    {
-      "id": "c-llum-escala",
-      "name": "llum",
-      "description": "La llum tremola i fa ballar les ombres.",
-      "color": "#feae34",
-      "sheet": "c-llum-escala.png",
-      "frameWidth": 661,
-      "frameHeight": 77,
-      "animations": {
-        "idle-side": {
-          "frames": [
-            0,
-            1,
-            2,
-            3,
-            4,
-            5
-          ],
-          "fps": 7
-        },
-        "idle-down": {
-          "frames": [
-            0,
-            1,
-            2,
-            3,
-            4,
-            5
-          ],
-          "fps": 7
-        },
-        "idle-up": {
-          "frames": [
-            0,
-            1,
-            2,
-            3,
-            4,
-            5
-          ],
-          "fps": 7
-        },
-        "walk-side": {
-          "frames": [
-            0,
-            1,
-            2,
-            3,
-            4,
-            5
-          ],
-          "fps": 7
-        },
-        "walk-down": {
-          "frames": [
-            0,
-            1,
-            2,
-            3,
-            4,
-            5
-          ],
-          "fps": 7
-        },
-        "walk-up": {
-          "frames": [
-            0,
-            1,
-            2,
-            3,
-            4,
-            5
-          ],
-          "fps": 7
-        },
-        "talk-side": {
-          "frames": [
-            0,
-            1,
-            2,
-            3,
-            4,
-            5
-          ],
-          "fps": 7
-        },
-        "talk-down": {
-          "frames": [
-            0,
-            1,
-            2,
-            3,
-            4,
-            5
-          ],
-          "fps": 7
-        },
-        "talk-up": {
-          "frames": [
-            0,
-            1,
-            2,
-            3,
-            4,
-            5
-          ],
-          "fps": 7
-        }
-      },
-      "createdAt": "2026-10-29T14:17:24.059Z",
-      "updatedAt": "2026-10-29T14:17:24.059Z"
-    },
-    {
-      "id": "c-llum-vestibul",
-      "name": "llum",
-      "description": "La llum tremola i fa ballar les ombres.",
-      "color": "#feae34",
-      "sheet": "c-llum-vestibul.png",
-      "frameWidth": 706,
-      "frameHeight": 85,
-      "animations": {
-        "idle-side": {
-          "frames": [
-            0,
-            1,
-            2,
-            3,
-            4,
-            5
-          ],
-          "fps": 7
-        },
-        "idle-down": {
-          "frames": [
-            0,
-            1,
-            2,
-            3,
-            4,
-            5
-          ],
-          "fps": 7
-        },
-        "idle-up": {
-          "frames": [
-            0,
-            1,
-            2,
-            3,
-            4,
-            5
-          ],
-          "fps": 7
-        },
-        "walk-side": {
-          "frames": [
-            0,
-            1,
-            2,
-            3,
-            4,
-            5
-          ],
-          "fps": 7
-        },
-        "walk-down": {
-          "frames": [
-            0,
-            1,
-            2,
-            3,
-            4,
-            5
-          ],
-          "fps": 7
-        },
-        "walk-up": {
-          "frames": [
-            0,
-            1,
-            2,
-            3,
-            4,
-            5
-          ],
-          "fps": 7
-        },
-        "talk-side": {
-          "frames": [
-            0,
-            1,
-            2,
-            3,
-            4,
-            5
-          ],
-          "fps": 7
-        },
-        "talk-down": {
-          "frames": [
-            0,
-            1,
-            2,
-            3,
-            4,
-            5
-          ],
-          "fps": 7
-        },
-        "talk-up": {
-          "frames": [
-            0,
-            1,
-            2,
-            3,
-            4,
-            5
-          ],
-          "fps": 7
-        }
-      },
-      "createdAt": "2026-10-29T14:17:24.059Z",
-      "updatedAt": "2026-10-29T14:17:24.059Z"
-    },
-    {
-      "id": "c-llum-gransalo",
-      "name": "llum",
-      "description": "La llum tremola i fa ballar les ombres.",
-      "color": "#feae34",
-      "sheet": "c-llum-gransalo.png",
-      "frameWidth": 1463,
-      "frameHeight": 208,
-      "animations": {
-        "idle-side": {
-          "frames": [
-            0,
-            1,
-            2,
-            3,
-            4,
-            5
-          ],
-          "fps": 7
-        },
-        "idle-down": {
-          "frames": [
-            0,
-            1,
-            2,
-            3,
-            4,
-            5
-          ],
-          "fps": 7
-        },
-        "idle-up": {
-          "frames": [
-            0,
-            1,
-            2,
-            3,
-            4,
-            5
-          ],
-          "fps": 7
-        },
-        "walk-side": {
-          "frames": [
-            0,
-            1,
-            2,
-            3,
-            4,
-            5
-          ],
-          "fps": 7
-        },
-        "walk-down": {
-          "frames": [
-            0,
-            1,
-            2,
-            3,
-            4,
-            5
-          ],
-          "fps": 7
-        },
-        "walk-up": {
-          "frames": [
-            0,
-            1,
-            2,
-            3,
-            4,
-            5
-          ],
-          "fps": 7
-        },
-        "talk-side": {
-          "frames": [
-            0,
-            1,
-            2,
-            3,
-            4,
-            5
-          ],
-          "fps": 7
-        },
-        "talk-down": {
-          "frames": [
-            0,
-            1,
-            2,
-            3,
-            4,
-            5
-          ],
-          "fps": 7
-        },
-        "talk-up": {
-          "frames": [
-            0,
-            1,
-            2,
-            3,
-            4,
-            5
-          ],
-          "fps": 7
-        }
-      },
-      "createdAt": "2026-10-29T14:17:24.059Z",
-      "updatedAt": "2026-10-29T14:17:24.059Z"
-    },
-    {
-      "id": "c-llum-biblioteca",
-      "name": "llum",
-      "description": "La llum tremola i fa ballar les ombres.",
-      "color": "#feae34",
-      "sheet": "c-llum-biblioteca.png",
-      "frameWidth": 683,
-      "frameHeight": 98,
-      "animations": {
-        "idle-side": {
-          "frames": [
-            0,
-            1,
-            2,
-            3,
-            4,
-            5
-          ],
-          "fps": 7
-        },
-        "idle-down": {
-          "frames": [
-            0,
-            1,
-            2,
-            3,
-            4,
-            5
-          ],
-          "fps": 7
-        },
-        "idle-up": {
-          "frames": [
-            0,
-            1,
-            2,
-            3,
-            4,
-            5
-          ],
-          "fps": 7
-        },
-        "walk-side": {
-          "frames": [
-            0,
-            1,
-            2,
-            3,
-            4,
-            5
-          ],
-          "fps": 7
-        },
-        "walk-down": {
-          "frames": [
-            0,
-            1,
-            2,
-            3,
-            4,
-            5
-          ],
-          "fps": 7
-        },
-        "walk-up": {
-          "frames": [
-            0,
-            1,
-            2,
-            3,
-            4,
-            5
-          ],
-          "fps": 7
-        },
-        "talk-side": {
-          "frames": [
-            0,
-            1,
-            2,
-            3,
-            4,
-            5
-          ],
-          "fps": 7
-        },
-        "talk-down": {
-          "frames": [
-            0,
-            1,
-            2,
-            3,
-            4,
-            5
-          ],
-          "fps": 7
-        },
-        "talk-up": {
-          "frames": [
-            0,
-            1,
-            2,
-            3,
-            4,
-            5
-          ],
-          "fps": 7
-        }
-      },
-      "createdAt": "2026-10-29T14:17:24.059Z",
-      "updatedAt": "2026-10-29T14:17:24.059Z"
-    },
-    {
-      "id": "c-llum-masmorra",
-      "name": "llum",
-      "description": "La llum tremola i fa ballar les ombres.",
-      "color": "#feae34",
-      "sheet": "c-llum-masmorra.png",
-      "frameWidth": 640,
-      "frameHeight": 79,
-      "animations": {
-        "idle-side": {
-          "frames": [
-            0,
-            1,
-            2,
-            3,
-            4,
-            5
-          ],
-          "fps": 7
-        },
-        "idle-down": {
-          "frames": [
-            0,
-            1,
-            2,
-            3,
-            4,
-            5
-          ],
-          "fps": 7
-        },
-        "idle-up": {
-          "frames": [
-            0,
-            1,
-            2,
-            3,
-            4,
-            5
-          ],
-          "fps": 7
-        },
-        "walk-side": {
-          "frames": [
-            0,
-            1,
-            2,
-            3,
-            4,
-            5
-          ],
-          "fps": 7
-        },
-        "walk-down": {
-          "frames": [
-            0,
-            1,
-            2,
-            3,
-            4,
-            5
-          ],
-          "fps": 7
-        },
-        "walk-up": {
-          "frames": [
-            0,
-            1,
-            2,
-            3,
-            4,
-            5
-          ],
-          "fps": 7
-        },
-        "talk-side": {
-          "frames": [
-            0,
-            1,
-            2,
-            3,
-            4,
-            5
-          ],
-          "fps": 7
-        },
-        "talk-down": {
-          "frames": [
-            0,
-            1,
-            2,
-            3,
-            4,
-            5
-          ],
-          "fps": 7
-        },
-        "talk-up": {
-          "frames": [
-            0,
-            1,
-            2,
-            3,
-            4,
-            5
-          ],
-          "fps": 7
-        }
-      },
-      "createdAt": "2026-10-29T14:17:24.059Z",
-      "updatedAt": "2026-10-29T14:17:24.059Z"
-    },
-    {
-      "id": "c-llum-cuines",
-      "name": "llum",
-      "description": "La llum tremola i fa ballar les ombres.",
-      "color": "#feae34",
-      "sheet": "c-llum-cuines.png",
-      "frameWidth": 640,
-      "frameHeight": 47,
-      "animations": {
-        "idle-side": {
-          "frames": [
-            0,
-            1,
-            2,
-            3,
-            4,
-            5
-          ],
-          "fps": 7
-        },
-        "idle-down": {
-          "frames": [
-            0,
-            1,
-            2,
-            3,
-            4,
-            5
-          ],
-          "fps": 7
-        },
-        "idle-up": {
-          "frames": [
-            0,
-            1,
-            2,
-            3,
-            4,
-            5
-          ],
-          "fps": 7
-        },
-        "walk-side": {
-          "frames": [
-            0,
-            1,
-            2,
-            3,
-            4,
-            5
-          ],
-          "fps": 7
-        },
-        "walk-down": {
-          "frames": [
-            0,
-            1,
-            2,
-            3,
-            4,
-            5
-          ],
-          "fps": 7
-        },
-        "walk-up": {
-          "frames": [
-            0,
-            1,
-            2,
-            3,
-            4,
-            5
-          ],
-          "fps": 7
-        },
-        "talk-side": {
-          "frames": [
-            0,
-            1,
-            2,
-            3,
-            4,
-            5
-          ],
-          "fps": 7
-        },
-        "talk-down": {
-          "frames": [
-            0,
-            1,
-            2,
-            3,
-            4,
-            5
-          ],
-          "fps": 7
-        },
-        "talk-up": {
-          "frames": [
-            0,
-            1,
-            2,
-            3,
-            4,
-            5
-          ],
-          "fps": 7
-        }
-      },
-      "createdAt": "2026-10-29T14:17:24.059Z",
-      "updatedAt": "2026-10-29T14:17:24.059Z"
-    },
-    {
-      "id": "c-llum-gargola",
-      "name": "llum",
-      "description": "La llum tremola i fa ballar les ombres.",
-      "color": "#feae34",
-      "sheet": "c-llum-gargola.png",
-      "frameWidth": 931,
-      "frameHeight": 92,
-      "animations": {
-        "idle-side": {
-          "frames": [
-            0,
-            1,
-            2,
-            3,
-            4,
-            5
-          ],
-          "fps": 7
-        },
-        "idle-down": {
-          "frames": [
-            0,
-            1,
-            2,
-            3,
-            4,
-            5
-          ],
-          "fps": 7
-        },
-        "idle-up": {
-          "frames": [
-            0,
-            1,
-            2,
-            3,
-            4,
-            5
-          ],
-          "fps": 7
-        },
-        "walk-side": {
-          "frames": [
-            0,
-            1,
-            2,
-            3,
-            4,
-            5
-          ],
-          "fps": 7
-        },
-        "walk-down": {
-          "frames": [
-            0,
-            1,
-            2,
-            3,
-            4,
-            5
-          ],
-          "fps": 7
-        },
-        "walk-up": {
-          "frames": [
-            0,
-            1,
-            2,
-            3,
-            4,
-            5
-          ],
-          "fps": 7
-        },
-        "talk-side": {
-          "frames": [
-            0,
-            1,
-            2,
-            3,
-            4,
-            5
-          ],
-          "fps": 7
-        },
-        "talk-down": {
-          "frames": [
-            0,
-            1,
-            2,
-            3,
-            4,
-            5
-          ],
-          "fps": 7
-        },
-        "talk-up": {
-          "frames": [
-            0,
-            1,
-            2,
-            3,
-            4,
-            5
-          ],
-          "fps": 7
-        }
-      },
-      "createdAt": "2026-10-29T14:17:24.059Z",
-      "updatedAt": "2026-10-29T14:17:24.059Z"
-    },
-    {
-      "id": "c-llum-setena",
-      "name": "llum",
-      "description": "La llum tremola i fa ballar les ombres.",
-      "color": "#feae34",
-      "sheet": "c-llum-setena.png",
-      "frameWidth": 853,
-      "frameHeight": 91,
-      "animations": {
-        "idle-side": {
-          "frames": [
-            0,
-            1,
-            2,
-            3,
-            4,
-            5
-          ],
-          "fps": 7
-        },
-        "idle-down": {
-          "frames": [
-            0,
-            1,
-            2,
-            3,
-            4,
-            5
-          ],
-          "fps": 7
-        },
-        "idle-up": {
-          "frames": [
-            0,
-            1,
-            2,
-            3,
-            4,
-            5
-          ],
-          "fps": 7
-        },
-        "walk-side": {
-          "frames": [
-            0,
-            1,
-            2,
-            3,
-            4,
-            5
-          ],
-          "fps": 7
-        },
-        "walk-down": {
-          "frames": [
-            0,
-            1,
-            2,
-            3,
-            4,
-            5
-          ],
-          "fps": 7
-        },
-        "walk-up": {
-          "frames": [
-            0,
-            1,
-            2,
-            3,
-            4,
-            5
-          ],
-          "fps": 7
-        },
-        "talk-side": {
-          "frames": [
-            0,
-            1,
-            2,
-            3,
-            4,
-            5
-          ],
-          "fps": 7
-        },
-        "talk-down": {
-          "frames": [
-            0,
-            1,
-            2,
-            3,
-            4,
-            5
-          ],
-          "fps": 7
-        },
-        "talk-up": {
-          "frames": [
-            0,
-            1,
-            2,
-            3,
-            4,
-            5
-          ],
-          "fps": 7
-        }
-      },
-      "createdAt": "2026-10-29T14:17:24.059Z",
-      "updatedAt": "2026-10-29T14:17:24.059Z"
-    },
-    {
-      "id": "c-llum-jardins",
-      "name": "llum",
-      "description": "La llum tremola i fa ballar les ombres.",
-      "color": "#feae34",
-      "sheet": "c-llum-jardins.png",
-      "frameWidth": 2276,
-      "frameHeight": 263,
-      "animations": {
-        "idle-side": {
-          "frames": [
-            0,
-            1,
-            2,
-            3,
-            4,
-            5
-          ],
-          "fps": 7
-        },
-        "idle-down": {
-          "frames": [
-            0,
-            1,
-            2,
-            3,
-            4,
-            5
-          ],
-          "fps": 7
-        },
-        "idle-up": {
-          "frames": [
-            0,
-            1,
-            2,
-            3,
-            4,
-            5
-          ],
-          "fps": 7
-        },
-        "walk-side": {
-          "frames": [
-            0,
-            1,
-            2,
-            3,
-            4,
-            5
-          ],
-          "fps": 7
-        },
-        "walk-down": {
-          "frames": [
-            0,
-            1,
-            2,
-            3,
-            4,
-            5
-          ],
-          "fps": 7
-        },
-        "walk-up": {
-          "frames": [
-            0,
-            1,
-            2,
-            3,
-            4,
-            5
-          ],
-          "fps": 7
-        },
-        "talk-side": {
-          "frames": [
-            0,
-            1,
-            2,
-            3,
-            4,
-            5
-          ],
-          "fps": 7
-        },
-        "talk-down": {
-          "frames": [
-            0,
-            1,
-            2,
-            3,
-            4,
-            5
-          ],
-          "fps": 7
-        },
-        "talk-up": {
-          "frames": [
-            0,
-            1,
-            2,
-            3,
-            4,
-            5
-          ],
-          "fps": 7
-        }
-      },
-      "createdAt": "2026-10-29T14:17:24.059Z",
-      "updatedAt": "2026-10-29T14:17:24.059Z"
-    },
-    {
-      "id": "c-llum-cabana",
-      "name": "llum",
-      "description": "La llum tremola i fa ballar les ombres.",
-      "color": "#feae34",
-      "sheet": "c-llum-cabana.png",
-      "frameWidth": 500,
-      "frameHeight": 1,
-      "animations": {
-        "idle-side": {
-          "frames": [
-            0,
-            1,
-            2,
-            3,
-            4,
-            5
-          ],
-          "fps": 7
-        },
-        "idle-down": {
-          "frames": [
-            0,
-            1,
-            2,
-            3,
-            4,
-            5
-          ],
-          "fps": 7
-        },
-        "idle-up": {
-          "frames": [
-            0,
-            1,
-            2,
-            3,
-            4,
-            5
-          ],
-          "fps": 7
-        },
-        "walk-side": {
-          "frames": [
-            0,
-            1,
-            2,
-            3,
-            4,
-            5
-          ],
-          "fps": 7
-        },
-        "walk-down": {
-          "frames": [
-            0,
-            1,
-            2,
-            3,
-            4,
-            5
-          ],
-          "fps": 7
-        },
-        "walk-up": {
-          "frames": [
-            0,
-            1,
-            2,
-            3,
-            4,
-            5
-          ],
-          "fps": 7
-        },
-        "talk-side": {
-          "frames": [
-            0,
-            1,
-            2,
-            3,
-            4,
-            5
-          ],
-          "fps": 7
-        },
-        "talk-down": {
-          "frames": [
-            0,
-            1,
-            2,
-            3,
-            4,
-            5
-          ],
-          "fps": 7
-        },
-        "talk-up": {
-          "frames": [
-            0,
-            1,
-            2,
-            3,
-            4,
-            5
-          ],
-          "fps": 7
-        }
-      },
-      "createdAt": "2026-10-29T14:17:24.059Z",
-      "updatedAt": "2026-10-29T14:17:24.059Z"
-    },
-    {
-      "id": "c-llum-llac",
-      "name": "llum",
-      "description": "La llum tremola i fa ballar les ombres.",
-      "color": "#feae34",
-      "sheet": "c-llum-llac.png",
-      "frameWidth": 1138,
-      "frameHeight": 153,
-      "animations": {
-        "idle-side": {
-          "frames": [
-            0,
-            1,
-            2,
-            3,
-            4,
-            5
-          ],
-          "fps": 7
-        },
-        "idle-down": {
-          "frames": [
-            0,
-            1,
-            2,
-            3,
-            4,
-            5
-          ],
-          "fps": 7
-        },
-        "idle-up": {
-          "frames": [
-            0,
-            1,
-            2,
-            3,
-            4,
-            5
-          ],
-          "fps": 7
-        },
-        "walk-side": {
-          "frames": [
-            0,
-            1,
-            2,
-            3,
-            4,
-            5
-          ],
-          "fps": 7
-        },
-        "walk-down": {
-          "frames": [
-            0,
-            1,
-            2,
-            3,
-            4,
-            5
-          ],
-          "fps": 7
-        },
-        "walk-up": {
-          "frames": [
-            0,
-            1,
-            2,
-            3,
-            4,
-            5
-          ],
-          "fps": 7
-        },
-        "talk-side": {
-          "frames": [
-            0,
-            1,
-            2,
-            3,
-            4,
-            5
-          ],
-          "fps": 7
-        },
-        "talk-down": {
-          "frames": [
-            0,
-            1,
-            2,
-            3,
-            4,
-            5
-          ],
-          "fps": 7
-        },
-        "talk-up": {
-          "frames": [
-            0,
-            1,
-            2,
-            3,
-            4,
-            5
-          ],
-          "fps": 7
-        }
-      },
-      "createdAt": "2026-10-29T14:17:24.059Z",
-      "updatedAt": "2026-10-29T14:17:24.059Z"
+      "createdAt": "2026-10-29T14:40:17.840Z",
+      "updatedAt": "2026-10-29T14:40:17.840Z"
     },
     {
       "id": "c-barret",
@@ -15255,8 +15715,8 @@
           "fps": 4
         }
       },
-      "createdAt": "2026-10-29T14:17:24.059Z",
-      "updatedAt": "2026-10-29T14:17:24.059Z"
+      "createdAt": "2026-10-29T14:40:17.840Z",
+      "updatedAt": "2026-10-29T14:40:17.840Z"
     }
   ],
   "playerId": "c-harry",
